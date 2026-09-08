@@ -414,8 +414,10 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
 
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
-.hero { display: flex; align-items: flex-start; justify-content: flex-start; gap: 72px; padding-block: 92px 48px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
+.hero-card { width: 100%; }
+.hero-card .card { width: 100%; }
 .hero h1 { margin: 0 0 10px; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
 .headline { margin: 0 0 28px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
 .thesis { margin: 0 0 18px; font-size: 25px; line-height: 1.32; font-weight: 500; color: var(--ink); letter-spacing: -.012em; }
@@ -423,14 +425,14 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
 .links a { color: var(--link); text-decoration: none; font-size: 15px; font-weight: 500; padding-bottom: 2px; border-bottom: 1px solid rgba(173,175,182,.4); }
 .links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
-.hero-photo { flex: none; width: 200px; height: 200px; margin-top: 6px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 12px 30px -12px rgba(0,0,0,.7); }
+.hero-photo { width: 88px; height: 88px; margin: 0 0 22px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 12px 30px -12px rgba(0,0,0,.7); }
 .hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* initials plaque until assets/photo.jpg exists: hairline rim, top-lit, quiet monogram */
 .tile {
   width: 100%; height: 100%; display: grid; place-items: center;
   background: radial-gradient(120% 110% at 28% 18%, #35363D 0%, #27282D 62%, #222328 100%);
   box-shadow: inset 0 0 0 1px rgba(233,228,218,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.35);
-  color: #D6D1C6; font-size: 54px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
+  color: #D6D1C6; font-size: 26px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
 }
 
 /* ---- sections ---- */
@@ -438,21 +440,23 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .section h2 { margin: 0 0 24px; font-size: 26px; font-weight: 600; letter-spacing: -.012em; line-height: 1.2; color: var(--ink); }
 .group-label { margin: 0 0 18px; font-size: 15px; font-weight: 500; color: #B4B6BC; }
 .group + .group { margin-top: 40px; }
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+.grid.skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 /* ---- footer: card fine print, items separated by space alone ---- */
 .foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
 
-@media (max-width: 1199px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 979px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding: 0 32px; } .hero { padding-top: 64px; gap: 48px; } .hero-photo { width: 160px; height: 160px; } .tile { font-size: 44px; } }
+@media (max-width: 1199px) { .hero { grid-template-columns: minmax(0, 1fr) 360px; gap: 56px; } }
+@media (max-width: 979px) { .grid, .grid.skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding: 0 32px; } .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; } .hero-card { width: min(100%, 360px); } }
 @media (max-width: 599px) {
   :root { --gap: 22px; }
   .wrap { padding: 0 24px; }
-  .grid { grid-template-columns: minmax(0, 340px); }
-  .hero { flex-direction: column-reverse; gap: 22px; padding-block: 44px 32px; }
-  .hero-photo { width: 64px; height: 64px; margin-top: 0; border-radius: 5px; }
+  .grid, .grid.skills { grid-template-columns: minmax(0, 340px); }
+  .hero { gap: 28px; padding-block: 44px 32px; }
+  .hero-card { width: min(100%, 340px); }
+  .hero-photo { width: 64px; height: 64px; margin: 0 0 16px; border-radius: 5px; }
   .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
   .thesis { font-size: 22px; }
   .bio { font-size: 16px; }
@@ -709,7 +713,7 @@ function careerCard(card, rel) {
   const t = FRAMES[card.frame];
   if (!t) throw new Error(`Unknown frame "${card.frame}" on card ${card.id}`);
   const art = exists(card.art) ? card.art : card.artPlaceholder;
-  const typeLine = `[ ${card.company} / ${card.city} / ${card.dates} ]`;
+  const typeLine = Array.isArray(card.typeLine) ? `[ ${card.typeLine.join(' / ')} ]` : `[ ${card.company} / ${card.city} / ${card.dates} ]`;
   const nameAvail = G.inner - G.platePadL - G.platePadR - G.plateGap - G.badge;
   const name = nameFit(card.name, nameAvail);
   const nameStyle = [name.fs !== G.nameFs ? `--nfs:${name.fs}cqw` : '', name.cond < 1 ? `--cond:${name.cond}` : ''].filter(Boolean).join(';');
@@ -760,25 +764,27 @@ const linksList = (links, cls) => `<ul class="links${cls ? ' ' + cls : ''}">${li
 
 function hero(site) {
   const photo = exists(site.photo)
-    ? `<img src="${esc(site.photo)}" alt="${esc(site.photoAlt)}" width="200" height="200">`
+    ? `<img src="${esc(site.photo)}" alt="${esc(site.photoAlt)}" width="88" height="88">`
     : `<div class="tile" aria-hidden="true">${esc(initials(site.name))}</div>`;
   return `
 <header class="hero wrap">
   <div class="hero-text">
+    <div class="hero-photo">${photo}</div>
     <h1>${esc(site.name)}</h1>
     <p class="headline">${esc(site.headline)}</p>
     <p class="thesis">${esc(site.thesis)}</p>
     <p class="bio">${esc(site.body)}</p>
     <nav aria-label="Profile links">${linksList(site.links)}</nav>
   </div>
-  <div class="hero-photo">${photo}</div>
+  <div class="hero-card">${careerCard(content.cards[0], '')}
+  </div>
 </header>`;
 }
 function skillGroup(group, id) {
   return `
 <div class="group">
   <h3 class="group-label" id="${id}">${esc(group.label)}</h3>
-  <div class="grid">${group.items.map(i => skillCard(i, group.type)).join('')}
+  <div class="grid skills">${group.items.map(i => skillCard(i, group.type)).join('')}
   </div>
 </div>`;
 }
@@ -866,7 +872,7 @@ ${hero(site)}
 <main class="wrap">
 <section class="section" aria-labelledby="experience-h">
   <h2 id="experience-h">${esc(content.experienceHeading)}</h2>
-  <div class="grid">${cards.map(c => careerCard(c, '')).join('')}
+  <div class="grid">${cards.slice(1).map(c => careerCard(c, '')).join('')}
   </div>
 </section>
 <section class="section" aria-labelledby="skills-h">
