@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jaspal Singh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="I sold for six years, ran the systems that pay sellers, and now I build them as an engineer at Anthropic.">
+<meta name="theme-color" content="#17181C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+:root { color-scheme: dark; --bg: #17181C; --ink: #E9E4DA; --ink-2: #C9C6BE; --muted: #8E9099; --link: #ADAFB6; --gap: 28px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: clip; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(1400px 900px at 50% 0, #2B2C31 0%, #1E1F24 40%, rgba(23,24,28,0) 100%);
+  background-repeat: no-repeat;
+  color: var(--ink-2);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+a { color: var(--link); }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+
+/* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
+.hero { display: flex; align-items: flex-start; justify-content: flex-start; gap: 72px; padding-block: 92px 48px; }
+.hero-text { max-width: 64ch; }
+.hero h1 { margin: 0 0 10px; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+.headline { margin: 0 0 28px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
+.thesis { margin: 0 0 18px; font-size: 25px; line-height: 1.32; font-weight: 500; color: var(--ink); letter-spacing: -.012em; }
+.bio { margin: 0 0 28px; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+.links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
+.links a { color: var(--link); text-decoration: none; font-size: 15px; font-weight: 500; padding-bottom: 2px; border-bottom: 1px solid rgba(173,175,182,.4); }
+.links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.hero-photo { flex: none; width: 200px; height: 200px; margin-top: 6px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 12px 30px -12px rgba(0,0,0,.7); }
+.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* initials plaque until assets/photo.jpg exists: hairline rim, top-lit, quiet monogram */
+.tile {
+  width: 100%; height: 100%; display: grid; place-items: center;
+  background: radial-gradient(120% 110% at 28% 18%, #35363D 0%, #27282D 62%, #222328 100%);
+  box-shadow: inset 0 0 0 1px rgba(233,228,218,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.35);
+  color: #D6D1C6; font-size: 54px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
+}
+
+/* ---- sections ---- */
+.section { padding: 36px 0 48px; }
+.section h2 { margin: 0 0 24px; font-size: 26px; font-weight: 600; letter-spacing: -.012em; line-height: 1.2; color: var(--ink); }
+.group-label { margin: 0 0 18px; font-size: 15px; font-weight: 500; color: #B4B6BC; }
+.group + .group { margin-top: 40px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+
+/* ---- footer: card fine print, items separated by space alone ---- */
+.foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
+.fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
+.foot .links a { font-size: 13px; }
+
+@media (max-width: 1199px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 979px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding: 0 32px; } .hero { padding-top: 64px; gap: 48px; } .hero-photo { width: 160px; height: 160px; } .tile { font-size: 44px; } }
+@media (max-width: 599px) {
+  :root { --gap: 22px; }
+  .wrap { padding: 0 24px; }
+  .grid { grid-template-columns: minmax(0, 340px); }
+  .hero { flex-direction: column-reverse; gap: 22px; padding-block: 44px 32px; }
+  .hero-photo { width: 64px; height: 64px; margin-top: 0; border-radius: 5px; }
+  .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
+  .thesis { font-size: 22px; }
+  .bio { font-size: 16px; }
+  .foot { padding-bottom: 56px; }
+}
+
+/* ---- card shell (from the proof; sized by the grid column, cqw units inside) ---- */
+.card {
+  --mx: 64%; --my: 30%;
+  --rx: 0deg; --ry: 0deg;
+  --fp: calc(var(--mx) * 1.2 - 10%) calc(var(--my) * 1.2 - 10%);
+  --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
+  position: relative; width: 100%; margin: 0;
+  container-type: inline-size;
+  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.card.career { aspect-ratio: 59 / 86; }
+.card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
+.card-inner {
+  position: relative; width: 100%; height: 100%;
+  border-radius: 4.5cqw; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; align-items: stretch;
+  padding: 4.4cqw 7cqw 5.2cqw;
+  background-size: 240px 720px, 160px 160px, 100% 100%, 100% 100%, 100% 100%;
+  background-blend-mode: soft-light, overlay, normal, normal, normal;
+  box-shadow:
+    inset 0 0 0 2px var(--edge),
+    inset 0 0 0 3px var(--chamfer),
+    inset 0 0 0 4px var(--shade),
+    0 1px 0 rgba(255,255,255,.10),
+    0 1px 2px rgba(0,0,0,.75),
+    0 2px 3px rgba(0,0,0,.45),
+    0 10px 14px -6px rgba(0,0,0,.55),
+    2px 28px 36px -12px rgba(0,0,0,.66),
+    4px 64px 80px -30px rgba(0,0,0,.6);
+}
+.skill .card-inner { padding: 4.4cqw 7cqw 4.4cqw; }
+.name, .badge, .kind, .type, .strip, .effect { position: relative; z-index: 3; }
+.card-inner::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 4;
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.62), inset 1.5px 0 0 rgba(255,255,255,.30), inset 0 -1.5px 0 rgba(0,0,0,.34), inset -1.5px 0 0 rgba(0,0,0,.18);
+}
+.card-inner::before {
+  content: ""; position: absolute; inset: 1.9cqw; border-radius: 2.9cqw; pointer-events: none; z-index: 1;
+  box-shadow:
+    -1px -1px 0 var(--ridge-l), 1px 1px 0 var(--ridge-d),
+    inset 1px 1px 0 var(--ridge-d), inset -1px -1px 0 var(--ridge-l);
+}
+
+.f-eng { --edge:#8A8E99; --chamfer:rgba(255,255,255,.92); --shade:rgba(80,84,96,.30); --ridge-l:rgba(255,255,255,.98); --ridge-d:rgba(60,64,76,.62); --ink:#23262E; --ink-shadow:rgba(255,255,255,.72);
+  --plate-1:rgba(255,255,255,.62); --plate-2:rgba(255,255,255,.34); --plate-3:rgba(255,255,255,.22); --plate-hi:rgba(255,255,255,1); --plate-lo:rgba(70,74,86,.45); --plate-hi2:rgba(255,255,255,.75); --plate-lo2:rgba(70,74,86,.28); --plate-drop:rgba(40,44,55,.38); --plate-line:rgba(70,74,86,.42);
+  --bz-1:#FCFCFD; --bz-2:#D3D5DB; --bz-3:#9FA3AD; --bz-hi:rgba(255,255,255,.9); --bz-lo:rgba(50,54,64,.45); --bz-out:rgba(50,54,64,.42);
+  --paper-line:#9C8F78; --paper-drop:rgba(255,255,255,.6); --satin:255,255,255; --gl:0.3; --gl-hover:0.7; }
+.f-eng .card-inner { background-color:#E2E3E7; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjQ2Jy8+PC9zdmc+"), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC41NScvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 60%, rgba(40,44,56,.14) 100%), linear-gradient(155deg, rgba(255,255,255,.62) 0%, rgba(255,255,255,.18) 32%, rgba(255,255,255,0) 50%, rgba(22,24,32,.10) 74%, rgba(22,24,32,.24) 100%), linear-gradient(180deg, #F2F2F4 0%, #E5E6EA 42%, #D5D7DD 74%, #C9CBD2 100%); }
+.f-eng .badge { --rim-1:#FBFBFD; --rim-2:#8E929E; --rim-3:#DADCE2; --rim-dark:#4A4E5A; --coin-1:#4E5364; --coin-2:#2E3240; --coin-3:#1A1D26; --coin-ink:#EEF0F5; }
+.f-founder { --edge:#4C336F; --chamfer:rgba(230,220,250,.95); --shade:rgba(60,35,100,.28); --ridge-l:rgba(236,228,252,.95); --ridge-d:rgba(60,35,100,.62); --ink:#0E0A1A; --ink-shadow:rgba(236,228,252,.55);
+  --plate-1:rgba(242,235,255,.48); --plate-2:rgba(242,235,255,.24); --plate-3:rgba(242,235,255,.14); --plate-hi:rgba(242,235,255,.95); --plate-lo:rgba(60,35,100,.48); --plate-hi2:rgba(242,235,255,.62); --plate-lo2:rgba(60,35,100,.3); --plate-drop:rgba(40,20,70,.42); --plate-line:rgba(80,50,130,.52);
+  --bz-1:#EEE6FA; --bz-2:#B39BDD; --bz-3:#5E4290; --bz-hi:rgba(240,232,255,.85); --bz-lo:rgba(40,20,80,.5); --bz-out:rgba(40,20,80,.5);
+  --paper-line:#5E4A78; --paper-drop:rgba(236,228,252,.5); --satin:242,235,255; --gl:0.3; --gl-hover:0.7; }
+.f-founder .card-inner { background-color:#A386D1; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(45,22,85,0.2) 100%), linear-gradient(155deg, rgba(240,232,255,0.5) 0%, rgba(240,232,255,0.14) 32%, rgba(240,232,255,0) 50%, rgba(40,20,80,0.08) 74%, rgba(40,20,80,0.18) 100%), linear-gradient(180deg, #B49CDE 0%, #A386D1 42%, #9A7CC7 74%, #9070BC 100%); }
+.f-founder .badge { --rim-1:#F5EFFF; --rim-2:#6E4EA0; --rim-3:#CFBBEC; --rim-dark:#3E2A62; --coin-1:#3C2670; --coin-2:#251545; --coin-3:#140A28; --coin-ink:#F2ECFF; }
+.f-ops { --edge:#7E4A1E; --chamfer:rgba(241,192,140,.95); --shade:rgba(90,50,20,.28); --ridge-l:rgba(247,205,160,.95); --ridge-d:rgba(90,50,20,.62); --ink:#1C0D04; --ink-shadow:rgba(255,226,190,.55);
+  --plate-1:rgba(255,232,200,.48); --plate-2:rgba(255,232,200,.24); --plate-3:rgba(255,232,200,.14); --plate-hi:rgba(255,238,210,.95); --plate-lo:rgba(90,50,20,.48); --plate-hi2:rgba(255,238,210,.62); --plate-lo2:rgba(90,50,20,.3); --plate-drop:rgba(60,30,10,.42); --plate-line:rgba(110,60,25,.52);
+  --bz-1:#FADDB8; --bz-2:#D89A5B; --bz-3:#8E4F1E; --bz-hi:rgba(255,232,200,.85); --bz-lo:rgba(70,35,10,.5); --bz-out:rgba(70,35,10,.5);
+  --paper-line:#6F4C28; --paper-drop:rgba(255,228,190,.5); --satin:255,240,215; --gl:0.24; --gl-hover:0.5; }
+.f-ops .card-inner { background-color:#D48B45; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(70,30,6,0.2) 100%), linear-gradient(155deg, rgba(255,228,190,0.5) 0%, rgba(255,228,190,0.14) 32%, rgba(255,228,190,0) 50%, rgba(60,25,5,0.08) 74%, rgba(60,25,5,0.18) 100%), linear-gradient(180deg, #E4A15E 0%, #D48B45 42%, #C67B37 74%, #B86F2E 100%); }
+.f-ops .badge { --rim-1:#FBE0BD; --rim-2:#9A5A26; --rim-3:#E4AC72; --rim-dark:#5A3212; --coin-1:#3E62B2; --coin-2:#1E3A78; --coin-3:#10224E; --coin-ink:#EEF2FF; }
+.f-sales { --edge:#7C5C1E; --chamfer:rgba(250,236,190,.95); --shade:rgba(100,75,20,.28); --ridge-l:rgba(252,241,205,.95); --ridge-d:rgba(100,75,20,.62); --ink:#1E1506; --ink-shadow:rgba(255,243,208,.55);
+  --plate-1:rgba(255,246,214,.48); --plate-2:rgba(255,246,214,.24); --plate-3:rgba(255,246,214,.14); --plate-hi:rgba(255,246,214,.95); --plate-lo:rgba(100,75,20,.48); --plate-hi2:rgba(255,246,214,.62); --plate-lo2:rgba(100,75,20,.3); --plate-drop:rgba(70,50,10,.42); --plate-line:rgba(120,90,30,.52);
+  --bz-1:#FBF0CC; --bz-2:#E3C87C; --bz-3:#9A7A2E; --bz-hi:rgba(255,246,214,.85); --bz-lo:rgba(80,60,15,.5); --bz-out:rgba(80,60,15,.5);
+  --paper-line:#7A6030; --paper-drop:rgba(255,243,208,.5); --satin:255,247,220; --gl:0.24; --gl-hover:0.5; }
+.f-sales .card-inner { background-color:#DEBE6C; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(90,65,15,0.2) 100%), linear-gradient(155deg, rgba(255,246,214,0.5) 0%, rgba(255,246,214,0.14) 32%, rgba(255,246,214,0) 50%, rgba(80,60,12,0.08) 74%, rgba(80,60,12,0.18) 100%), linear-gradient(180deg, #EDD48E 0%, #DEBE6C 42%, #D2AF5B 74%, #C6A04C 100%); }
+.f-sales .badge { --rim-1:#FDF2CC; --rim-2:#9E7E2C; --rim-3:#E9D18A; --rim-dark:#5E4A18; --coin-1:#B02A3C; --coin-2:#7C1828; --coin-3:#4A0C16; --coin-ink:#FFF1F0; }
+.f-spell { --edge:#174A33; --chamfer:rgba(196,236,216,.95); --shade:rgba(16,60,38,.28); --ridge-l:rgba(210,242,226,.95); --ridge-d:rgba(16,60,38,.62); --ink:#08201A; --ink-shadow:rgba(214,244,230,.5);
+  --plate-1:rgba(228,250,238,.48); --plate-2:rgba(228,250,238,.24); --plate-3:rgba(228,250,238,.14); --plate-hi:rgba(228,250,238,.95); --plate-lo:rgba(16,60,38,.48); --plate-hi2:rgba(228,250,238,.62); --plate-lo2:rgba(16,60,38,.3); --plate-drop:rgba(8,42,26,.42); --plate-line:rgba(26,80,54,.52);
+  --bz-1:#E2F6EA; --bz-2:#6FB894; --bz-3:#276A4A; --bz-hi:rgba(224,248,236,.85); --bz-lo:rgba(8,42,28,.5); --bz-out:rgba(8,42,28,.5);
+  --paper-line:#376350; --paper-drop:rgba(214,244,230,.5); --satin:232,255,242; --gl:0.24; --gl-hover:0.5; }
+.f-spell .card-inner { background-color:#43926D; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(10,45,30,0.2) 100%), linear-gradient(155deg, rgba(224,248,236,0.5) 0%, rgba(224,248,236,0.14) 32%, rgba(224,248,236,0) 50%, rgba(8,42,28,0.08) 74%, rgba(8,42,28,0.18) 100%), linear-gradient(180deg, #5AA383 0%, #43926D 42%, #3B8562 74%, #347858 100%); }
+.f-trap { --edge:#5E2242; --chamfer:rgba(245,200,222,.95); --shade:rgba(90,25,60,.28); --ridge-l:rgba(250,215,232,.95); --ridge-d:rgba(90,25,60,.62); --ink:#26091A; --ink-shadow:rgba(252,222,238,.55);
+  --plate-1:rgba(255,232,243,.48); --plate-2:rgba(255,232,243,.24); --plate-3:rgba(255,232,243,.14); --plate-hi:rgba(255,232,243,.95); --plate-lo:rgba(90,25,60,.48); --plate-hi2:rgba(255,232,243,.62); --plate-lo2:rgba(90,25,60,.3); --plate-drop:rgba(60,15,40,.42); --plate-line:rgba(120,40,80,.52);
+  --bz-1:#FBE6F0; --bz-2:#D98CB4; --bz-3:#7D2F58; --bz-hi:rgba(255,230,242,.85); --bz-lo:rgba(70,15,45,.5); --bz-out:rgba(70,15,45,.5);
+  --paper-line:#6E3552; --paper-drop:rgba(252,222,238,.5); --satin:255,236,246; --gl:0.24; --gl-hover:0.5; }
+.f-trap .card-inner { background-color:#C66497; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(80,20,50,0.2) 100%), linear-gradient(155deg, rgba(255,230,242,0.5) 0%, rgba(255,230,242,0.14) 32%, rgba(255,230,242,0) 50%, rgba(70,15,45,0.08) 74%, rgba(70,15,45,0.18) 100%), linear-gradient(180deg, #D57AA8 0%, #C66497 42%, #B95889 74%, #AC4D7C 100%); }
+
+/* ---- name plate (raised, lit top-left) ---- */
+.plate {
+  position: relative; height: 12.8cqw; margin-bottom: 1.9cqw; flex: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 2cqw;
+  padding: 0 1.45cqw 0 2.8cqw; border-radius: 1.2cqw;
+  background: linear-gradient(180deg, var(--plate-1), var(--plate-2) 55%, var(--plate-3));
+  box-shadow:
+    inset 0 1px 0 var(--plate-hi), inset 1px 0 0 var(--plate-hi2),
+    inset 0 -1px 0 var(--plate-lo), inset -1px 0 0 var(--plate-lo2),
+    0 1px 1px var(--plate-drop), 1px 1px 0 var(--plate-drop), 0 0 0 1px var(--plate-line);
+}
+.name {
+  margin: 0; flex: 1; min-width: 0; white-space: nowrap; overflow: visible;
+  font-family: "Cormorant SC", "Cormorant", Georgia, serif; font-weight: 600; font-size: var(--nfs, 4.6cqw); line-height: 1;
+  letter-spacing: 0.012em; color: var(--ink); text-shadow: 0 1px 0 var(--ink-shadow);
+  padding-bottom: .3cqw;
+}
+.name > span { display: inline-block; transform-origin: 0 50%; transform: scaleX(var(--cond, 1)); }
+/* ---- badge: struck coin, rim in the card's own metal ---- */
+.badge {
+  flex: none; position: relative; width: 10.2cqw; height: 10.2cqw; border-radius: 50%;
+  display: grid; place-items: center;
+  font: 700 2.3cqw/1 Inter, system-ui, sans-serif; letter-spacing: .12em; text-indent: .12em; color: var(--coin-ink);
+  text-shadow: 0 1px 0 rgba(0,0,0,.65), 0 -1px 0 rgba(255,255,255,.14);
+  background-image:
+    repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.55) 0deg 3deg, rgba(0,0,0,.42) 3deg 6deg),
+    conic-gradient(from 205deg at 50% 50%, var(--rim-1) 0deg, var(--rim-2) 70deg, var(--rim-3) 150deg, var(--rim-2) 210deg, var(--rim-1) 290deg, var(--rim-3) 330deg, var(--rim-1) 360deg);
+  background-blend-mode: overlay, normal;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.38),
+    0 0 0 1px var(--rim-dark),
+    0 1px 2px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.35);
+}
+/* longer badge words stay inside the struck face (face is 78% of the coin; word kept under ~88% of it) */
+.badge.mid { font-size: 1.8cqw; letter-spacing: .06em; text-indent: .06em; }
+.badge.long { font-size: 1.4cqw; letter-spacing: .02em; text-indent: .02em; }
+.badge::before {
+  content: ""; position: absolute; inset: 11%; border-radius: 50%; pointer-events: none; z-index: -1;
+  background-image:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.30) 0%, rgba(255,255,255,.08) 20%, rgba(255,255,255,0) 40%),
+    repeating-conic-gradient(from 12deg at 50% 50%, rgba(255,255,255,.08) 0deg 3deg, rgba(0,0,0,.10) 3deg 6deg),
+    radial-gradient(circle at 50% 50%, var(--coin-1) 0%, var(--coin-2) 58%, var(--coin-3) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.22),
+    inset 0 1.5px 2px rgba(0,0,0,.6),
+    inset 0 -1px 0 rgba(255,255,255,.10),
+    0 0 0 1px rgba(0,0,0,.55),
+    0 1px 0 1px rgba(255,255,255,.18);
+}
+/* ---- skill type mark, right-aligned in the plate ---- */
+.kind {
+  flex: none; font-family: "EB Garamond", Georgia, serif; font-weight: 700; font-size: 3.1cqw; line-height: 1;
+  color: var(--ink); letter-spacing: .01em; padding-right: 1cqw; white-space: nowrap;
+}
+
+/* ---- art window: raised metallic lip, art set into it ---- */
+.art {
+  position: relative; height: 72.9cqw; margin-bottom: 1.4cqw; flex: none;
+  border-radius: 1.1cqw;
+  background: linear-gradient(145deg, var(--bz-1) 0%, var(--bz-2) 40%, var(--bz-3) 100%);
+  box-shadow:
+    inset 1px 1px 0 var(--bz-hi), inset -1px -1px 0 var(--bz-lo),
+    0 0 0 1px var(--bz-out), 0 1px 2px rgba(0,0,0,.28), 1px 1px 0 var(--bz-out);
+}
+.art-inner { position: absolute; inset: .95cqw; border-radius: .5cqw; overflow: hidden; background: #0B0F1C; }
+.art-img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+/* recess shadow kept light so the top of the artwork is not darkened */
+.art-inner::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow:
+    inset 0 2px 3px rgba(0,0,0,.45), inset 0 1px 0 rgba(0,0,0,.55),
+    inset 2px 0 3px rgba(0,0,0,.3), inset -1px 0 3px rgba(0,0,0,.22), inset 0 -1px 3px rgba(0,0,0,.22),
+    inset 0 -1px 0 rgba(255,255,255,.14),
+    inset 0 0 0 1px rgba(0,0,0,.55);
+}
+/* ---- company mark: white monochrome, about 13% of card width, bottom-right inside the window, under the foil.
+   Wordmarks (Deel) get a 15cqw-wide box so their ink mass stays close to the square glyphs. ---- */
+.logo {
+  position: absolute; right: 2.6cqw; bottom: 2.4cqw; width: 13cqw; height: 13cqw;
+  object-fit: contain; object-position: right bottom; opacity: .92;
+  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.6)) drop-shadow(0 0 5px rgba(0,0,0,.45));
+}
+.logo.wide { width: 15cqw; height: 6cqw; }
+/* ---- type line ---- */
+.type {
+  height: 5.5cqw; margin: 0 0 1.1cqw; flex: none; white-space: nowrap; overflow: hidden; padding-left: .2cqw;
+  font-family: "EB Garamond", Georgia, serif; font-weight: 700; font-size: var(--tfs, 3.6cqw); line-height: 5.5cqw;
+  color: var(--ink); letter-spacing: .004em;
+}
+/* ---- effect box (paper set into the frame) ---- */
+.effect {
+  height: 32.063cqw; margin-bottom: 1.7cqw; flex: none; padding: 1.2cqw 1.8cqw 1cqw;
+  border-radius: .7cqw; border: 1px solid var(--paper-line);
+  background-color: #F3ECD8;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyMDAnIGhlaWdodD0nMjAwJz48ZmlsdGVyIGlkPSdwJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScxLjI1JyBudW1PY3RhdmVzPSc0JyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScyMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzIwMCcgaGVpZ2h0PScyMDAnIGZpbHRlcj0ndXJsKCNwKScgb3BhY2l0eT0nLjYnLz48L3N2Zz4="), radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 65%), linear-gradient(180deg, #F7F1E1 0%, #F2EAD5 55%, #EBE1C8 100%);
+  background-size: 100px 100px, 100% 100%, 100% 100%;
+  background-blend-mode: soft-light, normal, normal;
+  box-shadow:
+    inset 0 2px 3px rgba(60,40,10,.30), inset 2px 0 3px rgba(60,40,10,.14),
+    inset 0 -1px 0 rgba(255,255,255,.75), inset -1px 0 0 rgba(255,255,255,.45),
+    inset 0 0 0 1px rgba(120,100,60,.18),
+    0 1px 0 var(--paper-drop);
+  color: #2A2219;
+  font-family: "EB Garamond", Georgia, serif; font-size: var(--efs, 4cqw); line-height: 1.25;
+  text-align: left; hyphens: manual; text-wrap: pretty;
+}
+.effect p { margin: 0; }
+.effect.line { height: 9.6cqw; margin-bottom: 0; padding: 0 1.5cqw; display: flex; align-items: center; overflow: hidden; font-size: var(--efs, 3.6cqw); }
+.effect.line p { white-space: nowrap; }
+/* ---- bottom strip ---- */
+.strip {
+  height: 6.8cqw; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 .3cqw;
+  font: 600 2.5cqw/1 Inter, system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* ---- foil / glare layers (siblings, blend with frame + art; ink is stacked above) ---- */
+.foil, .sheen, .prism, .glitter, .satin, .glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2; }
+.foil, .sheen, .prism, .satin, .glare { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+/* rainbow band: silver at rest except one diagonal band whose hues compress toward the specular core */
+.foil {
+  background-image:
+    linear-gradient(115deg,
+      rgba(255,255,255,0) 47.4%,
+      hsla(355, 95%, 62%, .5) 48.6%, hsl(355 95% 62%) 49.6%, hsl(40 100% 58%) 50.6%, hsl(95 85% 55%) 51.6%,
+      hsl(175 90% 55%) 52.6%, hsl(215 95% 62%) 53.6%, hsl(275 90% 64%) 54.8%, hsl(320 90% 62%) 56%,
+      hsla(320, 90%, 62%, .5) 57.2%, rgba(255,255,255,0) 58.6%),
+    linear-gradient(115deg,
+      rgba(255,255,255,0) 45%, hsla(355, 90%, 62%, .22) 46.5%, hsla(40, 100%, 58%, .22) 48.5%, hsla(95, 85%, 55%, .16) 50.5%,
+      hsla(175, 90%, 55%, .12) 53%, hsla(215, 95%, 62%, .16) 55.5%, hsla(275, 90%, 64%, .22) 57.5%, hsla(320, 90%, 62%, .22) 59.5%, rgba(255,255,255,0) 61%);
+  background-size: 240% 240%;
+  background-position: var(--fp);
+  mix-blend-mode: hard-light; opacity: .48;
+  -webkit-mask-image: var(--falloff), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNycvPjxyZWN0IHg9JzcuOTUnIHk9JzIwLjA1JyB3aWR0aD0nODQuMScgaGVpZ2h0PSc3MScgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwLjMnLz48cmVjdCB4PSc3JyB5PScxMDAnIHdpZHRoPSc4NicgaGVpZ2h0PSczMi4wNjMnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4wNScvPjwvc3ZnPg=="); mask-image: var(--falloff), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNycvPjxyZWN0IHg9JzcuOTUnIHk9JzIwLjA1JyB3aWR0aD0nODQuMScgaGVpZ2h0PSc3MScgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwLjMnLz48cmVjdCB4PSc3JyB5PScxMDAnIHdpZHRoPSc4NicgaGVpZ2h0PSczMi4wNjMnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4wNScvPjwvc3ZnPg==");
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+  transition: background-position .55s cubic-bezier(.2,.8,.2,1);
+}
+/* specular core of the band */
+.sheen {
+  background-image: linear-gradient(115deg,
+    rgba(255,255,255,0) 49.8%, rgba(255,255,255,.16) 51.4%, rgba(255,255,255,.6) 52.5%, rgba(255,255,255,.74) 53%, rgba(255,255,255,.58) 53.6%, rgba(255,255,255,.16) 54.8%, rgba(255,255,255,0) 56.4%);
+  background-size: 240% 240%;
+  background-position: var(--fp);
+  mix-blend-mode: normal; opacity: .85;
+  -webkit-mask-image: var(--falloff), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNjUnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC40NScvPjxyZWN0IHg9JzcnIHk9JzEwMCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzMyLjA2MycgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"); mask-image: var(--falloff), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNjUnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC40NScvPjxyZWN0IHg9JzcnIHk9JzEwMCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzMyLjA2MycgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+");
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+  transition: background-position .55s cubic-bezier(.2,.8,.2,1);
+}
+/* directional micro-grain, visible only inside the band */
+.prism {
+  background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0) 0 2px, rgba(255,255,255,.7) 2px 3px, rgba(0,0,0,.35) 3px 4px, rgba(0,0,0,0) 4px 6px);
+  mix-blend-mode: overlay; opacity: .7;
+  -webkit-mask-image: linear-gradient(115deg, transparent 45.5%, #000 48.5%, #000 57.5%, transparent 60.5%), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNjUnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC40NScvPjxyZWN0IHg9JzcnIHk9JzEwMCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzMyLjA2MycgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"), var(--falloff);
+  mask-image: linear-gradient(115deg, transparent 45.5%, #000 48.5%, #000 57.5%, transparent 60.5%), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuNjUnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC40NScvPjxyZWN0IHg9JzcnIHk9JzEwMCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzMyLjA2MycgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"), var(--falloff);
+  -webkit-mask-size: 240% 240%, 100% 100%, 100% 100%; mask-size: 240% 240%, 100% 100%, 100% 100%;
+  -webkit-mask-position: var(--fp), 0 0, 0 0; mask-position: var(--fp), 0 0, 0 0;
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+  transition: -webkit-mask-position .55s cubic-bezier(.2,.8,.2,1), mask-position .55s cubic-bezier(.2,.8,.2,1);
+}
+.glitter {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNDAnIGhlaWdodD0nMTQwJz48Y2lyY2xlIGN4PSc4NC44JyBjeT0nNDYuNScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc0Ny41JyBjeT0nMTIxLjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nNDUuMicgY3k9JzE2LjEnIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMTE0LjMnIGN5PScxMzIuMScgcj0nMS40JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PScxMDUuNScgY3k9JzQ4LjUnIHI9JzAuOCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNzcuNCcgY3k9Jzg4JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzEwMy40JyBjeT0nNTcuNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc3Ny4xJyBjeT0nMTI5LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMTM5LjInIGN5PScxMjguMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxMjMuOScgY3k9JzEwOS42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzEyNS4yJyBjeT0nMTE2LjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNTInIGN5PSczOS45JyByPScwLjknIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzE0LjYnIGN5PScxMTYuOCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc3MC42JyBjeT0nMTExLjgnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMjguMScgY3k9JzIzLjQnIHI9JzEuMycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMTMzLjknIGN5PSc5NS4xJyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOScvPjxjaXJjbGUgY3g9JzEyMS42JyBjeT0nOTYuNicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc3NC4yJyBjeT0nMzIuNycgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc4My44JyBjeT0nNTQuMScgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSczMy4xJyBjeT0nNjIuNicgcj0nMC45JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSczNS4yJyBjeT0nMjkuMScgcj0nMS42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSczMi45JyBjeT0nMTkuMicgcj0nMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNDYuMycgY3k9JzcxLjUnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMzEuMicgY3k9JzEyOS42JyByPScwLjknIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzEnLz48Y2lyY2xlIGN4PSc3My41JyBjeT0nNjIuMycgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc4NycgY3k9JzEwMi4zJyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzEzMi45JyBjeT0nMTIuMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxNCcgY3k9JzcxLjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMTAxLjgnIGN5PScxMjcuOCcgcj0nMC45JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc5Ni44JyBjeT0nODkuNCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PScxMS44JyBjeT0nMTM3LjcnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nNzEnIGN5PScxMjIuOCcgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxNS40JyBjeT0nMTM0LjknIHI9JzEuMicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMTM4LjcnIGN5PScyNi42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzEwMS45JyBjeT0nNjIuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSczMycgY3k9JzEzOC4xJyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzY0LjEnIGN5PScxLjMnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMzUuOScgY3k9Jzc3LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNy43JyBjeT0nODcuMicgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMTAuMycgY3k9JzExMC40JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzEnLz48Y2lyY2xlIGN4PSc1OC4yJyBjeT0nNTYuOScgcj0nMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMzQuNCcgY3k9Jzk5LjUnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nNi44JyBjeT0nMycgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc2OS4xJyBjeT0nMTAzLjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMzEuMicgY3k9JzEyLjInIHI9JzEuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTAnIGN5PSc4MCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc2MS43JyBjeT0nODEnIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMjAuMycgY3k9Jzc1LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNjguOCcgY3k9JzM1LjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nODcuNicgY3k9Jzk1JyByPScwLjYnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzEwMycgY3k9JzQ0LjcnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nNTAnIGN5PScxMDEuMicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PScxMjguNScgY3k9JzEwNC4zJyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzEyOC43JyBjeT0nNDcuOScgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc0Ni41JyBjeT0nMTExLjEnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTIuOScgY3k9JzEuNycgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScxJy8+PGNpcmNsZSBjeD0nOS43JyBjeT0nMTE2LjYnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNTcuOScgY3k9JzIzLjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMS43JyBjeT0nMTA1LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nOS4yJyBjeT0nNzQuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4OS40JyBjeT0nODguNicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc5NC4zJyBjeT0nMzcuNicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc0Mi43JyBjeT0nMTA1LjMnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nMTM3LjMnIGN5PSc0NC44JyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzExMi4yJyBjeT0nNTAuMycgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjUnLz48Y2lyY2xlIGN4PScxMjguNicgY3k9JzkzLjInIHI9JzEuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNzAuMycgY3k9JzkzLjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMTEwLjknIGN5PScxMDYuMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4MC4yJyBjeT0nNy40JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzQyLjknIGN5PSc5MC42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzQ2LjEnIGN5PSczOS40JyByPScxLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzY0LjQnIGN5PScxMTIuNScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc0Mi41JyBjeT0nODQuMicgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PScyLjEnIGN5PScxNC43JyByPScxJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc3Ni41JyBjeT0nNjAuOScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMjQuNCcgY3k9JzI0LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nOTguMicgY3k9JzE3LjcnIHI9JzEuMycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMScvPjxjaXJjbGUgY3g9JzY0LjknIGN5PScxNC40JyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzEzOC44JyBjeT0nNTkuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PScwLjgnIGN5PScxMjIuMScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSczLjEnIGN5PSc4LjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMzQuMycgY3k9JzI5LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMTE1LjknIGN5PSc4My42JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzI3LjEnIGN5PSc5OC40JyByPScxLjMnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzQ1LjEnIGN5PSc3My4yJyByPScxLjQnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzgzLjQnIGN5PSc0Ny41JyByPScxJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSczLjMnIGN5PSc1MS42JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzcwLjgnIGN5PSc4OS45JyByPScxLjInIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzEyNi45JyBjeT0nMTA0LjYnIHI9JzEuMicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nNjguMicgY3k9JzIwLjgnIHI9JzEuNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nNDMuNScgY3k9JzExLjQnIHI9JzAuOCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNTYnIGN5PSczMycgcj0nMS4zJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc1Mi40JyBjeT0nMTA1LjMnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nOTIuMycgY3k9JzI5LjInIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMjEuNicgY3k9JzYyLjInIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTI3LjUnIGN5PSc1NS4xJyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOScvPjxjaXJjbGUgY3g9JzEyNC44JyBjeT0nNjYuNScgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScyNS43JyBjeT0nNzIuNCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc2OS4xJyBjeT0nNjYuNicgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc2OC40JyBjeT0nMzIuMycgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4MicgY3k9JzEuOScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc1Mi4zJyBjeT0nMTEuNicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSczNi44JyBjeT0nMjQuNicgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMzIuNScgY3k9JzExNy40JyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzI4LjUnIGN5PScxMDguNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxOC4yJyBjeT0nODUuNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PScxMzYuMycgY3k9JzUxLjInIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMzAuNycgY3k9JzE5LjYnIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNTkuMycgY3k9Jzg2LjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNicgY3k9Jzc2LjYnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PC9zdmc+"), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNDAnIGhlaWdodD0nMTQwJz48Y2lyY2xlIGN4PSc4NC44JyBjeT0nNDYuNScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc0Ny41JyBjeT0nMTIxLjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nNDUuMicgY3k9JzE2LjEnIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMTE0LjMnIGN5PScxMzIuMScgcj0nMS40JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PScxMDUuNScgY3k9JzQ4LjUnIHI9JzAuOCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNzcuNCcgY3k9Jzg4JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzEwMy40JyBjeT0nNTcuNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc3Ny4xJyBjeT0nMTI5LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMTM5LjInIGN5PScxMjguMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxMjMuOScgY3k9JzEwOS42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzEyNS4yJyBjeT0nMTE2LjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNTInIGN5PSczOS45JyByPScwLjknIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzE0LjYnIGN5PScxMTYuOCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc3MC42JyBjeT0nMTExLjgnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMjguMScgY3k9JzIzLjQnIHI9JzEuMycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMTMzLjknIGN5PSc5NS4xJyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOScvPjxjaXJjbGUgY3g9JzEyMS42JyBjeT0nOTYuNicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc3NC4yJyBjeT0nMzIuNycgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc4My44JyBjeT0nNTQuMScgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSczMy4xJyBjeT0nNjIuNicgcj0nMC45JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSczNS4yJyBjeT0nMjkuMScgcj0nMS42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSczMi45JyBjeT0nMTkuMicgcj0nMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNDYuMycgY3k9JzcxLjUnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMzEuMicgY3k9JzEyOS42JyByPScwLjknIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzEnLz48Y2lyY2xlIGN4PSc3My41JyBjeT0nNjIuMycgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc4NycgY3k9JzEwMi4zJyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzEzMi45JyBjeT0nMTIuMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxNCcgY3k9JzcxLjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMTAxLjgnIGN5PScxMjcuOCcgcj0nMC45JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc5Ni44JyBjeT0nODkuNCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PScxMS44JyBjeT0nMTM3LjcnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nNzEnIGN5PScxMjIuOCcgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PScxNS40JyBjeT0nMTM0LjknIHI9JzEuMicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nMTM4LjcnIGN5PScyNi42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzEwMS45JyBjeT0nNjIuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSczMycgY3k9JzEzOC4xJyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzY0LjEnIGN5PScxLjMnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMzUuOScgY3k9Jzc3LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNy43JyBjeT0nODcuMicgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMTAuMycgY3k9JzExMC40JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzEnLz48Y2lyY2xlIGN4PSc1OC4yJyBjeT0nNTYuOScgcj0nMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMzQuNCcgY3k9Jzk5LjUnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nNi44JyBjeT0nMycgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc2OS4xJyBjeT0nMTAzLjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMzEuMicgY3k9JzEyLjInIHI9JzEuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTAnIGN5PSc4MCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc2MS43JyBjeT0nODEnIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMjAuMycgY3k9Jzc1LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNjguOCcgY3k9JzM1LjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nODcuNicgY3k9Jzk1JyByPScwLjYnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzEwMycgY3k9JzQ0LjcnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nNTAnIGN5PScxMDEuMicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PScxMjguNScgY3k9JzEwNC4zJyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzEyOC43JyBjeT0nNDcuOScgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc0Ni41JyBjeT0nMTExLjEnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTIuOScgY3k9JzEuNycgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScxJy8+PGNpcmNsZSBjeD0nOS43JyBjeT0nMTE2LjYnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNTcuOScgY3k9JzIzLjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nMS43JyBjeT0nMTA1LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nOS4yJyBjeT0nNzQuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4OS40JyBjeT0nODguNicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PSc5NC4zJyBjeT0nMzcuNicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc0Mi43JyBjeT0nMTA1LjMnIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nMTM3LjMnIGN5PSc0NC44JyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzExMi4yJyBjeT0nNTAuMycgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjUnLz48Y2lyY2xlIGN4PScxMjguNicgY3k9JzkzLjInIHI9JzEuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNzAuMycgY3k9JzkzLjQnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMTEwLjknIGN5PScxMDYuMicgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4MC4yJyBjeT0nNy40JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzQyLjknIGN5PSc5MC42JyByPScwLjUnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzQ2LjEnIGN5PSczOS40JyByPScxLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNycvPjxjaXJjbGUgY3g9JzY0LjQnIGN5PScxMTIuNScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSc0Mi41JyBjeT0nODQuMicgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjYnLz48Y2lyY2xlIGN4PScyLjEnIGN5PScxNC43JyByPScxJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc3Ni41JyBjeT0nNjAuOScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMjQuNCcgY3k9JzI0LjInIHI9JzEuMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nOTguMicgY3k9JzE3LjcnIHI9JzEuMycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMScvPjxjaXJjbGUgY3g9JzY0LjknIGN5PScxNC40JyByPScwLjgnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzEzOC44JyBjeT0nNTkuNCcgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PScwLjgnIGN5PScxMjIuMScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSczLjEnIGN5PSc4LjknIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMzQuMycgY3k9JzI5LjInIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMTE1LjknIGN5PSc4My42JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOCcvPjxjaXJjbGUgY3g9JzI3LjEnIGN5PSc5OC40JyByPScxLjMnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzQ1LjEnIGN5PSc3My4yJyByPScxLjQnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNScvPjxjaXJjbGUgY3g9JzgzLjQnIGN5PSc0Ny41JyByPScxJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSczLjMnIGN5PSc1MS42JyByPScxLjEnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzcwLjgnIGN5PSc4OS45JyByPScxLjInIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzEyNi45JyBjeT0nMTA0LjYnIHI9JzEuMicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC40Jy8+PGNpcmNsZSBjeD0nNjguMicgY3k9JzIwLjgnIHI9JzEuNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nNDMuNScgY3k9JzExLjQnIHI9JzAuOCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC43Jy8+PGNpcmNsZSBjeD0nNTYnIGN5PSczMycgcj0nMS4zJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc1Mi40JyBjeT0nMTA1LjMnIHI9JzAuNycgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PGNpcmNsZSBjeD0nOTIuMycgY3k9JzI5LjInIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nMjEuNicgY3k9JzYyLjInIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nMTI3LjUnIGN5PSc1NS4xJyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuOScvPjxjaXJjbGUgY3g9JzEyNC44JyBjeT0nNjYuNScgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScyNS43JyBjeT0nNzIuNCcgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc2OS4xJyBjeT0nNjYuNicgcj0nMS4xJyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjgnLz48Y2lyY2xlIGN4PSc2OC40JyBjeT0nMzIuMycgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PSc4MicgY3k9JzEuOScgcj0nMC42JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjknLz48Y2lyY2xlIGN4PSc1Mi4zJyBjeT0nMTEuNicgcj0nMC41JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PSczNi44JyBjeT0nMjQuNicgcj0nMC43JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxMzIuNScgY3k9JzExNy40JyByPScwLjcnIGZpbGw9JyNmZmYnIG9wYWNpdHk9JzAuNicvPjxjaXJjbGUgY3g9JzI4LjUnIGN5PScxMDguNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjcnLz48Y2lyY2xlIGN4PScxOC4yJyBjeT0nODUuNCcgcj0nMC44JyBmaWxsPScjZmZmJyBvcGFjaXR5PScwLjQnLz48Y2lyY2xlIGN4PScxMzYuMycgY3k9JzUxLjInIHI9JzAuNicgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC45Jy8+PGNpcmNsZSBjeD0nMzAuNycgY3k9JzE5LjYnIHI9JzAuOScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC44Jy8+PGNpcmNsZSBjeD0nNTkuMycgY3k9Jzg2LjUnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC42Jy8+PGNpcmNsZSBjeD0nNicgY3k9Jzc2LjYnIHI9JzAuNScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nMC41Jy8+PC9zdmc+");
+  background-size: 210px 210px, 150px 150px;
+  background-position: calc(var(--mx) * .5) calc(var(--my) * .5), calc(100% - var(--mx) * .35) calc(var(--my) * .3);
+  mix-blend-mode: color-dodge; opacity: .5;
+  -webkit-mask-image: linear-gradient(#000, #000); mask-image: linear-gradient(#000, #000);
+  -webkit-mask-size: 84.1cqw 71cqw; mask-size: 84.1cqw 71cqw;
+  -webkit-mask-position: 7.95cqw 20.05cqw; mask-position: 7.95cqw 20.05cqw;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  transition: background-position .55s cubic-bezier(.2,.8,.2,1);
+}
+/* matte cards: satin band in the card's own metal (no rainbow) */
+.satin {
+  background-image: linear-gradient(115deg,
+    rgba(var(--satin),0) 44%, rgba(var(--satin),.16) 49%, rgba(var(--satin),.42) 52.5%, rgba(var(--satin),.5) 53.2%, rgba(var(--satin),.16) 57%, rgba(var(--satin),0) 62%);
+  background-size: 240% 240%;
+  background-position: var(--fp);
+  mix-blend-mode: overlay; opacity: .95;
+  -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuOScvPjxyZWN0IHg9JzcuOTUnIHk9JzIwLjA1JyB3aWR0aD0nODQuMScgaGVpZ2h0PSc3MScgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwLjM1Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAnLz48L3N2Zz4="); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03IDQuNCBoODYgdjEyLjggaC04NiB6IE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3JyB5PSc0LjQnIHdpZHRoPSc4NicgaGVpZ2h0PScxMi44JyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuOScvPjxyZWN0IHg9JzcuOTUnIHk9JzIwLjA1JyB3aWR0aD0nODQuMScgaGVpZ2h0PSc3MScgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwLjM1Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAnLz48L3N2Zz4=");
+  transition: background-position .55s cubic-bezier(.2,.8,.2,1);
+}
+.glare {
+  background: radial-gradient(farthest-corner circle at var(--mx) var(--my), rgba(255,255,255,.7) 0%, rgba(255,255,255,.28) 20%, rgba(255,255,255,0) 58%);
+  mix-blend-mode: overlay; opacity: var(--gl);
+  -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC44Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuMjUnLz48L3N2Zz4="); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC44Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuMjUnLz48L3N2Zz4=");
+  transition: opacity .5s ease, background-position .5s ease;
+}
+.skill .satin { -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgNC40IGg4NiB2MTIuOCBoLTg2IHogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzQuNCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzEyLjgnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC45Jy8+PHJlY3QgeD0nNycgeT0nMTkuMScgd2lkdGg9Jzg2JyBoZWlnaHQ9JzkuNicgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgNC40IGg4NiB2MTIuOCBoLTg2IHogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzQuNCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzEyLjgnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC45Jy8+PHJlY3QgeD0nNycgeT0nMTkuMScgd2lkdGg9Jzg2JyBoZWlnaHQ9JzkuNicgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"); }
+.skill .glare { -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzE5LjEnIHdpZHRoPSc4NicgaGVpZ2h0PSc5LjYnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4yNScvPjwvc3ZnPg=="); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzE5LjEnIHdpZHRoPSc4NicgaGVpZ2h0PSc5LjYnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4yNScvPjwvc3ZnPg=="); }
+.card.is-hover .glare { opacity: var(--gl-hover); }
+.card.is-hover .foil, .card.is-hover .sheen, .card.is-hover .prism, .card.is-hover .glitter, .card.is-hover .satin, .card.is-hover .glare { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .card { transform: none !important; transition: none; }
+  .foil, .sheen, .prism, .glitter, .satin, .glare { transition: none; }
+}
+
+/* ---- qa close-up ---- */
+body.detail { padding: 42px 24px; display: flex; justify-content: center; align-items: flex-start; }
+body.detail .card { width: 720px; }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="hero-text">
+    <h1>Jaspal Singh</h1>
+    <p class="headline">Incentives Engineer and Forward Deployed Engineer at Anthropic. Founder, Qotiv.</p>
+    <p class="thesis">I sold for six years, ran the systems that pay sellers, and now I build them as an engineer at Anthropic.</p>
+    <p class="bio">Account executive at RBC Insurance, Clio and Deel. Moved into revenue strategy and operations at Deel, where I ran sales compensation for roughly 500 reps worldwide, then led revenue operations at Engine as Director. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems, and I'm building Qotiv, a compensation platform for deal-based and usage-based commissions.</p>
+    <nav aria-label="Profile links"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
+  </div>
+  <div class="hero-photo"><div class="tile" aria-hidden="true">JS</div></div>
+</header>
+<main class="wrap">
+<section class="section" aria-labelledby="experience-h">
+  <h2 id="experience-h">Experience</h2>
+  <div class="grid">
+<article class="card career f-eng foil-card" data-tilt="10">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name" style="--nfs:3.7cqw;--cond:0.805"><span>Incentives Engineer – Forward Deployed Engineer</span></h3>
+      <span class="badge">ENG</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-01-anthropic.svg" alt=""><img class="logo" src="assets/logos/anthropic.svg" alt="Anthropic"></div></div>
+    <p class="type">[ Anthropic / San Francisco / May 2026 – Present ]</p>
+    <div class="effect" style="--efs:3.7cqw"><p>Builds the internal systems behind Anthropic's incentive programs: compensation logic, the data that feeds it and the frameworks that keep plans consistent as the company scales. Designs the mechanics, then ships the tooling that calculates, audits and pays. Brings ten years of selling and running revenue operations to an engineering seat.</p></div>
+    <footer class="strip"><span class="set">JS-EN001</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-founder foil-card" data-tilt="10">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Founder</span></h3>
+      <span class="badge long">FOUNDER</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-02-qotiv.svg" alt=""><img class="logo" src="assets/logos/qotiv.png" alt="Qotiv"></div></div>
+    <p class="type">[ Qotiv / Toronto / Nov 2025 – Present ]</p>
+    <div class="effect" style="--efs:3.9cqw"><p>Building a sales compensation platform that pays reps on deals and on product usage from one engine. Plan compiler, full payout lifecycle from calculation to approval to export, compliance and document signing built in. Made for revenue operations teams that have outgrown spreadsheets.</p></div>
+    <footer class="strip"><span class="set">JS-EN002</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-ops" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name" style="--nfs:4.45cqw;--cond:0.801"><span>Director, Revenue Strategy &amp; Operations</span></h3>
+      <span class="badge">OPS</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-03-engine.svg" alt=""><img class="logo" src="assets/logos/engine.png" alt="Engine"></div></div>
+    <p class="type">[ Engine / Toronto / Jan 2025 – Apr 2026 ]</p>
+    <div class="effect" style="--efs:3.9cqw"><p>Led the operations team across new business sales, expansion sales, revenue data, product GTM operations and compensation. Launched compensation infrastructure covering every variable role, aligning incentives with company goals. Scaled the team as the business grew.</p></div>
+    <footer class="strip"><span class="set">JS-EN003</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-ops" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Revenue Strategy &amp; Operations</span></h3>
+      <span class="badge">OPS</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-04-deel-revops.svg" alt=""><img class="logo wide" src="assets/logos/deel.png" alt="Deel"></div></div>
+    <p class="type">[ Deel / Toronto / Sep 2022 – Jan 2025 ]</p>
+    <div class="effect" style="--efs:3.9cqw"><p>Senior Analyst, then Manager, then Senior Manager. Owned sales compensation for roughly 500 reps globally and mapped the sales funnel for every product launch. Managed the revenue tech stack and process improvements, and served as interim sales operations leader from November 2022 to February 2023.</p></div>
+    <footer class="strip"><span class="set">JS-EN004</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-sales" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Account Executive, SMB</span></h3>
+      <span class="badge mid">SALES</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-05-deel-ae.svg" alt=""><img class="logo wide" src="assets/logos/deel.png" alt="Deel"></div></div>
+    <p class="type">[ Deel / Toronto / Nov 2021 – Sep 2022 ]</p>
+    <div class="effect"><p>Sold global hiring, payroll and employer-of-record services to small and mid-sized businesses. Full cycle from outbound and discovery through demo and close, helping companies hire legally in new countries and pay in more than 120 currencies.</p></div>
+    <footer class="strip"><span class="set">JS-EN005</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-sales" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Account Executive, Outbound</span></h3>
+      <span class="badge mid">SALES</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-06-clio.svg" alt=""><img class="logo" src="assets/logos/clio.png" alt="Clio"></div></div>
+    <p class="type">[ Clio / Toronto / Dec 2019 – Nov 2021 ]</p>
+    <div class="effect"><p>Built outbound pipeline for cloud practice-management software sold to law firms. Ran the full cycle from cold outreach to close, two years on site in Toronto.</p></div>
+    <footer class="strip"><span class="set">JS-EN006</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card career f-sales" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name" style="--nfs:4.5cqw;--cond:0.804"><span>Account Executive, Life &amp; Living Benefits</span></h3>
+      <span class="badge mid">SALES</span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-07-rbc.svg" alt=""><img class="logo" src="assets/logos/rbc.svg" alt="RBC Insurance"></div></div>
+    <p class="type">[ RBC Insurance / Toronto / Jun 2016 – Nov 2019 ]</p>
+    <div class="effect"><p>Advised clients on life insurance and living-benefits coverage. Three and a half years in a licensed, regulated sales role, learning to sell something people hope they never use.</p></div>
+    <footer class="strip"><span class="set">JS-EN007</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+  </div>
+</section>
+<section class="section" aria-labelledby="skills-h">
+  <h2 id="skills-h">Skills</h2>
+<div class="group">
+  <h3 class="group-label" id="skills-offense">Offense: design and strategy</h3>
+  <div class="grid">
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Comp Plan Design</span></h4>
+      <span class="kind">[ Spell ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Quotas, accelerators, SPIFs, deal-based and usage-based plans.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>GTM Strategy</span></h4>
+      <span class="kind">[ Spell ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Segmentation, motion design, launch planning.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Quota &amp; Territory Planning</span></h4>
+      <span class="kind">[ Spell ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Capacity models, coverage, fair territories.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Funnel Mapping</span></h4>
+      <span class="kind">[ Spell ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Stage definitions, conversion instrumentation, handoffs.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+  </div>
+</div>
+<div class="group">
+  <h3 class="group-label" id="skills-defense">Defense: controls and governance</h3>
+  <div class="grid">
+<article class="card skill f-trap" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Payout Controls</span></h4>
+      <span class="kind">[ Trap ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Calculate, approve, export, pay, with an audit trail at every step.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-trap" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name" style="--cond:0.996"><span>Comp Compliance &amp; Governance</span></h4>
+      <span class="kind">[ Trap ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Plan documents, acknowledgments, policy enforcement.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-trap" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Data Integrity</span></h4>
+      <span class="kind">[ Trap ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>One source of truth for reps, roles, quotas and credit.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-trap" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h4 class="name"><span>Clawback Policy</span></h4>
+      <span class="kind">[ Trap ]</span>
+    </header>
+    <div class="effect line" style="--efs:3.4cqw"><p>Clear rules for churn, refunds and disputes.</p></div>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="foot wrap">
+  <p class="fine"><span>JS-EN001</span><span>© 2026 Jaspal Singh</span><span>Original card design. Company names and logos belong to their owners. Views my own.</span></p>
+  <nav aria-label="Profile links, footer"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
+</footer>
+<script>
+(function(){
+  var mm = window.matchMedia ? function(q){ return matchMedia(q).matches; } : function(){ return false; };
+  var NFS = 4.6, NFS_MIN = 3.7, COND_MIN = 0.8;
+  function fit(){
+    document.querySelectorAll('.card').forEach(function(card){
+      var W = card.clientWidth / 100; if (!W) return;
+      card.querySelectorAll('.name').forEach(function(h){
+        var s = h.firstElementChild; if (!s) return;
+        s.style.transform = 'none'; h.style.setProperty('--nfs', NFS + 'cqw');
+        var w = s.getBoundingClientRect().width, a = h.clientWidth;
+        s.style.transform = '';
+        if (!(w > 0)) return;
+        var r = a / w, fs = NFS;
+        if (r < COND_MIN) { fs = Math.max(NFS_MIN, NFS * r / COND_MIN); r = Math.min(1, r * NFS / fs); }
+        h.style.setProperty('--nfs', fs.toFixed(2) + 'cqw');
+        h.style.setProperty('--cond', r < 1 ? r.toFixed(3) : '1');
+      });
+      var e = card.querySelector('.effect'); if (!e) return;
+      var p = e.firstElementChild, fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
+      var over = e.classList.contains('line') ? function(){ return p.scrollWidth > p.clientWidth + 1; } : function(){ return e.scrollHeight > e.clientHeight + 1; };
+      while (over() && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+
+  if (mm('(prefers-reduced-motion: reduce)') || mm('(pointer: coarse)')) return;
+  document.querySelectorAll('.card').forEach(function(card){
+    var max = parseFloat(card.dataset.tilt || '10'), raf = 0, px = .5, py = .5;
+    function apply(){
+      raf = 0;
+      card.style.setProperty('--mx', (px*100).toFixed(2) + '%');
+      card.style.setProperty('--my', (py*100).toFixed(2) + '%');
+      card.style.setProperty('--rx', ((.5 - py) * 2 * max).toFixed(2) + 'deg');
+      card.style.setProperty('--ry', ((px - .5) * 2 * max).toFixed(2) + 'deg');
+    }
+    card.addEventListener('pointermove', function(e){
+      if (e.pointerType === 'touch') return;
+      var r = card.getBoundingClientRect();
+      px = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      py = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+      card.classList.add('is-hover');
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+    card.addEventListener('pointerleave', function(){
+      card.classList.remove('is-hover');
+      ['--mx','--my','--rx','--ry'].forEach(function(p){ card.style.removeProperty(p); });
+    });
+  });
+})();</script>
+</body>
+</html>

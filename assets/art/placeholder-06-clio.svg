@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4F7BAA"/><stop offset=".22" stop-color="#7FA6CB"/><stop offset=".42" stop-color="#B4CCDD"/><stop offset=".54" stop-color="#E4D9C4"/><stop offset=".6" stop-color="#F4DBA8"/><stop offset=".7" stop-color="#E6C690"/><stop offset="1" stop-color="#C9A874"/></linearGradient>
+  <radialGradient id="sunGlow" cx="200" cy="190" r="620" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFBEE" stop-opacity="1"/><stop offset=".08" stop-color="#FFE9B4" stop-opacity=".82"/><stop offset=".2" stop-color="#F8CF86" stop-opacity=".4"/><stop offset=".42" stop-color="#E8B872" stop-opacity=".1"/><stop offset="1" stop-color="#E8C48E" stop-opacity="0"/></radialGradient>
+  <radialGradient id="sunCore"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#FFF6DC" stop-opacity=".95"/><stop offset=".7" stop-color="#FFE3A8" stop-opacity=".45"/><stop offset="1" stop-color="#FFE3A8" stop-opacity="0"/></radialGradient>
+  <radialGradient id="rayFade" cx="200" cy="190" r="820" gradientUnits="userSpaceOnUse"><stop offset=".04" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <mask id="rayM"><rect width="1000" height="1000" fill="url(#rayFade)"/></mask>
+  <linearGradient id="haze" x1="0" y1="330" x2="0" y2="560" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F3E6CC" stop-opacity="0"/><stop offset="1" stop-color="#F6E4C4" stop-opacity=".5"/></linearGradient>
+  <linearGradient id="tFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D9E8"/><stop offset="1" stop-color="#9DB3C9"/></linearGradient>
+  <linearGradient id="tMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BBD0E2"/><stop offset="1" stop-color="#7B96B2"/></linearGradient>
+  <linearGradient id="tNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE9F3"/><stop offset=".45" stop-color="#9FBBD3"/><stop offset="1" stop-color="#5F7B9A"/></linearGradient>
+  <linearGradient id="tLit" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".95"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></linearGradient>
+  <linearGradient id="baseFadeG" x1="0" y1="330" x2="0" y2="560" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>
+  <mask id="baseFade"><rect width="1000" height="1000" fill="url(#baseFadeG)"/></mask>
+  <pattern id="win" width="12" height="10" patternUnits="userSpaceOnUse"><rect width="12" height="1.4" fill="#0E2A45" opacity=".26"/><rect width="1.2" height="10" fill="#0E2A45" opacity=".14"/></pattern>
+  <radialGradient id="cloudB"><stop offset="0" stop-color="#C7D2DC" stop-opacity=".95"/><stop offset=".55" stop-color="#B7C4D1" stop-opacity=".75"/><stop offset="1" stop-color="#AEBCCB" stop-opacity="0"/></radialGradient>
+  <radialGradient id="cloudF"><stop offset="0" stop-color="#FFFBF2"/><stop offset=".45" stop-color="#FBEFD9" stop-opacity=".95"/><stop offset="1" stop-color="#EDD9B8" stop-opacity="0"/></radialGradient>
+  <radialGradient id="cloudLit"><stop offset="0" stop-color="#FFF2D2" stop-opacity=".9"/><stop offset="1" stop-color="#FFE7B8" stop-opacity="0"/></radialGradient>
+  <linearGradient id="rail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E5C8"/><stop offset=".2" stop-color="#D2BC94"/><stop offset=".6" stop-color="#A48A63"/><stop offset="1" stop-color="#6A5436"/></linearGradient>
+  <linearGradient id="railLow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDB891"/><stop offset=".5" stop-color="#A48B65"/><stop offset="1" stop-color="#6C5638"/></linearGradient>
+  <linearGradient id="balG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E7D6B4"/><stop offset=".35" stop-color="#C4AC85"/><stop offset=".75" stop-color="#8F7653"/><stop offset="1" stop-color="#5E4A2F"/></linearGradient>
+  <linearGradient id="pillar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3E3020"/><stop offset=".3" stop-color="#6A5638"/><stop offset=".72" stop-color="#8E7553"/><stop offset=".93" stop-color="#C8AF86"/><stop offset="1" stop-color="#FFEFC9"/></linearGradient>
+  <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6AF86"/><stop offset=".4" stop-color="#957B55"/><stop offset="1" stop-color="#3E2E1B"/></linearGradient>
+  <linearGradient id="floorLight" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEFC8" stop-opacity=".45"/><stop offset=".6" stop-color="#FFEFC8" stop-opacity="0"/></linearGradient>
+  <linearGradient id="brass" gradientUnits="userSpaceOnUse" x1="0" y1="-30" x2="0" y2="30"><stop offset="0" stop-color="#FFF9DC"/><stop offset=".08" stop-color="#FCE7A8"/><stop offset=".22" stop-color="#DFAE48"/><stop offset=".42" stop-color="#AE7A26"/><stop offset=".62" stop-color="#7C5414"/><stop offset=".84" stop-color="#3D2707"/><stop offset=".94" stop-color="#5A3E12"/><stop offset="1" stop-color="#8A6424"/></linearGradient>
+  <linearGradient id="brassD" gradientUnits="userSpaceOnUse" x1="0" y1="-34" x2="0" y2="34"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".14" stop-color="#E9C46C"/><stop offset=".4" stop-color="#8E621A"/><stop offset=".7" stop-color="#3A2507"/><stop offset=".9" stop-color="#1F1404"/><stop offset="1" stop-color="#4E3610"/></linearGradient>
+  <radialGradient id="lens" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".25" stop-color="#BFE0F5"/><stop offset=".7" stop-color="#2E5A86"/><stop offset="1" stop-color="#0E2540"/></radialGradient>
+  <linearGradient id="leg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6B4A28"/><stop offset=".4" stop-color="#3F2A12"/><stop offset="1" stop-color="#1F1407"/></linearGradient>
+  <linearGradient id="bkRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9A4034"/><stop offset=".5" stop-color="#6E2A22"/><stop offset="1" stop-color="#3E1611"/></linearGradient>
+  <linearGradient id="bkGreen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#557A5A"/><stop offset=".5" stop-color="#2F4A38"/><stop offset="1" stop-color="#17281D"/></linearGradient>
+  <linearGradient id="bkBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4C5F86"/><stop offset=".5" stop-color="#2C3A5A"/><stop offset="1" stop-color="#151D30"/></linearGradient>
+  <linearGradient id="bkBrown" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E6238"/><stop offset=".5" stop-color="#5B3A22"/><stop offset="1" stop-color="#2E1B0E"/></linearGradient>
+  <linearGradient id="feather" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFCF3"/><stop offset=".5" stop-color="#EFE6D2"/><stop offset="1" stop-color="#BDB39E"/></linearGradient>
+  <radialGradient id="warmGlow"><stop offset="0" stop-color="#FFF4D0" stop-opacity=".9"/><stop offset=".4" stop-color="#FFD98A" stop-opacity=".35"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
+  <radialGradient id="vig" cx=".46" cy=".46" r=".74"><stop offset=".4" stop-color="#000" stop-opacity="0"/><stop offset=".75" stop-color="#2A1A08" stop-opacity=".3"/><stop offset="1" stop-color="#1E1206" stop-opacity=".82"/></radialGradient>
+  <pattern id="hatch" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="1" fill="#000" opacity=".4"/></pattern>
+  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".5" intercept="-.1"/></feComponentTransfer></filter>
+  <filter id="b1" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1"/></filter>
+  <filter id="b2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.2"/></filter>
+  <filter id="b5" x="-15%" y="-15%" width="130%" height="130%"><feGaussianBlur stdDeviation="5"/></filter>
+  <filter id="b9" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="b18" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>
+  <filter id="b40" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="40"/></filter>
+  <path id="bal" d="M-10 0H10V10H4V16C14 20 13 36 11 46C9 56 6 64 5 72H11V88H-11V72H-5C-6 64 -9 56 -11 46C-13 36 -14 20 -4 16V10H-10Z"/>
+  <path id="balSh" d="M-9 0H9L74 200H44Z"/>
+  <g id="cu"><circle cx="0" cy="0" r="48"/><circle cx="-52" cy="12" r="38"/><circle cx="50" cy="8" r="42"/><circle cx="-96" cy="26" r="28"/><circle cx="96" cy="24" r="30"/><circle cx="-22" cy="-24" r="34"/><circle cx="32" cy="-20" r="30"/><circle cx="-130" cy="36" r="20"/><circle cx="132" cy="36" r="22"/><rect x="-150" y="20" width="300" height="40"/></g>
+</defs>
+
+<!-- sky -->
+<rect width="1000" height="1000" fill="url(#sky)"/>
+<rect width="1000" height="1000" fill="url(#sunGlow)"/>
+<!-- cirrus -->
+<g filter="url(#b18)" fill="#FBE9D2" opacity=".55">
+  <ellipse cx="560" cy="120" rx="260" ry="14" transform="rotate(-6 560 120)"/>
+  <ellipse cx="780" cy="200" rx="200" ry="10" transform="rotate(-4 780 200)"/>
+  <ellipse cx="420" cy="230" rx="170" ry="9" transform="rotate(-8 420 230)"/>
+</g>
+<g fill="#FFFFFF" opacity=".35"><circle cx="880" cy="70" r="1.3"/><circle cx="930" cy="150" r="1"/><circle cx="820" cy="40" r="1.1"/><circle cx="960" cy="95" r=".8"/><circle cx="740" cy="60" r=".9"/></g>
+
+<!-- far towers -->
+<g filter="url(#b9)" opacity=".42" fill="url(#tFar)">
+  <rect x="150" y="440" width="40" height="160"/><rect x="238" y="426" width="28" height="174"/><rect x="298" y="404" width="36" height="196"/><rect x="398" y="384" width="44" height="216"/><rect x="470" y="360" width="30" height="240"/><rect x="560" y="330" width="40" height="270"/><rect x="614" y="298" width="26" height="302"/><rect x="655" y="248" width="50" height="352"/><rect x="720" y="288" width="30" height="312"/><rect x="760" y="218" width="44" height="382"/><rect x="820" y="268" width="36" height="332"/><rect x="870" y="308" width="54" height="292"/><rect x="935" y="348" width="40" height="252"/>
+</g>
+<circle cx="720" cy="300" r="220" fill="url(#warmGlow)" opacity=".5"/>
+<!-- mid towers -->
+<g mask="url(#baseFade)">
+<g filter="url(#b2)" opacity=".8">
+  <g fill="url(#tMid)"><rect x="200" y="470" width="34" height="130"/><rect x="330" y="400" width="34" height="200"/><rect x="376" y="440" width="40" height="160"/><rect x="428" y="378" width="30" height="222"/><rect x="470" y="430" width="24" height="170"/><rect x="520" y="398" width="38" height="202"/><rect x="590" y="360" width="34" height="240"/><rect x="640" y="290" width="46" height="310"/><rect x="700" y="330" width="30" height="270"/><rect x="745" y="245" width="52" height="355"/><rect x="812" y="300" width="38" height="300"/><rect x="860" y="340" width="44" height="260"/><rect x="920" y="380" width="34" height="220"/></g>
+  <g fill="url(#tLit)"><rect x="640" y="290" width="12" height="310"/><rect x="745" y="245" width="14" height="355"/><rect x="590" y="360" width="9" height="240"/><rect x="812" y="300" width="10" height="300"/><rect x="520" y="398" width="9" height="202"/><rect x="330" y="400" width="8" height="200"/><rect x="428" y="378" width="8" height="222"/></g>
+  <polygon points="745,245 797,245 782,222 760,222" fill="#CFDFEC"/>
+</g>
+<rect width="1000" height="1000" fill="url(#haze)" opacity=".55"/>
+<!-- back clouds -->
+<g filter="url(#b18)">
+  <ellipse cx="300" cy="520" rx="240" ry="40" fill="url(#cloudB)"/><ellipse cx="620" cy="508" rx="220" ry="34" fill="url(#cloudB)"/><ellipse cx="900" cy="516" rx="200" ry="36" fill="url(#cloudB)"/>
+</g>
+<!-- near towers -->
+<g filter="url(#b1)" opacity=".95">
+  <g fill="url(#tNear)"><rect x="395" y="460" width="44" height="140"/><rect x="560" y="420" width="30" height="180"/><rect x="620" y="380" width="44" height="220"/><rect x="676" y="300" width="58" height="300"/><rect x="750" y="350" width="40" height="250"/><rect x="800" y="270" width="62" height="330"/><rect x="878" y="360" width="46" height="240"/></g>
+  <g fill="url(#win)"><rect x="395" y="460" width="44" height="140"/><rect x="560" y="420" width="30" height="180"/><rect x="620" y="380" width="44" height="220"/><rect x="676" y="300" width="58" height="300"/><rect x="750" y="350" width="40" height="250"/><rect x="800" y="270" width="62" height="330"/><rect x="878" y="360" width="46" height="240"/></g>
+  <g fill="url(#tLit)"><rect x="395" y="460" width="10" height="140"/><rect x="560" y="420" width="8" height="180"/><rect x="620" y="380" width="11" height="220"/><rect x="676" y="300" width="14" height="300"/><rect x="750" y="350" width="10" height="250"/><rect x="800" y="270" width="15" height="330"/><rect x="878" y="360" width="11" height="240"/></g>
+  <g fill="#3A5170" opacity=".28"><rect x="435" y="460" width="4" height="140"/><rect x="586" y="420" width="4" height="180"/><rect x="659" y="380" width="5" height="220"/><rect x="728" y="300" width="6" height="300"/><rect x="785" y="350" width="5" height="250"/><rect x="856" y="270" width="6" height="330"/><rect x="919" y="360" width="5" height="240"/></g>
+  <polygon points="676,300 734,300 716,262 694,262" fill="#DDE9F2"/><polygon points="800,270 862,270 848,240 814,240" fill="#DDE9F2"/>
+  <line x1="705" y1="262" x2="705" y2="222" stroke="#E9F1F7" stroke-width="2.4"/><line x1="831" y1="240" x2="831" y2="208" stroke="#E9F1F7" stroke-width="2"/>
+  <g fill="#FFF3CC" opacity=".9"><rect x="690" y="262" width="4" height="38"/><rect x="814" y="240" width="4" height="30"/></g>
+  <g fill="#FFE9B0" opacity=".75" filter="url(#b1)"><rect x="700" y="330" width="10" height="3"/><rect x="706" y="372" width="12" height="3"/><rect x="820" y="300" width="14" height="3"/><rect x="826" y="352" width="10" height="3"/><rect x="636" y="410" width="10" height="3"/><rect x="762" y="384" width="10" height="3"/><rect x="892" y="392" width="10" height="3"/></g>
+</g>
+</g>
+<!-- front clouds: cumulus masses, shaded underside then lit top -->
+<g filter="url(#b9)" opacity=".8">
+  <ellipse cx="200" cy="562" rx="230" ry="26" fill="#A6B3C2"/><ellipse cx="500" cy="560" rx="240" ry="24" fill="#AFBBC8"/><ellipse cx="780" cy="566" rx="220" ry="26" fill="#A6B3C2"/>
+</g>
+<g filter="url(#b2)">
+  <g fill="#9FAFC0" opacity=".85"><use href="#cu" transform="translate(262 550) scale(1.15 1)"/><use href="#cu" transform="translate(546 556) scale(.95 .9)"/><use href="#cu" transform="translate(826 552) scale(1.05 1)"/><use href="#cu" transform="translate(70 566) scale(.8 .8)"/></g>
+  <g fill="#FBF0DC"><use href="#cu" transform="translate(254 540) scale(1.15 1)"/><use href="#cu" transform="translate(540 547) scale(.95 .9)"/><use href="#cu" transform="translate(820 542) scale(1.05 1)"/><use href="#cu" transform="translate(64 556) scale(.8 .8)"/></g>
+  <g fill="#FFFBF1" opacity=".9"><use href="#cu" transform="translate(240 536) scale(.7 .55)"/><use href="#cu" transform="translate(530 542) scale(.55 .5)"/><use href="#cu" transform="translate(806 538) scale(.6 .55)"/></g>
+</g>
+<g filter="url(#b9)" opacity=".8">
+  <ellipse cx="300" cy="520" rx="140" ry="14" fill="url(#cloudLit)"/><ellipse cx="560" cy="530" rx="120" ry="12" fill="url(#cloudLit)"/>
+</g>
+<g filter="url(#b9)" fill="#E6D3B0" opacity=".7">
+  <ellipse cx="300" cy="580" rx="230" ry="12"/><ellipse cx="640" cy="582" rx="230" ry="12"/><ellipse cx="900" cy="580" rx="160" ry="12"/>
+</g>
+<!-- sun and rays -->
+<circle cx="200" cy="190" r="190" fill="url(#sunCore)" opacity=".75" filter="url(#b18)"/>
+<circle cx="200" cy="190" r="30" fill="url(#sunCore)"/>
+<g mask="url(#rayM)" filter="url(#b5)" fill="#FFF4DC">
+  <polygon points="200,190 1289,343 1280,400" opacity=".12"/><polygon points="200,190 1234,566 1213,620" opacity=".22"/><polygon points="200,190 1123,789 1090,837" opacity=".12"/><polygon points="200,190 950,995 907,1033" opacity=".24"/><polygon points="200,190 750,1143 699,1170" opacity=".14"/><polygon points="200,190 503,1247 448,1262" opacity=".2"/>
+</g>
+
+<!-- balcony floor -->
+<rect x="0" y="716" width="1000" height="284" fill="url(#floor)"/>
+<rect x="0" y="716" width="1000" height="284" fill="url(#floorLight)"/>
+<g stroke="#4A3820" stroke-width="1.2" opacity=".3"><line x1="0" y1="752" x2="1000" y2="752"/><line x1="0" y1="800" x2="1000" y2="800"/><line x1="0" y1="866" x2="1000" y2="866"/><line x1="0" y1="950" x2="1000" y2="950"/><line x1="160" y1="716" x2="20" y2="1000"/><line x1="330" y1="716" x2="260" y2="1000"/><line x1="500" y1="716" x2="500" y2="1000"/><line x1="670" y1="716" x2="740" y2="1000"/><line x1="840" y1="716" x2="980" y2="1000"/></g>
+<g stroke="#F3E3C0" stroke-width=".8" opacity=".25"><line x1="0" y1="754" x2="1000" y2="754"/><line x1="0" y1="802" x2="1000" y2="802"/><line x1="0" y1="868" x2="1000" y2="868"/></g>
+<!-- baluster shadows on floor -->
+<g filter="url(#b5)" fill="#2E2010" opacity=".3">
+  <use href="#balSh" x="165" y="716"/><use href="#balSh" x="253" y="716"/><use href="#balSh" x="341" y="716"/><use href="#balSh" x="429" y="716"/><use href="#balSh" x="517" y="716"/><use href="#balSh" x="605" y="716"/><use href="#balSh" x="693" y="716"/><use href="#balSh" x="781" y="716"/><use href="#balSh" x="869" y="716"/><use href="#balSh" x="957" y="716"/>
+</g>
+<polygon points="0,716 118,716 420,1000 0,1000" fill="#241808" opacity=".42" filter="url(#b9)"/>
+
+<!-- balustrade -->
+<rect x="0" y="696" width="1000" height="24" fill="url(#railLow)"/>
+<rect x="0" y="694" width="1000" height="4" fill="#EBDCBC" opacity=".6"/>
+<g filter="url(#b2)" fill="#2C1E0C" opacity=".32">
+  <use href="#bal" x="174" y="614"/><use href="#bal" x="262" y="614"/><use href="#bal" x="350" y="614"/><use href="#bal" x="438" y="614"/><use href="#bal" x="526" y="614"/><use href="#bal" x="614" y="614"/><use href="#bal" x="702" y="614"/><use href="#bal" x="790" y="614"/><use href="#bal" x="878" y="614"/><use href="#bal" x="966" y="614"/>
+</g>
+<g fill="url(#balG)">
+  <use href="#bal" x="165" y="608"/><use href="#bal" x="253" y="608"/><use href="#bal" x="341" y="608"/><use href="#bal" x="429" y="608"/><use href="#bal" x="517" y="608"/><use href="#bal" x="605" y="608"/><use href="#bal" x="693" y="608"/><use href="#bal" x="781" y="608"/><use href="#bal" x="869" y="608"/><use href="#bal" x="957" y="608"/>
+</g>
+<rect x="0" y="608" width="1000" height="14" fill="#2C1E0C" opacity=".22"/>
+<rect x="0" y="584" width="1000" height="26" rx="2" fill="url(#rail)"/>
+<rect x="0" y="584" width="1000" height="4" fill="#FFF4DA" opacity=".8"/>
+<rect x="0" y="606" width="1000" height="5" fill="#5A4628" opacity=".5"/>
+
+<!-- pillar (foreground, backlit) -->
+<rect x="-10" y="0" width="128" height="740" fill="url(#pillar)"/>
+<rect x="-10" y="150" width="132" height="22" fill="#4E3D27"/><rect x="-10" y="146" width="132" height="6" fill="#D9C39C" opacity=".7"/><rect x="-10" y="170" width="132" height="4" fill="#2B2012" opacity=".6"/>
+<g stroke="#000" stroke-width="3" opacity=".22"><line x1="22" y1="172" x2="22" y2="720"/><line x1="52" y1="172" x2="52" y2="720"/><line x1="82" y1="172" x2="82" y2="720"/></g>
+<g stroke="#F5E4BE" stroke-width="1.4" opacity=".22"><line x1="30" y1="172" x2="30" y2="720"/><line x1="60" y1="172" x2="60" y2="720"/><line x1="90" y1="172" x2="90" y2="720"/></g>
+<rect x="-10" y="716" width="150" height="34" fill="#4E3D27"/><rect x="-10" y="712" width="150" height="6" fill="#C7B18A" opacity=".8"/>
+<rect x="110" y="0" width="10" height="740" fill="#FFF3D2" opacity=".55" filter="url(#b2)"/>
+
+<!-- telescope shadow -->
+<g filter="url(#b9)" fill="#2A1A08">
+  <ellipse cx="610" cy="880" rx="200" ry="26" opacity=".38"/>
+  <polygon points="470,480 560,470 740,700 680,700" opacity=".3"/>
+</g>
+<!-- tripod -->
+<g fill="url(#leg)">
+  <polygon points="510,505 526,505 440,858 424,858"/>
+  <polygon points="512,505 528,505 606,868 590,868"/>
+  <polygon points="514,503 526,503 552,804 540,804"/>
+</g>
+<g fill="#E4BE6A"><polygon points="426,842 442,842 440,858 424,858"/><polygon points="590,852 606,852 606,868 590,868"/><polygon points="540,792 552,792 552,804 540,804"/></g>
+<g fill="#1A1006" opacity=".5" filter="url(#b1)"><ellipse cx="434" cy="860" rx="14" ry="3"/><ellipse cx="600" cy="870" rx="14" ry="3"/><ellipse cx="547" cy="806" rx="10" ry="2.5"/></g>
+<line x1="470" y1="690" x2="565" y2="690" stroke="#7A5314" stroke-width="5"/><line x1="470" y1="690" x2="565" y2="690" stroke="#F3D48A" stroke-width="1.6" opacity=".8"/>
+<circle cx="518" cy="506" r="16" fill="url(#brassD)"/><circle cx="514" cy="501" r="6" fill="#FFF3C8" opacity=".85"/>
+
+<!-- telescope -->
+<g transform="translate(500 470) rotate(-28)">
+  <ellipse cx="-10" cy="36" rx="60" ry="14" fill="#1B1206" opacity=".4" filter="url(#b5)"/>
+  <rect x="-26" y="24" width="52" height="22" rx="4" fill="url(#brassD)"/><rect x="-22" y="26" width="10" height="16" rx="2" fill="#FFF3C8" opacity=".45"/>
+  <rect x="-200" y="-9" width="10" height="18" rx="2" fill="url(#brassD)"/>
+  <rect x="-192" y="-14" width="44" height="28" rx="3" fill="url(#brass)"/>
+  <rect x="-152" y="-21" width="86" height="42" rx="3" fill="url(#brass)"/>
+  <rect x="-156" y="-24" width="14" height="48" rx="2" fill="url(#brassD)"/>
+  <rect x="-70" y="-29" width="200" height="58" rx="4" fill="url(#brass)"/>
+  <rect x="-76" y="-33" width="18" height="66" rx="2" fill="url(#brassD)"/>
+  <rect x="124" y="-34" width="70" height="68" rx="4" fill="url(#brass)"/>
+  <rect x="120" y="-38" width="16" height="76" rx="2" fill="url(#brassD)"/>
+  <rect x="188" y="-38" width="12" height="76" rx="3" fill="url(#brassD)"/>
+  <ellipse cx="199" cy="0" rx="6" ry="33" fill="url(#lens)"/>
+  <ellipse cx="198" cy="-10" rx="2.2" ry="10" fill="#FFFFFF" opacity=".9" filter="url(#b1)"/>
+  <rect x="-188" y="-10" width="36" height="5" rx="2" fill="#FFF8E0" opacity=".75" filter="url(#b1)"/>
+  <rect x="-148" y="-16" width="78" height="6" rx="3" fill="#FFF8E0" opacity=".8" filter="url(#b1)"/>
+  <rect x="-62" y="-23" width="186" height="8" rx="4" fill="#FFFAE6" opacity=".85" filter="url(#b1)"/>
+  <rect x="-40" y="-25" width="90" height="4" rx="2" fill="#FFFFFF" opacity=".7" filter="url(#b1)"/>
+  <rect x="128" y="-28" width="58" height="8" rx="4" fill="#FFFAE6" opacity=".85" filter="url(#b1)"/>
+  <rect x="-62" y="16" width="186" height="5" rx="2" fill="#FFD27A" opacity=".3" filter="url(#b1)"/>
+  <rect x="-66" y="3" width="192" height="6" rx="3" fill="#BFD8EC" opacity=".2" filter="url(#b1)"/><rect x="-150" y="1" width="80" height="4" rx="2" fill="#BFD8EC" opacity=".18" filter="url(#b1)"/><rect x="126" y="4" width="62" height="6" rx="3" fill="#BFD8EC" opacity=".2" filter="url(#b1)"/>
+  <g stroke="#2A1A05" stroke-width="1.2" opacity=".55"><line x1="-36" y1="-29" x2="-36" y2="29"/><line x1="46" y1="-29" x2="46" y2="29"/><line x1="102" y1="-29" x2="102" y2="29"/><line x1="-110" y1="-21" x2="-110" y2="21"/></g>
+  <g stroke="#FFF1C4" stroke-width=".8" opacity=".5"><line x1="-34" y1="-29" x2="-34" y2="29"/><line x1="48" y1="-29" x2="48" y2="29"/><line x1="104" y1="-29" x2="104" y2="29"/></g>
+  <circle cx="-30" cy="34" r="9" fill="url(#brassD)"/><circle cx="-32" cy="31" r="3.4" fill="#FFF3C8" opacity=".85"/>
+  <rect x="38" y="-40" width="8" height="12" fill="#3A2708"/><rect x="82" y="-40" width="8" height="12" fill="#3A2708"/>
+  <rect x="26" y="-52" width="76" height="14" rx="4" fill="url(#brass)"/><rect x="98" y="-54" width="8" height="18" rx="2" fill="url(#brassD)"/><rect x="26" y="-51" width="70" height="3" rx="1" fill="#FFF8E0" opacity=".8"/>
+</g>
+<circle cx="672" cy="380" r="80" fill="url(#warmGlow)" opacity=".7" filter="url(#b9)"/>
+<circle cx="560" cy="430" r="120" fill="url(#warmGlow)" opacity=".35" filter="url(#b18)"/>
+
+<!-- books on the rail -->
+<g filter="url(#b2)" fill="#2A1A08" opacity=".38"><rect x="664" y="556" width="160" height="34"/></g>
+<polygon points="652,552 808,552 818,542 662,542" fill="#B0584A"/><rect x="652" y="552" width="156" height="34" rx="2" fill="url(#bkRed)"/>
+<g fill="#E8C578" opacity=".85"><rect x="654" y="558" width="152" height="1.6"/><rect x="654" y="578" width="152" height="1.6"/></g><g fill="#F3DDA0" opacity=".7"><rect x="654" y="566" width="152" height="3"/></g>
+<polygon points="660,524 804,524 814,514 670,514" fill="#6C8F6E"/><rect x="660" y="524" width="144" height="30" rx="2" fill="url(#bkGreen)"/>
+<g fill="#E8C578" opacity=".85"><rect x="662" y="530" width="140" height="1.6"/><rect x="662" y="546" width="140" height="1.6"/></g><g fill="#F3DDA0" opacity=".7"><rect x="662" y="536" width="140" height="3"/></g>
+<polygon points="648,498 798,498 808,488 658,488" fill="#5F729A"/><rect x="648" y="498" width="150" height="28" rx="2" fill="url(#bkBlue)"/>
+<g fill="#E8C578" opacity=".85"><rect x="650" y="504" width="146" height="1.6"/><rect x="650" y="519" width="146" height="1.6"/></g><g fill="#F3DDA0" opacity=".7"><rect x="650" y="510" width="146" height="3"/></g>
+<polygon points="664,474 792,474 802,464 674,464" fill="#A4764A"/><rect x="664" y="474" width="128" height="26" rx="2" fill="url(#bkBrown)"/>
+<g fill="#E8C578" opacity=".85"><rect x="666" y="480" width="124" height="1.6"/><rect x="666" y="494" width="124" height="1.6"/></g><g fill="#F3DDA0" opacity=".7"><rect x="666" y="486" width="124" height="3"/></g>
+<g fill="#FFF6DC" opacity=".55"><rect x="652" y="552" width="156" height="1.5"/><rect x="660" y="524" width="144" height="1.5"/><rect x="648" y="498" width="150" height="1.5"/><rect x="664" y="474" width="128" height="1.5"/></g>
+<!-- inkwell + quill -->
+<ellipse cx="712" cy="466" rx="15" ry="5" fill="#1D1408" opacity=".5" filter="url(#b1)"/>
+<rect x="699" y="448" width="26" height="18" rx="5" fill="url(#brassD)"/><rect x="704" y="442" width="16" height="8" rx="2" fill="#3A2708"/><ellipse cx="712" cy="443" rx="6" ry="2" fill="#0B0A12"/>
+<rect x="702" y="450" width="6" height="12" rx="2" fill="#FFF3C8" opacity=".55"/>
+<g transform="translate(712 444) rotate(-64)">
+  <line x1="-4" y1="0" x2="176" y2="0" stroke="#E3D6B6" stroke-width="2.4"/>
+  <line x1="-4" y1="0" x2="60" y2="0" stroke="#7A6A48" stroke-width="1.2" opacity=".7"/>
+  <path d="M52 0C76 -16 128 -26 174 -7L176 0L173 5C132 18 92 13 52 0Z" fill="url(#feather)"/>
+  <path d="M52 0C76 -16 128 -26 174 -7L176 0Z" fill="#FFFFFF" opacity=".5"/>
+  <g stroke="#B7AC94" stroke-width=".7" opacity=".55"><line x1="70" y1="-8" x2="76" y2="4"/><line x1="90" y1="-13" x2="96" y2="7"/><line x1="110" y1="-17" x2="116" y2="9"/><line x1="130" y1="-19" x2="136" y2="9"/><line x1="150" y1="-17" x2="155" y2="6"/></g>
+</g>
+
+<!-- atmosphere -->
+<g fill="#FFF3D6">
+  <circle cx="300" cy="300" r="1.6" opacity=".45"/><circle cx="340" cy="360" r="1.1" opacity=".35"/><circle cx="410" cy="330" r="1.4" opacity=".5"/><circle cx="380" cy="440" r="1" opacity=".4"/><circle cx="460" cy="290" r="1.2" opacity=".35"/><circle cx="270" cy="420" r="1.5" opacity=".3"/><circle cx="520" cy="360" r="1" opacity=".45"/><circle cx="440" cy="520" r="1.3" opacity=".35"/><circle cx="600" cy="470" r="1.1" opacity=".4"/><circle cx="350" cy="500" r=".9" opacity=".4"/><circle cx="240" cy="330" r="1.2" opacity=".5"/><circle cx="560" cy="300" r="1.4" opacity=".3"/>
+</g>
+<rect width="1000" height="1000" fill="url(#hatch)" opacity=".035"/>
+<rect width="1000" height="1000" filter="url(#grain)" opacity=".16"/>
+<rect width="1000" height="1000" fill="url(#vig)"/>
+</svg>
