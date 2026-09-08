@@ -33,7 +33,7 @@
       "frame": "eng",
       "foil": true,
       "setCode": "JS-EN001",
-      "name": "Incentives Engineer – Forward Deployed Engineer",
+      "name": "Incentives Engineer",
       "badge": "ENG",
       "company": "Anthropic",
       "city": "San Francisco",
@@ -43,7 +43,12 @@
       "artPlaceholder": "assets/art/placeholder-01-anthropic.svg",
       "logo": "assets/logos/anthropic.svg",
       "logoAlt": "Anthropic",
-      "logoWide": false
+      "logoWide": false,
+      "typeLine": [
+        "Anthropic",
+        "Forward Deployed Engineer",
+        "May 2026 – Present"
+      ]
     },
     {
       "id": "qotiv",
