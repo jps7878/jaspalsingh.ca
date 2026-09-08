@@ -18,9 +18,9 @@ A one-page personal brand site for Jaspal Singh. Audience: people who look him u
 
 ## Page structure
 
-1. Hero. Straight and quiet. Name, headline, one-sentence thesis, four-sentence bio, links (LinkedIn, Email, Qotiv, GitHub), a plain headshot (`assets/photo.jpg`, square; a neutral initials tile until it exists). Inter, left-aligned, max 64ch.
-2. Experience. Heading "Experience". Seven cards, newest first, in a responsive grid: four then three on wide screens, two columns on tablets, one column on phones. Cards keep the 59:86 ratio at every size; on phones a card is about 320px wide.
-3. Skills. Heading "Skills". Two labeled groups: "Offense: design and strategy" as green spell-style cards and "Defense: controls and governance" as magenta trap-style cards. Skill cards are compact (name plate, one-line text box, a small `[ Spell ]` or `[ Trap ]` type mark) in the same material finish, no art window, no badge, no foil.
+1. Hero. Straight text on the left: a small square headshot above the name (`assets/photo.jpg`; a neutral initials tile until it exists), headline, one-sentence thesis, four-sentence bio, links (LinkedIn, Email, Qotiv, GitHub). Inter, left-aligned, max 64ch. On the right, the current-role card (Anthropic, silver foil) featured at about 400px wide; it stacks under the text on phones. Decided 2026-09-08 after judges found four-per-row card text too small.
+2. Experience. Heading "Experience". The remaining six cards, newest first, three per row on wide screens (about 430px wide), two columns on tablets, one column on phones (about 340px). Cards keep the 59:86 ratio at every size.
+3. Skills. Heading "Skills", a one-line plain-words intro ("Spells are what I design and build. Traps are the controls that keep payouts honest."), and one full-bleed horizontal shelf of eight FULL cards (same anatomy and size as the career cards) in the spell (green) and trap (magenta) metals, matte. Order alternates spell and trap so both are visible at first paint. Shelf: scroll-snap, first card aligned to the content column, peek of the next card, prev/next buttons (JS, hidden without it), keyboard-scrollable region. Skill cards differ from career cards only in: a glyph coin (spell sparkle, trap hexagonal ring) instead of a word, type line `[ Spell / Design & Strategy ]` or `[ Trap / Controls & Governance ]`, no company mark. Set codes continue JS-EN008 to JS-EN015; each has its own art slot with a code-drawn placeholder until real art exists (optional prompts in the owner's art document).
 4. Footer. One line styled like card fine print: set code, copyright, ownership note. Same four links.
 
 ## Card system
@@ -33,8 +33,8 @@ Frame types (all derived from the proof's material stack: base gradient, directi
 | founder | Qotiv                          | brushed violet        | FOUNDER    | deep violet  |
 | ops     | Engine, Deel RevOps            | brushed copper-orange | OPS        | deep blue    |
 | sales   | Deel AE, Clio, RBC Insurance   | brushed gold-tan      | SALES      | deep crimson |
-| spell   | offense skills                 | brushed green         | none       | none         |
-| trap    | defense skills                 | brushed magenta       | none       | none         |
+| spell   | design & strategy skills       | brushed green         | glyph      | deep forest  |
+| trap    | controls & governance skills   | brushed magenta       | glyph      | deep plum    |
 
 Anatomy (career cards), top to bottom: name plate about 9% of height with the role title in Cormorant SC and the coin at right; art window about 50% of height, inset about 7% per side, recessed; type line `[ Company / City / Dates ]` in bold small serif; effect box about 20% with a paragraph in EB Garamond; bottom strip with set code left and copyright right. Long titles are condensed horizontally to stay on one line, as real cards do.
 

@@ -10,7 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
 <style>
-:root { color-scheme: dark; --bg: #17181C; --ink: #E9E4DA; --ink-2: #C9C6BE; --muted: #8E9099; --link: #ADAFB6; --gap: 28px; }
+/* --card-w is one column of the Experience grid, written as a formula so the hero card and every shelf card
+   resolve it against their own container and come out the same physical size as the grid's cards. */
+:root { color-scheme: dark; --bg: #17181C; --ink: #E9E4DA; --ink-2: #C9C6BE; --muted: #8E9099; --link: #ADAFB6; --gap: 28px; --pad-x: 48px; --card-w: calc((100% - 2 * var(--gap)) / 3); }
 * { box-sizing: border-box; }
 html, body { margin: 0; overflow-x: clip; }
 html { -webkit-text-size-adjust: 100%; }
@@ -25,10 +27,10 @@ body {
 }
 a { color: var(--link); }
 a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
-.wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
-.hero { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 72px; align-items: start; padding-block: 72px 40px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) var(--card-w); gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
 .hero-card { width: 100%; }
 .hero-card .card { width: 100%; }
@@ -50,26 +52,66 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 
 /* ---- sections ---- */
-.section { padding: 36px 0 48px; }
+.section { padding-block: 36px 48px; }
 .section h2 { margin: 0 0 24px; font-size: 26px; font-weight: 600; letter-spacing: -.012em; line-height: 1.2; color: var(--ink); }
-.group-label { margin: 0 0 18px; font-size: 15px; font-weight: 500; color: #B4B6BC; }
-.group + .group { margin-top: 40px; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
-.grid.skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ---- skills: heading with prev/next at the right, intro in the hero's muted style, then a full-bleed shelf ---- */
+.section-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; margin: 0 0 8px; }
+.section-head h2 { margin: 0; }
+.shelf-nav:not([hidden]) { display: flex; gap: 10px; } /* stays hidden (UA [hidden]) until the script reveals it */
+.shelf-btn {
+  width: 40px; height: 40px; padding: 0; display: grid; place-items: center; cursor: pointer;
+  color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.30); border-radius: 50%;
+  transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.shelf-btn svg { width: 16px; height: 16px; display: block; }
+.shelf-btn:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.12); }
+.shelf-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.shelf-btn:disabled { cursor: default; opacity: .3; border-color: rgba(255,255,255,.30); background: rgba(255,255,255,.06); }
+.intro { margin: 0 0 6px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
+/* The shelf runs edge to edge; its inline padding equals the content column's left margin (max(--pad-x, centring
+   slack + --pad-x)) so the first card lines up with the heading and the last card rests on the column's right edge.
+   Cards are one grid column wide (--card-w), so three fill the column exactly as the Experience rows do and the
+   fourth shows in the right gutter. Scroll containers clip their children's shadows, so the shelf carries 112px of
+   bottom padding (the card shadow has faded to the background by ~106px) and the frame around it pulls the next
+   section back up by 64px, keeping the 48px rhythm. The scrollbar is hidden: the peek, the buttons, swipe and the
+   keyboard (the shelf is focusable) are the scrolling affordances. */
+.shelf-frame { position: relative; margin-bottom: -64px; }
+.shelf {
+  --shelf-pad: max(var(--pad-x), calc((100% - 1440px) / 2 + var(--pad-x)));
+  display: flex; align-items: flex-start; gap: var(--gap);
+  padding: 14px var(--shelf-pad) 112px;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--shelf-pad);
+  scrollbar-width: none;
+}
+.shelf::-webkit-scrollbar { display: none; }
+.shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
+/* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
+.shelf:focus-visible { outline: none; }
+.shelf-frame:has(.shelf:focus-visible)::after {
+  content: ""; position: absolute; inset: 6px 8px 104px; border: 2px solid var(--ink); border-radius: 8px; pointer-events: none;
+}
+@supports not selector(:has(*)) { .shelf:focus-visible { outline: 2px solid var(--ink); outline-offset: -8px; } }
 
 /* ---- footer: card fine print, items separated by space alone ---- */
 .foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
 
-@media (max-width: 1199px) { .hero { grid-template-columns: minmax(0, 1fr) 360px; gap: 56px; } }
-@media (max-width: 979px) { .grid, .grid.skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding: 0 32px; } .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; } .hero-card { width: min(100%, 360px); } }
+@media (max-width: 1199px) { .hero { gap: 56px; } }
+@media (max-width: 979px) {
+  :root { --pad-x: 32px; --card-w: calc((100% - var(--gap)) / 2); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; }
+  .hero-card { width: var(--card-w); }
+}
 @media (max-width: 599px) {
-  :root { --gap: 22px; }
-  .wrap { padding: 0 24px; }
-  .grid, .grid.skills { grid-template-columns: minmax(0, 340px); }
+  :root { --gap: 22px; --pad-x: 24px; --card-w: min(340px, 82vw); }
+  .grid { grid-template-columns: minmax(0, var(--card-w)); }
+  .shelf-frame { margin-bottom: -72px; }
   .hero { gap: 28px; padding-block: 44px 32px; }
-  .hero-card { width: min(100%, 340px); }
   .hero-photo { width: 64px; height: 64px; margin: 0 0 16px; border-radius: 5px; }
   .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
   .thesis { font-size: 22px; }
@@ -83,12 +125,11 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   --rx: 0deg; --ry: 0deg;
   --fp: calc(var(--mx) * 1.2 - 10%) calc(var(--my) * 1.2 - 10%);
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
-  position: relative; width: 100%; margin: 0;
+  position: relative; width: 100%; margin: 0; aspect-ratio: 59 / 86;
   container-type: inline-size;
   transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
-.card.career { aspect-ratio: 59 / 86; }
 .card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
 .card-inner {
   position: relative; width: 100%; height: 100%;
@@ -108,8 +149,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
     2px 28px 36px -12px rgba(0,0,0,.66),
     4px 64px 80px -30px rgba(0,0,0,.6);
 }
-.skill .card-inner { padding: 4.4cqw 7cqw 4.4cqw; }
-.name, .badge, .kind, .type, .strip, .effect { position: relative; z-index: 3; }
+.name, .badge, .type, .strip, .effect { position: relative; z-index: 3; }
 .card-inner::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 4;
   box-shadow: inset 0 1.5px 0 rgba(255,255,255,.62), inset 1.5px 0 0 rgba(255,255,255,.30), inset 0 -1.5px 0 rgba(0,0,0,.34), inset -1.5px 0 0 rgba(0,0,0,.18);
@@ -149,12 +189,14 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   --plate-1:rgba(228,250,238,.48); --plate-2:rgba(228,250,238,.24); --plate-3:rgba(228,250,238,.14); --plate-hi:rgba(228,250,238,.95); --plate-lo:rgba(16,60,38,.48); --plate-hi2:rgba(228,250,238,.62); --plate-lo2:rgba(16,60,38,.3); --plate-drop:rgba(8,42,26,.42); --plate-line:rgba(26,80,54,.52);
   --bz-1:#E2F6EA; --bz-2:#6FB894; --bz-3:#276A4A; --bz-hi:rgba(224,248,236,.85); --bz-lo:rgba(8,42,28,.5); --bz-out:rgba(8,42,28,.5);
   --paper-line:#376350; --paper-drop:rgba(214,244,230,.5); --satin:232,255,242; --gl:0.24; --gl-hover:0.5; }
-.f-spell .card-inner { background-color:#43926D; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(10,45,30,0.2) 100%), linear-gradient(155deg, rgba(224,248,236,0.5) 0%, rgba(224,248,236,0.14) 32%, rgba(224,248,236,0) 50%, rgba(8,42,28,0.08) 74%, rgba(8,42,28,0.18) 100%), linear-gradient(180deg, #5AA383 0%, #43926D 42%, #3B8562 74%, #347858 100%); }
+.f-spell .card-inner { background-color:#43926D; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(10,45,30,0.14) 100%), linear-gradient(155deg, rgba(224,248,236,0.38) 0%, rgba(224,248,236,0.11) 32%, rgba(224,248,236,0) 50%, rgba(8,42,28,0.04) 74%, rgba(8,42,28,0.09) 100%), linear-gradient(180deg, #4E9A78 0%, #43926D 42%, #409069 74%, #3A8862 100%); }
+.f-spell .badge { --rim-1:#E6F9EE; --rim-2:#2E7F58; --rim-3:#A6DBC0; --rim-dark:#12402C; --coin-1:#1E6B4A; --coin-2:#0F4530; --coin-3:#072A1C; --coin-ink:#EAFFF3; }
 .f-trap { --edge:#5E2242; --chamfer:rgba(245,200,222,.95); --shade:rgba(90,25,60,.28); --ridge-l:rgba(250,215,232,.95); --ridge-d:rgba(90,25,60,.62); --ink:#26091A; --ink-shadow:rgba(252,222,238,.55);
   --plate-1:rgba(255,232,243,.48); --plate-2:rgba(255,232,243,.24); --plate-3:rgba(255,232,243,.14); --plate-hi:rgba(255,232,243,.95); --plate-lo:rgba(90,25,60,.48); --plate-hi2:rgba(255,232,243,.62); --plate-lo2:rgba(90,25,60,.3); --plate-drop:rgba(60,15,40,.42); --plate-line:rgba(120,40,80,.52);
   --bz-1:#FBE6F0; --bz-2:#D98CB4; --bz-3:#7D2F58; --bz-hi:rgba(255,230,242,.85); --bz-lo:rgba(70,15,45,.5); --bz-out:rgba(70,15,45,.5);
   --paper-line:#6E3552; --paper-drop:rgba(252,222,238,.5); --satin:255,236,246; --gl:0.24; --gl-hover:0.5; }
-.f-trap .card-inner { background-color:#C66497; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(80,20,50,0.2) 100%), linear-gradient(155deg, rgba(255,230,242,0.5) 0%, rgba(255,230,242,0.14) 32%, rgba(255,230,242,0) 50%, rgba(70,15,45,0.08) 74%, rgba(70,15,45,0.18) 100%), linear-gradient(180deg, #D57AA8 0%, #C66497 42%, #B95889 74%, #AC4D7C 100%); }
+.f-trap .card-inner { background-color:#C66497; background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nNzIwJz48ZmlsdGVyIGlkPSdiJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjU1IDAuMDAzJyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPSc0Jy8+PGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIHZhbHVlcz0nMCcvPjxmZUNvbXBvbmVudFRyYW5zZmVyPjxmZUZ1bmNBIHR5cGU9J2xpbmVhcicgc2xvcGU9JzAnIGludGVyY2VwdD0nMScvPjwvZmVDb21wb25lbnRUcmFuc2Zlcj48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMjQwJyBoZWlnaHQ9JzcyMCcgZmlsdGVyPSd1cmwoI2IpJyBvcGFjaXR5PScwLjInLz48L3N2Zz4="), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJyB4PScwJyB5PScwJyB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScwLjk1JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJyBzZWVkPScxMScvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48ZmVDb21wb25lbnRUcmFuc2Zlcj48ZmVGdW5jQSB0eXBlPSdsaW5lYXInIHNsb3BlPScwJyBpbnRlcmNlcHQ9JzEnLz48L2ZlQ29tcG9uZW50VHJhbnNmZXI+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE2MCcgaGVpZ2h0PScxNjAnIGZpbHRlcj0ndXJsKCNuKScgb3BhY2l0eT0nMC42NicvPjwvc3ZnPg=="), radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(80,20,50,0.14) 100%), linear-gradient(155deg, rgba(255,230,242,0.38) 0%, rgba(255,230,242,0.11) 32%, rgba(255,230,242,0) 50%, rgba(70,15,45,0.04) 74%, rgba(70,15,45,0.09) 100%), linear-gradient(180deg, #CD6F9F 0%, #C66497 42%, #C16496 74%, #B95A8A 100%); }
+.f-trap .badge { --rim-1:#FBE6F0; --rim-2:#8C3A66; --rim-3:#E3A7C6; --rim-dark:#4C1A38; --coin-1:#6A2350; --coin-2:#471435; --coin-3:#2A0A1E; --coin-ink:#FFEAF5; }
 
 /* ---- name plate (raised, lit top-left) ---- */
 .plate {
@@ -192,6 +234,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 /* longer badge words stay inside the struck face (face is 78% of the coin; word kept under ~88% of it) */
 .badge.mid { font-size: 1.8cqw; letter-spacing: .06em; text-indent: .06em; }
 .badge.long { font-size: 1.4cqw; letter-spacing: .02em; text-indent: .02em; }
+/* skill coins carry a glyph (inline SVG, currentColor = coin ink) sized like a badge word: ~72% of the struck face */
+.badge svg { width: 56%; height: 56%; display: block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.65)); }
 .badge::before {
   content: ""; position: absolute; inset: 11%; border-radius: 50%; pointer-events: none; z-index: -1;
   background-image:
@@ -205,12 +249,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
     0 0 0 1px rgba(0,0,0,.55),
     0 1px 0 1px rgba(255,255,255,.18);
 }
-/* ---- skill type mark, right-aligned in the plate ---- */
-.kind {
-  flex: none; font-family: "EB Garamond", Georgia, serif; font-weight: 700; font-size: 3.1cqw; line-height: 1;
-  color: var(--ink); letter-spacing: .01em; padding-right: 1cqw; white-space: nowrap;
-}
-
 /* ---- art window: raised metallic lip, art set into it ---- */
 .art {
   position: relative; height: 72.9cqw; margin-bottom: 1.4cqw; flex: none;
@@ -263,8 +301,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   text-align: left; hyphens: manual; text-wrap: pretty;
 }
 .effect p { margin: 0; }
-.effect.line { height: 9.6cqw; margin-bottom: 0; padding: 0 1.5cqw; display: flex; align-items: center; overflow: hidden; font-size: var(--efs, 3.6cqw); }
-.effect.line p { white-space: nowrap; }
 /* ---- bottom strip ---- */
 .strip {
   height: 6.8cqw; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 .3cqw;
@@ -342,8 +378,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC44Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuMjUnLz48L3N2Zz4="); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTQ1Ljc2JyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48cGF0aCBkPSdNMCAwIEgxMDAgVjE0NS43NiBIMCBaIE03Ljk1IDIwLjA1IGg4NC4xIHY3MSBoLTg0LjEgeiBNNyAxMDAgaDg2IHYzMi4wNjMgaC04NiB6JyBmaWxsPScjZmZmJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnLz48cmVjdCB4PSc3Ljk1JyB5PScyMC4wNScgd2lkdGg9Jzg0LjEnIGhlaWdodD0nNzEnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC44Jy8+PHJlY3QgeD0nNycgeT0nMTAwJyB3aWR0aD0nODYnIGhlaWdodD0nMzIuMDYzJyBmaWxsPScjZmZmJyBmaWxsLW9wYWNpdHk9JzAuMjUnLz48L3N2Zz4=");
   transition: opacity .5s ease, background-position .5s ease;
 }
-.skill .satin { -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgNC40IGg4NiB2MTIuOCBoLTg2IHogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzQuNCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzEyLjgnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC45Jy8+PHJlY3QgeD0nNycgeT0nMTkuMScgd2lkdGg9Jzg2JyBoZWlnaHQ9JzkuNicgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgNC40IGg4NiB2MTIuOCBoLTg2IHogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzQuNCcgd2lkdGg9Jzg2JyBoZWlnaHQ9JzEyLjgnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC45Jy8+PHJlY3QgeD0nNycgeT0nMTkuMScgd2lkdGg9Jzg2JyBoZWlnaHQ9JzkuNicgZmlsbD0nI2ZmZicgZmlsbC1vcGFjaXR5PScwJy8+PC9zdmc+"); }
-.skill .glare { -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzE5LjEnIHdpZHRoPSc4NicgaGVpZ2h0PSc5LjYnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4yNScvPjwvc3ZnPg=="); mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMzMuMScgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZSc+PHBhdGggZD0nTTAgMCBIMTAwIFYzMy4xIEgwIFogTTcgMTkuMSBoODYgdjkuNiBoLTg2IHonIGZpbGw9JyNmZmYnIGZpbGwtcnVsZT0nZXZlbm9kZCcvPjxyZWN0IHg9JzcnIHk9JzE5LjEnIHdpZHRoPSc4NicgaGVpZ2h0PSc5LjYnIGZpbGw9JyNmZmYnIGZpbGwtb3BhY2l0eT0nMC4yNScvPjwvc3ZnPg=="); }
 .card.is-hover .glare { opacity: var(--gl-hover); }
 .card.is-hover .foil, .card.is-hover .sheen, .card.is-hover .prism, .card.is-hover .glitter, .card.is-hover .satin, .card.is-hover .glare { transition: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -383,8 +417,8 @@ body.detail .card { width: 720px; }
 </article>
   </div>
 </header>
-<main class="wrap">
-<section class="section" aria-labelledby="experience-h">
+<main>
+<section class="section wrap" aria-labelledby="experience-h">
   <h2 id="experience-h">Experience</h2>
   <div class="grid">
 <article class="card career f-founder foil-card" data-tilt="10">
@@ -468,97 +502,124 @@ body.detail .card { width: 720px; }
   </div>
 </section>
 <section class="section" aria-labelledby="skills-h">
-  <h2 id="skills-h">Skills</h2>
-<div class="group">
-  <h3 class="group-label" id="skills-offense">Offense: design and strategy</h3>
-  <div class="grid skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="skills-h">Skills</h2>
+      <div class="shelf-nav" hidden>
+        <button type="button" class="shelf-btn" data-dir="-1" aria-label="Previous card"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+        <button type="button" class="shelf-btn" data-dir="1" aria-label="Next card"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+    <p class="intro">Spells are what I design and build. Traps are the controls that keep payouts honest.</p>
+  </div>
+  <div class="shelf-frame">
+    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">
 <article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
-      <h4 class="name"><span>Comp Plan Design</span></h4>
-      <span class="kind">[ Spell ]</span>
+      <h3 class="name"><span>Comp Plan Design</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg></span>
     </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Quotas, accelerators, SPIFs, deal-based and usage-based plans.</p></div>
-    <div class="satin"></div><div class="glare"></div>
-  </div>
-</article>
-<article class="card skill f-spell" data-tilt="6">
-  <div class="card-inner">
-    <header class="plate">
-      <h4 class="name"><span>GTM Strategy</span></h4>
-      <span class="kind">[ Spell ]</span>
-    </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Segmentation, motion design, launch planning.</p></div>
-    <div class="satin"></div><div class="glare"></div>
-  </div>
-</article>
-<article class="card skill f-spell" data-tilt="6">
-  <div class="card-inner">
-    <header class="plate">
-      <h4 class="name"><span>Quota &amp; Territory Planning</span></h4>
-      <span class="kind">[ Spell ]</span>
-    </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Capacity models, coverage, fair territories.</p></div>
-    <div class="satin"></div><div class="glare"></div>
-  </div>
-</article>
-<article class="card skill f-spell" data-tilt="6">
-  <div class="card-inner">
-    <header class="plate">
-      <h4 class="name"><span>Funnel Mapping</span></h4>
-      <span class="kind">[ Spell ]</span>
-    </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Stage definitions, conversion instrumentation, handoffs.</p></div>
-    <div class="satin"></div><div class="glare"></div>
-  </div>
-</article>
-  </div>
-</div>
-<div class="group">
-  <h3 class="group-label" id="skills-defense">Defense: controls and governance</h3>
-  <div class="grid skills">
-<article class="card skill f-trap" data-tilt="6">
-  <div class="card-inner">
-    <header class="plate">
-      <h4 class="name"><span>Payout Controls</span></h4>
-      <span class="kind">[ Trap ]</span>
-    </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Calculate, approve, export, pay, with an audit trail at every step.</p></div>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-08-comp-plan-design.svg" alt=""></div></div>
+    <p class="type">[ Spell / Design &amp; Strategy ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Quotas, accelerators, SPIFs, deal-based and usage-based plans. Designs the mechanics so a plan pays for the behaviour the business actually wants, and models the cost before anyone signs.</p></div>
+    <footer class="strip"><span class="set">JS-EN008</span><span class="copy">© 2026 Jaspal Singh</span></footer>
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
 <article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
-      <h4 class="name" style="--cond:0.996"><span>Comp Compliance &amp; Governance</span></h4>
-      <span class="kind">[ Trap ]</span>
+      <h3 class="name"><span>Payout Controls</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg></span>
     </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Plan documents, acknowledgments, policy enforcement.</p></div>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-09-payout-controls.svg" alt=""></div></div>
+    <p class="type">[ Trap / Controls &amp; Governance ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Calculate, approve, export, pay, with an audit trail at every step. Every payout traces back to a plan version, a deal and an approver.</p></div>
+    <footer class="strip"><span class="set">JS-EN009</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>GTM Strategy</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg></span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-10-gtm-strategy.svg" alt=""></div></div>
+    <p class="type">[ Spell / Design &amp; Strategy ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.</p></div>
+    <footer class="strip"><span class="set">JS-EN010</span><span class="copy">© 2026 Jaspal Singh</span></footer>
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
 <article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
-      <h4 class="name"><span>Data Integrity</span></h4>
-      <span class="kind">[ Trap ]</span>
+      <h3 class="name"><span>Comp Compliance &amp; Governance</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg></span>
     </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>One source of truth for reps, roles, quotas and credit.</p></div>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-11-comp-compliance.svg" alt=""></div></div>
+    <p class="type">[ Trap / Controls &amp; Governance ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Plan documents, acknowledgments, policy enforcement. Reps sign what they are paid on, and changes go through a process instead of a spreadsheet edit.</p></div>
+    <footer class="strip"><span class="set">JS-EN011</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Quota &amp; Territory Planning</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg></span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-12-quota-territory.svg" alt=""></div></div>
+    <p class="type">[ Spell / Design &amp; Strategy ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.</p></div>
+    <footer class="strip"><span class="set">JS-EN012</span><span class="copy">© 2026 Jaspal Singh</span></footer>
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
 <article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
-      <h4 class="name"><span>Clawback Policy</span></h4>
-      <span class="kind">[ Trap ]</span>
+      <h3 class="name"><span>Data Integrity</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg></span>
     </header>
-    <div class="effect line" style="--efs:3.4cqw"><p>Clear rules for churn, refunds and disputes.</p></div>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-13-data-integrity.svg" alt=""></div></div>
+    <p class="type">[ Trap / Controls &amp; Governance ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>One source of truth for reps, roles, quotas and credit. Catches the duplicate account, the missing territory and the stale role before they become a wrong payment.</p></div>
+    <footer class="strip"><span class="set">JS-EN013</span><span class="copy">© 2026 Jaspal Singh</span></footer>
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
+<article class="card skill f-spell" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Funnel Mapping</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg></span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-14-funnel-mapping.svg" alt=""></div></div>
+    <p class="type">[ Spell / Design &amp; Strategy ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Stage definitions, conversion instrumentation, handoffs. Maps how a deal actually moves so forecasts, comp and marketing all read from the same funnel.</p></div>
+    <footer class="strip"><span class="set">JS-EN014</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
   </div>
-</div>
+</article>
+<article class="card skill f-trap" data-tilt="6">
+  <div class="card-inner">
+    <header class="plate">
+      <h3 class="name"><span>Clawback Policy</span></h3>
+      <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg></span>
+    </header>
+    <div class="art"><div class="art-inner"><img class="art-img" src="assets/art/placeholder-15-clawback-policy.svg" alt=""></div></div>
+    <p class="type">[ Trap / Controls &amp; Governance ]</p>
+    <div class="effect" style="--efs:4.6cqw"><p>Clear rules for churn, refunds and disputes. Written down before the deal closes, so nobody argues about it after.</p></div>
+    <footer class="strip"><span class="set">JS-EN015</span><span class="copy">© 2026 Jaspal Singh</span></footer>
+    <div class="satin"></div><div class="glare"></div>
+  </div>
+</article>
+    </div>
+  </div>
 </section>
 </main>
 
@@ -585,12 +646,34 @@ body.detail .card { width: 720px; }
         h.style.setProperty('--cond', r < 1 ? r.toFixed(3) : '1');
       });
       var e = card.querySelector('.effect'); if (!e) return;
-      var p = e.firstElementChild, fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
-      var over = e.classList.contains('line') ? function(){ return p.scrollWidth > p.clientWidth + 1; } : function(){ return e.scrollHeight > e.clientHeight + 1; };
-      while (over() && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
+      var fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
+      while (e.scrollHeight > e.clientHeight + 1 && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
     });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+
+  // Skills shelf: prev/next step one card (card pitch measured from the first two cards); the snap settles it.
+  var shelf = document.querySelector('.shelf'), nav = document.querySelector('.shelf-nav');
+  if (shelf && nav) {
+    var reduce = mm('(prefers-reduced-motion: reduce)'), sraf = 0;
+    var btns = nav.querySelectorAll('button');
+    function pitch(){ var c = shelf.querySelectorAll('.card'); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : shelf.clientWidth; }
+    function maxScroll(){ return Math.max(0, shelf.scrollWidth - shelf.clientWidth); }
+    function update(){
+      sraf = 0;
+      var x = shelf.scrollLeft, max = maxScroll();
+      btns.forEach(function(b){ b.disabled = +b.dataset.dir < 0 ? x <= 1 : x >= max - 1; });
+    }
+    nav.hidden = false;
+    nav.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b || b.disabled) return;
+      var s = pitch(), i = Math.round(shelf.scrollLeft / s) + (+b.dataset.dir);
+      shelf.scrollTo({ left: Math.max(0, Math.min(maxScroll(), i * s)), behavior: reduce ? 'auto' : 'smooth' });
+    });
+    shelf.addEventListener('scroll', function(){ if (!sraf) sraf = requestAnimationFrame(update); }, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
 
   if (mm('(prefers-reduced-motion: reduce)') || mm('(pointer: coarse)')) return;
   document.querySelectorAll('.card').forEach(function(card){

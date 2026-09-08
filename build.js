@@ -8,6 +8,7 @@
  * Reads content.json and writes:
  *   index.html                 the site (inline CSS, tiny inline script, one Google Fonts link)
  *   qa/detail.html             the first career card alone at 720px, for close-up renders
+ *                              (skills render as full cards of the same anatomy on a snap shelf)
  *   assets/art/placeholder-01-anthropic.svg and placeholder-03-engine.svg
  *                              the two code-drawn placeholders carried over from the proof
  *
@@ -35,23 +36,21 @@ function rng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 10139
 const initials = name => name.split(/\s+/).filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
 // ---------- card geometry (card-width units, cqw) ----------
-// Career card, top to bottom: padding 4.4 / 7 / 5.2; plate 12.8; art 72.9 (inner inset .95, 50% of height);
-// type 5.5; effect 32.06 (22%); strip 6.8. Total height 145.76 = 86/59 * 100 (the trading-card ratio).
+// One anatomy for every card (career and skill), top to bottom: padding 4.4 / 7 / 5.2; plate 12.8;
+// art 72.9 (inner inset .95, 50% of height); type 5.5; effect 32.06 (22%); strip 6.8.
+// Total height 145.76 = 86/59 * 100 (the trading-card ratio).
 // The proof's margins were trimmed by 2.9cqw in total so the effect box (the readable part) could grow.
 const G = {
   padT: 4.4, padX: 7, padB: 5.2, plate: 12.8, plateMb: 1.9, art: 72.9, artMb: 1.4,
   type: 5.5, typeMb: 1.1, effectMb: 1.7, strip: 6.8,
   platePadL: 2.8, platePadR: 1.45, plateGap: 2, badge: 10.2,
   nameFs: 4.6, nameFsMin: 3.7, nameCondMin: 0.8, nameTracking: 0.012,
-  typeFs: 3.6, effectFs: 4.0, effectLh: 1.25, effectPadX: 1.8, effectPadT: 1.2, effectPadB: 1.0,
+  typeFs: 3.6, effectFs: 4.0, effectFsSkill: 4.6, effectLh: 1.25, effectPadX: 1.8, effectPadT: 1.2, effectPadB: 1.0,
   stripFs: 2.5,
 };
 G.height = r3((86 / 59) * 100); // 145.763
 G.effect = r3(G.height - (G.padT + G.plate + G.plateMb + G.art + G.artMb + G.type + G.typeMb + G.effectMb + G.strip + G.padB)); // 32.06
 G.inner = 100 - 2 * G.padX; // 86
-// Skill card: padding 4.4 / 7 / 4.4; plate 12.8; one-line text box 9.6.
-const S = { padT: 4.4, padX: 7, padB: 4.4, plate: 12.8, plateMb: 1.9, line: 9.6, lineFs: 3.6, linePadX: 1.5, kindFs: 3.1 };
-S.height = r3(S.padT + S.plate + S.plateMb + S.line + S.padB); // 33.1
 
 // ---------- font metrics (advance widths per 1000 em, measured once in Chrome) ----------
 // Cormorant SC 600 (card names), EB Garamond 400 (effect text), EB Garamond 700 (type line, kind mark).
@@ -85,20 +84,15 @@ function nameFit(str, availCqw) {
   const fs = Math.max(G.nameFsMin, Math.floor((G.nameFs * r / G.nameCondMin) * 20) / 20);
   return { fs, cond: r3(Math.min(1, r * G.nameFs / fs)) };
 }
-// Effect text: largest size (stepping down from 4.0cqw) whose wrapped lines fit the box.
-function effectSize(text) {
+// Effect text: largest size (stepping down from `max`) whose wrapped lines fit the box. Career paragraphs
+// start at 4.0cqw; skill text is written shorter and starts at 4.6cqw so three or four lines fill the
+// parchment the way a career paragraph does, in the same box.
+const EFFECT_STEPS = [4.6, 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.85, 2.7];
+function effectSize(text, max = G.effectFs) {
   const innerW = G.inner - 2 * G.effectPadX, innerH = G.effect - G.effectPadT - G.effectPadB;
-  const steps = [4.0, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.85, 2.7];
+  const steps = EFFECT_STEPS.filter(s => s <= max + 1e-9);
   for (const fs of steps) if (wrapLines(METRICS.ebg400, text, innerW / fs) * fs * G.effectLh <= innerH) return fs;
   return steps[steps.length - 1];
-}
-// Skill one-liners: one size for all eight (the largest that keeps every line whole), so a row of
-// compact cards reads as a set rather than eight sizes.
-function skillLineSize(texts) {
-  const innerW = G.inner - 2 * S.linePadX;
-  const em = Math.max(...texts.map(t => emWidth(METRICS.ebg400, t)));
-  for (const fs of [3.6, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.9, 2.8, 2.7]) if (em * fs <= innerW) return fs;
-  return Math.max(2.5, r3(innerW / em));
 }
 function typeSize(str) {
   const avail = G.inner - 0.2, w = emWidth(METRICS.ebg700, str, 0.004) * G.typeFs;
@@ -138,10 +132,6 @@ const MASK_FOIL = careerMask(.7, .3, .05);
 const MASK_SHEEN = careerMask(.65, .45, 0);
 const MASK_SATIN = careerMask(.9, .35, 0);
 const MASK_GLARE = careerMask(1, .8, .25);
-const SZ = { plate: { x: S.padX, y: S.padT, w: 100 - 2 * S.padX, h: S.plate }, line: { x: S.padX, y: S.padT + S.plate + S.plateMb, w: 100 - 2 * S.padX, h: S.line } };
-const skillMask = (plate, line) => zoneMask(S.height, [{ r: SZ.plate, o: plate }, { r: SZ.line, o: line }]);
-const MASK_SATIN_S = skillMask(.9, 0);
-const MASK_GLARE_S = skillMask(1, .25);
 
 // ---------- frame metals ----------
 // eng and ops are the proof's two metals verbatim (calibration). The other four are derived from
@@ -202,28 +192,43 @@ const FRAMES = {
     badge: { rim: ['#FDF2CC', '#9E7E2C', '#E9D18A', '#5E4A18'], coin: ['#B02A3C', '#7C1828', '#4A0C16'], ink: '#FFF1F0' },
     foil: false, satin: '255,247,220', glare: [.24, .5],
   },
-  spell: { // brushed green, deepened so its luminance sits with the trap magenta (mint read as a pastel next to it)
+  spell: { // brushed green, deepened so its luminance sits with the trap magenta (mint read as a pastel next to it).
+    // Lower two metal stops lifted and the corner shade softened so the strip text (dark ink on the darkest part
+    // of the frame, bottom-right under the shade) measures >= 4.5:1. The top-left light is dimmer than the
+    // career metals' (.38 vs .5) and the top stop deeper so the frame reads as lacquer, not mint; the plate and
+    // type line keep several times the contrast they need.
     base: '#43926D', brush: BRUSH_B, grain: GRAIN_B,
-    vignette: vignette('10,45,30'), light: light('224,248,236', '8,42,28'),
-    metal: metal('#5AA383', '#43926D', '#3B8562', '#347858'),
+    vignette: vignette('10,45,30', .14), light: light('224,248,236', '8,42,28', [.38, .11, .04, .09]),
+    metal: metal('#4E9A78', '#43926D', '#409069', '#3A8862'),
     edge: '#174A33', chamfer: 'rgba(196,236,216,.95)', shade: 'rgba(16,60,38,.28)', ridgeL: 'rgba(210,242,226,.95)', ridgeD: 'rgba(16,60,38,.62)',
     ink: '#08201A', inkShadow: 'rgba(214,244,230,.5)',
     plate: plateSet('228,250,238', '16,60,38', 'rgba(8,42,26,.42)', 'rgba(26,80,54,.52)'),
     bezel: ['#E2F6EA', '#6FB894', '#276A4A', 'rgba(224,248,236,.85)', 'rgba(8,42,28,.5)', 'rgba(8,42,28,.5)'],
     paperLine: '#376350', paperDrop: 'rgba(214,244,230,.5)',
-    badge: null, foil: false, satin: '232,255,242', glare: [.24, .5],
+    badge: { rim: ['#E6F9EE', '#2E7F58', '#A6DBC0', '#12402C'], coin: ['#1E6B4A', '#0F4530', '#072A1C'], ink: '#EAFFF3' }, // deep forest face, glyph not word
+    foil: false, satin: '232,255,242', glare: [.24, .5],
   },
-  trap: { // brushed magenta
+  trap: { // brushed magenta; lower stops and corner shade tuned like spell so the strip text clears 4.5:1,
+    // top light and top stop deepened like spell so it reads lacquered rather than candy pink
     base: '#C66497', brush: BRUSH_B, grain: GRAIN_B,
-    vignette: vignette('80,20,50'), light: light('255,230,242', '70,15,45'),
-    metal: metal('#D57AA8', '#C66497', '#B95889', '#AC4D7C'),
+    vignette: vignette('80,20,50', .14), light: light('255,230,242', '70,15,45', [.38, .11, .04, .09]),
+    metal: metal('#CD6F9F', '#C66497', '#C16496', '#B95A8A'),
     edge: '#5E2242', chamfer: 'rgba(245,200,222,.95)', shade: 'rgba(90,25,60,.28)', ridgeL: 'rgba(250,215,232,.95)', ridgeD: 'rgba(90,25,60,.62)',
     ink: '#26091A', inkShadow: 'rgba(252,222,238,.55)',
     plate: plateSet('255,232,243', '90,25,60', 'rgba(60,15,40,.42)', 'rgba(120,40,80,.52)'),
     bezel: ['#FBE6F0', '#D98CB4', '#7D2F58', 'rgba(255,230,242,.85)', 'rgba(70,15,45,.5)', 'rgba(70,15,45,.5)'],
     paperLine: '#6E3552', paperDrop: 'rgba(252,222,238,.5)',
-    badge: null, foil: false, satin: '255,236,246', glare: [.24, .5],
+    badge: { rim: ['#FBE6F0', '#8C3A66', '#E3A7C6', '#4C1A38'], coin: ['#6A2350', '#471435', '#2A0A1E'], ink: '#FFEAF5' }, // deep plum face, glyph not word
+    foil: false, satin: '255,236,246', glare: [.24, .5],
   },
+};
+// Coin glyphs for skill cards (original marks, drawn in the coin's ink color via currentColor). Both are a
+// single filled shape so the two coins read as one struck relief: spell is a four-point sparkle (108 units^2
+// of ink), trap a hexagonal seal with a ring knocked out of it (even-odd), leaving a centre disc; its
+// radii (hex 9.8, ring 6.6, disc 2.9) put it at 139 units^2 so the two sit close in weight.
+const GLYPHS = {
+  spell: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg>',
+  trap: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg>',
 };
 function frameCss(name, t) {
   const p = t.plate, b = t.bezel, g = t.badge, c = `.f-${name}`;
@@ -396,7 +401,9 @@ const PLACEHOLDER_ART = { anthropic: artNocturne, engine: artEngine };
 // ---------- CSS ----------
 const FONTS_HREF = 'https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=block';
 const css = `
-:root { color-scheme: dark; --bg: #17181C; --ink: #E9E4DA; --ink-2: #C9C6BE; --muted: #8E9099; --link: #ADAFB6; --gap: 28px; }
+/* --card-w is one column of the Experience grid, written as a formula so the hero card and every shelf card
+   resolve it against their own container and come out the same physical size as the grid's cards. */
+:root { color-scheme: dark; --bg: #17181C; --ink: #E9E4DA; --ink-2: #C9C6BE; --muted: #8E9099; --link: #ADAFB6; --gap: 28px; --pad-x: 48px; --card-w: calc((100% - 2 * var(--gap)) / 3); }
 * { box-sizing: border-box; }
 html, body { margin: 0; overflow-x: clip; }
 html { -webkit-text-size-adjust: 100%; }
@@ -411,10 +418,10 @@ body {
 }
 a { color: var(--link); }
 a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
-.wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
-.hero { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 72px; align-items: start; padding-block: 72px 40px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) var(--card-w); gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
 .hero-card { width: 100%; }
 .hero-card .card { width: 100%; }
@@ -436,26 +443,66 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 
 /* ---- sections ---- */
-.section { padding: 36px 0 48px; }
+.section { padding-block: 36px 48px; }
 .section h2 { margin: 0 0 24px; font-size: 26px; font-weight: 600; letter-spacing: -.012em; line-height: 1.2; color: var(--ink); }
-.group-label { margin: 0 0 18px; font-size: 15px; font-weight: 500; color: #B4B6BC; }
-.group + .group { margin-top: 40px; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
-.grid.skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ---- skills: heading with prev/next at the right, intro in the hero's muted style, then a full-bleed shelf ---- */
+.section-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; margin: 0 0 8px; }
+.section-head h2 { margin: 0; }
+.shelf-nav:not([hidden]) { display: flex; gap: 10px; } /* stays hidden (UA [hidden]) until the script reveals it */
+.shelf-btn {
+  width: 40px; height: 40px; padding: 0; display: grid; place-items: center; cursor: pointer;
+  color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.30); border-radius: 50%;
+  transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.shelf-btn svg { width: 16px; height: 16px; display: block; }
+.shelf-btn:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.12); }
+.shelf-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.shelf-btn:disabled { cursor: default; opacity: .3; border-color: rgba(255,255,255,.30); background: rgba(255,255,255,.06); }
+.intro { margin: 0 0 6px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
+/* The shelf runs edge to edge; its inline padding equals the content column's left margin (max(--pad-x, centring
+   slack + --pad-x)) so the first card lines up with the heading and the last card rests on the column's right edge.
+   Cards are one grid column wide (--card-w), so three fill the column exactly as the Experience rows do and the
+   fourth shows in the right gutter. Scroll containers clip their children's shadows, so the shelf carries 112px of
+   bottom padding (the card shadow has faded to the background by ~106px) and the frame around it pulls the next
+   section back up by 64px, keeping the 48px rhythm. The scrollbar is hidden: the peek, the buttons, swipe and the
+   keyboard (the shelf is focusable) are the scrolling affordances. */
+.shelf-frame { position: relative; margin-bottom: -64px; }
+.shelf {
+  --shelf-pad: max(var(--pad-x), calc((100% - 1440px) / 2 + var(--pad-x)));
+  display: flex; align-items: flex-start; gap: var(--gap);
+  padding: 14px var(--shelf-pad) 112px;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--shelf-pad);
+  scrollbar-width: none;
+}
+.shelf::-webkit-scrollbar { display: none; }
+.shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
+/* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
+.shelf:focus-visible { outline: none; }
+.shelf-frame:has(.shelf:focus-visible)::after {
+  content: ""; position: absolute; inset: 6px 8px 104px; border: 2px solid var(--ink); border-radius: 8px; pointer-events: none;
+}
+@supports not selector(:has(*)) { .shelf:focus-visible { outline: 2px solid var(--ink); outline-offset: -8px; } }
 
 /* ---- footer: card fine print, items separated by space alone ---- */
 .foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
 
-@media (max-width: 1199px) { .hero { grid-template-columns: minmax(0, 1fr) 360px; gap: 56px; } }
-@media (max-width: 979px) { .grid, .grid.skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding: 0 32px; } .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; } .hero-card { width: min(100%, 360px); } }
+@media (max-width: 1199px) { .hero { gap: 56px; } }
+@media (max-width: 979px) {
+  :root { --pad-x: 32px; --card-w: calc((100% - var(--gap)) / 2); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; }
+  .hero-card { width: var(--card-w); }
+}
 @media (max-width: 599px) {
-  :root { --gap: 22px; }
-  .wrap { padding: 0 24px; }
-  .grid, .grid.skills { grid-template-columns: minmax(0, 340px); }
+  :root { --gap: 22px; --pad-x: 24px; --card-w: min(340px, 82vw); }
+  .grid { grid-template-columns: minmax(0, var(--card-w)); }
+  .shelf-frame { margin-bottom: -72px; }
   .hero { gap: 28px; padding-block: 44px 32px; }
-  .hero-card { width: min(100%, 340px); }
   .hero-photo { width: 64px; height: 64px; margin: 0 0 16px; border-radius: 5px; }
   .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
   .thesis { font-size: 22px; }
@@ -469,12 +516,11 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   --rx: 0deg; --ry: 0deg;
   --fp: calc(var(--mx) * 1.2 - 10%) calc(var(--my) * 1.2 - 10%);
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
-  position: relative; width: 100%; margin: 0;
+  position: relative; width: 100%; margin: 0; aspect-ratio: 59 / 86;
   container-type: inline-size;
   transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
-.card.career { aspect-ratio: 59 / 86; }
 .card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
 .card-inner {
   position: relative; width: 100%; height: 100%;
@@ -494,8 +540,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
     2px 28px 36px -12px rgba(0,0,0,.66),
     4px 64px 80px -30px rgba(0,0,0,.6);
 }
-.skill .card-inner { padding: ${S.padT}cqw ${S.padX}cqw ${S.padB}cqw; }
-.name, .badge, .kind, .type, .strip, .effect { position: relative; z-index: 3; }
+.name, .badge, .type, .strip, .effect { position: relative; z-index: 3; }
 .card-inner::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 4;
   box-shadow: inset 0 1.5px 0 rgba(255,255,255,.62), inset 1.5px 0 0 rgba(255,255,255,.30), inset 0 -1.5px 0 rgba(0,0,0,.34), inset -1.5px 0 0 rgba(0,0,0,.18);
@@ -544,6 +589,8 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
 /* longer badge words stay inside the struck face (face is 78% of the coin; word kept under ~88% of it) */
 .badge.mid { font-size: 1.8cqw; letter-spacing: .06em; text-indent: .06em; }
 .badge.long { font-size: 1.4cqw; letter-spacing: .02em; text-indent: .02em; }
+/* skill coins carry a glyph (inline SVG, currentColor = coin ink) sized like a badge word: ~72% of the struck face */
+.badge svg { width: 56%; height: 56%; display: block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.65)); }
 .badge::before {
   content: ""; position: absolute; inset: 11%; border-radius: 50%; pointer-events: none; z-index: -1;
   background-image:
@@ -557,12 +604,6 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
     0 0 0 1px rgba(0,0,0,.55),
     0 1px 0 1px rgba(255,255,255,.18);
 }
-/* ---- skill type mark, right-aligned in the plate ---- */
-.kind {
-  flex: none; font-family: "EB Garamond", Georgia, serif; font-weight: 700; font-size: ${S.kindFs}cqw; line-height: 1;
-  color: var(--ink); letter-spacing: .01em; padding-right: 1cqw; white-space: nowrap;
-}
-
 /* ---- art window: raised metallic lip, art set into it ---- */
 .art {
   position: relative; height: ${G.art}cqw; margin-bottom: ${G.artMb}cqw; flex: none;
@@ -615,8 +656,6 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
   text-align: left; hyphens: manual; text-wrap: pretty;
 }
 .effect p { margin: 0; }
-.effect.line { height: ${S.line}cqw; margin-bottom: 0; padding: 0 ${S.linePadX}cqw; display: flex; align-items: center; overflow: hidden; font-size: var(--efs, ${S.lineFs}cqw); }
-.effect.line p { white-space: nowrap; }
 /* ---- bottom strip ---- */
 .strip {
   height: ${G.strip}cqw; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 .3cqw;
@@ -694,8 +733,6 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
   -webkit-mask-image: ${MASK_GLARE}; mask-image: ${MASK_GLARE};
   transition: opacity .5s ease, background-position .5s ease;
 }
-.skill .satin { -webkit-mask-image: ${MASK_SATIN_S}; mask-image: ${MASK_SATIN_S}; }
-.skill .glare { -webkit-mask-image: ${MASK_GLARE_S}; mask-image: ${MASK_GLARE_S}; }
 .card.is-hover .glare { opacity: var(--gl-hover); }
 .card.is-hover .foil, .card.is-hover .sheen, .card.is-hover .prism, .card.is-hover .glitter, .card.is-hover .satin, .card.is-hover .glare { transition: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -709,54 +746,43 @@ body.detail .card { width: 720px; }
 `;
 
 // ---------- markup ----------
-function careerCard(card, rel) {
-  const t = FRAMES[card.frame];
-  if (!t) throw new Error(`Unknown frame "${card.frame}" on card ${card.id}`);
+// One full-card renderer. kind 'career': word coin, company mark in the art window, type line from
+// typeLine or company/city/dates, foil where the frame allows it. kind 'skill': glyph coin, no mark,
+// type line "[ Spell / group ]" or "[ Trap / group ]", frame chosen by the skill's type, always matte.
+const cap = s => s[0].toUpperCase() + s.slice(1);
+function fullCard(card, kind, rel) {
+  const frameName = kind === 'skill' ? card.type : card.frame;
+  const t = FRAMES[frameName];
+  if (!t) throw new Error(`Unknown frame "${frameName}" on card ${card.id}`);
+  if (kind === 'skill' && !GLYPHS[card.type]) throw new Error(`Unknown skill type "${card.type}" on card ${card.id}`);
   const art = exists(card.art) ? card.art : card.artPlaceholder;
-  const typeLine = Array.isArray(card.typeLine) ? `[ ${card.typeLine.join(' / ')} ]` : `[ ${card.company} / ${card.city} / ${card.dates} ]`;
+  const typeLine = kind === 'skill' ? `[ ${cap(card.type)} / ${card.group} ]`
+    : Array.isArray(card.typeLine) ? `[ ${card.typeLine.join(' / ')} ]` : `[ ${card.company} / ${card.city} / ${card.dates} ]`;
   const nameAvail = G.inner - G.platePadL - G.platePadR - G.plateGap - G.badge;
   const name = nameFit(card.name, nameAvail);
   const nameStyle = [name.fs !== G.nameFs ? `--nfs:${name.fs}cqw` : '', name.cond < 1 ? `--cond:${name.cond}` : ''].filter(Boolean).join(';');
-  const efs = effectSize(card.text);
+  const efs = effectSize(card.text, kind === 'skill' ? G.effectFsSkill : G.effectFs);
   const tfs = typeSize(typeLine);
-  const foil = card.foil && t.foil;
-  const badgeCls = card.badge.length >= 7 ? ' long' : card.badge.length >= 5 ? ' mid' : '';
-  const logoCls = card.logoWide ? ' wide' : '';
+  const foil = kind === 'career' && card.foil && t.foil;
+  const badge = kind === 'skill'
+    ? `<span class="badge" aria-hidden="true">${GLYPHS[card.type]}</span>`
+    : `<span class="badge${card.badge.length >= 7 ? ' long' : card.badge.length >= 5 ? ' mid' : ''}">${esc(card.badge)}</span>`;
+  const logo = kind === 'career' ? `<img class="logo${card.logoWide ? ' wide' : ''}" src="${rel}${esc(card.logo)}" alt="${esc(card.logoAlt)}">` : '';
   const layers = foil
     ? '<div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>'
     : '<div class="satin"></div><div class="glare"></div>';
   return `
-<article class="card career f-${card.frame}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}">
+<article class="card ${kind} f-${frameName}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"${nameStyle ? ` style="${nameStyle}"` : ''}><span>${esc(card.name)}</span></h3>
-      <span class="badge${badgeCls}">${esc(card.badge)}</span>
+      ${badge}
     </header>
-    <div class="art"><div class="art-inner"><img class="art-img" src="${rel}${esc(art)}" alt=""><img class="logo${logoCls}" src="${rel}${esc(card.logo)}" alt="${esc(card.logoAlt)}"></div></div>
+    <div class="art"><div class="art-inner"><img class="art-img" src="${rel}${esc(art)}" alt="">${logo}</div></div>
     <p class="type"${tfs !== G.typeFs ? ` style="--tfs:${tfs}cqw"` : ''}>${esc(typeLine)}</p>
     <div class="effect"${efs !== G.effectFs ? ` style="--efs:${efs}cqw"` : ''}><p>${esc(card.text)}</p></div>
     <footer class="strip"><span class="set">${esc(card.setCode)}</span><span class="copy">${esc(content.footer.copyright)}</span></footer>
     ${layers}
-  </div>
-</article>`;
-}
-const SKILL_LINE_FS = skillLineSize(Object.values(content.skills).flatMap(g => g.items.map(i => i.text)));
-function skillCard(item, type) {
-  const kind = `[ ${type[0].toUpperCase()}${type.slice(1)} ]`;
-  const kindW = emWidth(METRICS.ebg700, kind, 0.01) * S.kindFs + 1; // + padding-right
-  const nameAvail = (100 - 2 * S.padX) - G.platePadL - G.platePadR - G.plateGap - kindW;
-  const name = nameFit(item.name, nameAvail);
-  const nameStyle = [name.fs !== G.nameFs ? `--nfs:${name.fs}cqw` : '', name.cond < 1 ? `--cond:${name.cond}` : ''].filter(Boolean).join(';');
-  const efs = SKILL_LINE_FS;
-  return `
-<article class="card skill f-${type}" data-tilt="6">
-  <div class="card-inner">
-    <header class="plate">
-      <h4 class="name"${nameStyle ? ` style="${nameStyle}"` : ''}><span>${esc(item.name)}</span></h4>
-      <span class="kind">${esc(kind)}</span>
-    </header>
-    <div class="effect line"${efs !== S.lineFs ? ` style="--efs:${efs}cqw"` : ''}><p>${esc(item.text)}</p></div>
-    <div class="satin"></div><div class="glare"></div>
   </div>
 </article>`;
 }
@@ -776,17 +802,32 @@ function hero(site) {
     <p class="bio">${esc(site.body)}</p>
     <nav aria-label="Profile links">${linksList(site.links)}</nav>
   </div>
-  <div class="hero-card">${careerCard(content.cards[0], '')}
+  <div class="hero-card">${fullCard(content.cards[0], 'career', '')}
   </div>
 </header>`;
 }
-function skillGroup(group, id) {
+// Skills: heading with prev/next at the right (revealed by the script; hidden without it), intro line, then
+// one full-bleed snap shelf holding all eight cards in content order. The shelf is a focusable region named
+// "Skill cards" so it is not announced as a second "Skills" inside the section.
+const chevron = dir => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${dir < 0 ? 'M10 3 5 8l5 5' : 'M6 3l5 5-5 5'}"/></svg>`;
+function skillsSection() {
   return `
-<div class="group">
-  <h3 class="group-label" id="${id}">${esc(group.label)}</h3>
-  <div class="grid skills">${group.items.map(i => skillCard(i, group.type)).join('')}
+<section class="section" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="skills-h">${esc(content.skillsHeading)}</h2>
+      <div class="shelf-nav" hidden>
+        <button type="button" class="shelf-btn" data-dir="-1" aria-label="Previous card">${chevron(-1)}</button>
+        <button type="button" class="shelf-btn" data-dir="1" aria-label="Next card">${chevron(1)}</button>
+      </div>
+    </div>
+    <p class="intro">${esc(content.skillsIntro)}</p>
   </div>
-</div>`;
+  <div class="shelf-frame">
+    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">${content.skills.map(s => fullCard(s, 'skill', '')).join('')}
+    </div>
+  </div>
+</section>`;
 }
 function footer(f, links) {
   return `
@@ -816,12 +857,34 @@ const js = `
         h.style.setProperty('--cond', r < 1 ? r.toFixed(3) : '1');
       });
       var e = card.querySelector('.effect'); if (!e) return;
-      var p = e.firstElementChild, fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
-      var over = e.classList.contains('line') ? function(){ return p.scrollWidth > p.clientWidth + 1; } : function(){ return e.scrollHeight > e.clientHeight + 1; };
-      while (over() && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
+      var fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
+      while (e.scrollHeight > e.clientHeight + 1 && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
     });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+
+  // Skills shelf: prev/next step one card (card pitch measured from the first two cards); the snap settles it.
+  var shelf = document.querySelector('.shelf'), nav = document.querySelector('.shelf-nav');
+  if (shelf && nav) {
+    var reduce = mm('(prefers-reduced-motion: reduce)'), sraf = 0;
+    var btns = nav.querySelectorAll('button');
+    function pitch(){ var c = shelf.querySelectorAll('.card'); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : shelf.clientWidth; }
+    function maxScroll(){ return Math.max(0, shelf.scrollWidth - shelf.clientWidth); }
+    function update(){
+      sraf = 0;
+      var x = shelf.scrollLeft, max = maxScroll();
+      btns.forEach(function(b){ b.disabled = +b.dataset.dir < 0 ? x <= 1 : x >= max - 1; });
+    }
+    nav.hidden = false;
+    nav.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b || b.disabled) return;
+      var s = pitch(), i = Math.round(shelf.scrollLeft / s) + (+b.dataset.dir);
+      shelf.scrollTo({ left: Math.max(0, Math.min(maxScroll(), i * s)), behavior: reduce ? 'auto' : 'smooth' });
+    });
+    shelf.addEventListener('scroll', function(){ if (!sraf) sraf = requestAnimationFrame(update); }, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
 
   if (mm('(prefers-reduced-motion: reduce)') || mm('(pointer: coarse)')) return;
   document.querySelectorAll('.card').forEach(function(card){
@@ -861,7 +924,7 @@ function head(title, description) {
 <style>${css}</style>`;
 }
 function indexPage() {
-  const { site, cards, skills } = content;
+  const { site, cards } = content;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -869,15 +932,12 @@ ${head(site.title, site.thesis)}
 </head>
 <body>
 ${hero(site)}
-<main class="wrap">
-<section class="section" aria-labelledby="experience-h">
+<main>
+<section class="section wrap" aria-labelledby="experience-h">
   <h2 id="experience-h">${esc(content.experienceHeading)}</h2>
-  <div class="grid">${cards.slice(1).map(c => careerCard(c, '')).join('')}
+  <div class="grid">${cards.slice(1).map(c => fullCard(c, 'career', '')).join('')}
   </div>
-</section>
-<section class="section" aria-labelledby="skills-h">
-  <h2 id="skills-h">${esc(content.skillsHeading)}</h2>${Object.entries(skills).map(([k, g]) => skillGroup(g, `skills-${k}`)).join('')}
-</section>
+</section>${skillsSection()}
 </main>
 ${footer(content.footer, site.links)}
 <script>${js}</script>
@@ -893,7 +953,7 @@ function detailPage() {
 ${head(`${content.site.title} - card detail`, card.name)}
 </head>
 <body class="detail">
-<main>${careerCard(card, '../')}
+<main>${fullCard(card, 'career', '../')}
 </main>
 <script>${js}</script>
 </body>
@@ -915,7 +975,8 @@ for (const card of content.cards) {
 }
 write('index.html', indexPage());
 write('qa/detail.html', detailPage());
-const missing = content.cards.filter(c => !exists(c.art) && !exists(c.artPlaceholder)).map(c => c.artPlaceholder);
+const allCards = [...content.cards, ...content.skills];
+const missing = allCards.filter(c => !exists(c.art) && !exists(c.artPlaceholder)).map(c => c.artPlaceholder);
 console.log('wrote ' + written.join(', '));
-console.log(`art: ${content.cards.filter(c => exists(c.art)).length}/${content.cards.length} final, hero photo ${exists(content.site.photo) ? 'present' : 'missing (initials tile)'}`);
+console.log(`art: ${allCards.filter(c => exists(c.art)).length}/${allCards.length} final, hero photo ${exists(content.site.photo) ? 'present' : 'missing (initials tile)'}`);
 if (missing.length) console.log('placeholders not yet drawn: ' + missing.join(', '));

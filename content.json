@@ -154,55 +154,92 @@
     }
   ],
   "skillsHeading": "Skills",
-  "skills": {
-    "offense": {
-      "label": "Offense: design and strategy",
+  "skills": [
+    {
+      "id": "comp-plan-design",
       "type": "spell",
-      "items": [
-        {
-          "name": "Comp Plan Design",
-          "text": "Quotas, accelerators, SPIFs, deal-based and usage-based plans."
-        },
-        {
-          "name": "GTM Strategy",
-          "text": "Segmentation, motion design, launch planning."
-        },
-        {
-          "name": "Quota & Territory Planning",
-          "text": "Capacity models, coverage, fair territories."
-        },
-        {
-          "name": "Funnel Mapping",
-          "text": "Stage definitions, conversion instrumentation, handoffs."
-        }
-      ]
+      "group": "Design & Strategy",
+      "name": "Comp Plan Design",
+      "text": "Quotas, accelerators, SPIFs, deal-based and usage-based plans. Designs the mechanics so a plan pays for the behaviour the business actually wants, and models the cost before anyone signs.",
+      "setCode": "JS-EN008",
+      "art": "assets/art/art-08-comp-plan-design.jpg",
+      "artPlaceholder": "assets/art/placeholder-08-comp-plan-design.svg"
     },
-    "defense": {
-      "label": "Defense: controls and governance",
+    {
+      "id": "payout-controls",
       "type": "trap",
-      "items": [
-        {
-          "name": "Payout Controls",
-          "text": "Calculate, approve, export, pay, with an audit trail at every step."
-        },
-        {
-          "name": "Comp Compliance & Governance",
-          "text": "Plan documents, acknowledgments, policy enforcement."
-        },
-        {
-          "name": "Data Integrity",
-          "text": "One source of truth for reps, roles, quotas and credit."
-        },
-        {
-          "name": "Clawback Policy",
-          "text": "Clear rules for churn, refunds and disputes."
-        }
-      ]
+      "group": "Controls & Governance",
+      "name": "Payout Controls",
+      "text": "Calculate, approve, export, pay, with an audit trail at every step. Every payout traces back to a plan version, a deal and an approver.",
+      "setCode": "JS-EN009",
+      "art": "assets/art/art-09-payout-controls.jpg",
+      "artPlaceholder": "assets/art/placeholder-09-payout-controls.svg"
+    },
+    {
+      "id": "gtm-strategy",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "GTM Strategy",
+      "text": "Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.",
+      "setCode": "JS-EN010",
+      "art": "assets/art/art-10-gtm-strategy.jpg",
+      "artPlaceholder": "assets/art/placeholder-10-gtm-strategy.svg"
+    },
+    {
+      "id": "comp-compliance",
+      "type": "trap",
+      "group": "Controls & Governance",
+      "name": "Comp Compliance & Governance",
+      "text": "Plan documents, acknowledgments, policy enforcement. Reps sign what they are paid on, and changes go through a process instead of a spreadsheet edit.",
+      "setCode": "JS-EN011",
+      "art": "assets/art/art-11-comp-compliance.jpg",
+      "artPlaceholder": "assets/art/placeholder-11-comp-compliance.svg"
+    },
+    {
+      "id": "quota-territory",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Quota & Territory Planning",
+      "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
+      "setCode": "JS-EN012",
+      "art": "assets/art/art-12-quota-territory.jpg",
+      "artPlaceholder": "assets/art/placeholder-12-quota-territory.svg"
+    },
+    {
+      "id": "data-integrity",
+      "type": "trap",
+      "group": "Controls & Governance",
+      "name": "Data Integrity",
+      "text": "One source of truth for reps, roles, quotas and credit. Catches the duplicate account, the missing territory and the stale role before they become a wrong payment.",
+      "setCode": "JS-EN013",
+      "art": "assets/art/art-13-data-integrity.jpg",
+      "artPlaceholder": "assets/art/placeholder-13-data-integrity.svg"
+    },
+    {
+      "id": "funnel-mapping",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Funnel Mapping",
+      "text": "Stage definitions, conversion instrumentation, handoffs. Maps how a deal actually moves so forecasts, comp and marketing all read from the same funnel.",
+      "setCode": "JS-EN014",
+      "art": "assets/art/art-14-funnel-mapping.jpg",
+      "artPlaceholder": "assets/art/placeholder-14-funnel-mapping.svg"
+    },
+    {
+      "id": "clawback-policy",
+      "type": "trap",
+      "group": "Controls & Governance",
+      "name": "Clawback Policy",
+      "text": "Clear rules for churn, refunds and disputes. Written down before the deal closes, so nobody argues about it after.",
+      "setCode": "JS-EN015",
+      "art": "assets/art/art-15-clawback-policy.jpg",
+      "artPlaceholder": "assets/art/placeholder-15-clawback-policy.svg"
     }
-  },
+  ],
   "footer": {
     "setCode": "JS-EN001",
     "copyright": "© 2026 Jaspal Singh",
     "note": "Original card design. Company names and logos belong to their owners. Views my own."
-  }
+  },
+  "skillsIntro": "Spells are what I design and build. Traps are the controls that keep payouts honest."
 }
