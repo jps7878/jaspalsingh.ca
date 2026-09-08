@@ -1,0 +1,111 @@
+{
+  "site": {
+    "title": "Jaspal Singh",
+    "name": "Jaspal Singh",
+    "headline": "Incentives Engineer and Forward Deployed Engineer at Anthropic. Founder, Qotiv.",
+    "thesis": "I sold for six years, ran the systems that pay sellers, and now I build them as an engineer at Anthropic.",
+    "body": "Account executive at RBC Insurance, Clio and Deel. Moved into revenue strategy and operations at Deel, where I ran sales compensation for roughly 500 reps worldwide, then led revenue operations at Engine as Director. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems, and I'm building Qotiv, a compensation platform for deal-based and usage-based commissions.",
+    "photo": "assets/photo.jpg",
+    "photoAlt": "Jaspal Singh",
+    "links": [
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/jaspalsinghsoor/" },
+      { "label": "Email", "href": "mailto:jaspalsinghsoor@gmail.com" },
+      { "label": "Qotiv", "href": "https://qotiv.com" },
+      { "label": "GitHub", "href": "https://github.com/jps7878" }
+    ]
+  },
+  "experienceHeading": "Experience",
+  "cards": [
+    {
+      "id": "anthropic", "frame": "eng", "foil": true, "setCode": "JS-EN001",
+      "name": "Incentives Engineer – Forward Deployed Engineer",
+      "badge": "ENG",
+      "company": "Anthropic", "city": "San Francisco", "dates": "May 2026 – Present",
+      "text": "Builds the internal systems behind Anthropic's incentive programs: compensation logic, the data that feeds it and the frameworks that keep plans consistent as the company scales. Designs the mechanics, then ships the tooling that calculates, audits and pays. Brings ten years of selling and running revenue operations to an engineering seat.",
+      "art": "assets/art/art-01-anthropic.jpg", "artPlaceholder": "assets/art/placeholder-01-anthropic.svg",
+      "logo": "assets/logos/anthropic.svg", "logoAlt": "Anthropic"
+    },
+    {
+      "id": "qotiv", "frame": "founder", "foil": true, "setCode": "JS-EN002",
+      "name": "Founder",
+      "badge": "FOUNDER",
+      "company": "Qotiv", "city": "Toronto", "dates": "Nov 2025 – Present",
+      "text": "Building a sales compensation platform that pays reps on deals and on product usage from one engine. Plan compiler, full payout lifecycle from calculation to approval to export, compliance and document signing built in. Made for revenue operations teams that have outgrown spreadsheets.",
+      "art": "assets/art/art-02-qotiv.jpg", "artPlaceholder": "assets/art/placeholder-02-qotiv.svg",
+      "logo": "assets/logos/qotiv.png", "logoAlt": "Qotiv"
+    },
+    {
+      "id": "engine", "frame": "ops", "foil": false, "setCode": "JS-EN003",
+      "name": "Director, Revenue Strategy & Operations",
+      "badge": "OPS",
+      "company": "Engine", "city": "Toronto", "dates": "Jan 2025 – Apr 2026",
+      "text": "Led the operations team across new business sales, expansion sales, revenue data, product GTM operations and compensation. Launched compensation infrastructure covering every variable role, aligning incentives with company goals. Scaled the team as the business grew.",
+      "art": "assets/art/art-03-engine.jpg", "artPlaceholder": "assets/art/placeholder-03-engine.svg",
+      "logo": "assets/logos/engine.svg", "logoAlt": "Engine"
+    },
+    {
+      "id": "deel-revops", "frame": "ops", "foil": false, "setCode": "JS-EN004",
+      "name": "Revenue Strategy & Operations",
+      "badge": "OPS",
+      "company": "Deel", "city": "Toronto", "dates": "Sep 2022 – Jan 2025",
+      "text": "Senior Analyst, then Manager, then Senior Manager. Owned sales compensation for roughly 500 reps globally and mapped the sales funnel for every product launch. Managed the revenue tech stack and process improvements, and served as interim sales operations leader from November 2022 to February 2023.",
+      "art": "assets/art/art-04-deel-revops.jpg", "artPlaceholder": "assets/art/placeholder-04-deel-revops.svg",
+      "logo": "assets/logos/deel.svg", "logoAlt": "Deel"
+    },
+    {
+      "id": "deel-ae", "frame": "sales", "foil": false, "setCode": "JS-EN005",
+      "name": "Account Executive, SMB",
+      "badge": "SALES",
+      "company": "Deel", "city": "Toronto", "dates": "Nov 2021 – Sep 2022",
+      "text": "Sold global hiring, payroll and employer-of-record services to small and mid-sized businesses. Full cycle from outbound and discovery through demo and close, helping companies hire legally in new countries and pay in more than 120 currencies.",
+      "art": "assets/art/art-05-deel-ae.jpg", "artPlaceholder": "assets/art/placeholder-05-deel-ae.svg",
+      "logo": "assets/logos/deel.svg", "logoAlt": "Deel"
+    },
+    {
+      "id": "clio", "frame": "sales", "foil": false, "setCode": "JS-EN006",
+      "name": "Account Executive, Outbound",
+      "badge": "SALES",
+      "company": "Clio", "city": "Toronto", "dates": "Dec 2019 – Nov 2021",
+      "text": "Built outbound pipeline for cloud practice-management software sold to law firms. Ran the full cycle from cold outreach to close, two years on site in Toronto.",
+      "art": "assets/art/art-06-clio.jpg", "artPlaceholder": "assets/art/placeholder-06-clio.svg",
+      "logo": "assets/logos/clio.svg", "logoAlt": "Clio"
+    },
+    {
+      "id": "rbc", "frame": "sales", "foil": false, "setCode": "JS-EN007",
+      "name": "Account Executive, Life & Living Benefits",
+      "badge": "SALES",
+      "company": "RBC Insurance", "city": "Toronto", "dates": "Jun 2016 – Nov 2019",
+      "text": "Advised clients on life insurance and living-benefits coverage. Three and a half years in a licensed, regulated sales role, learning to sell something people hope they never use.",
+      "art": "assets/art/art-07-rbc.jpg", "artPlaceholder": "assets/art/placeholder-07-rbc.svg",
+      "logo": "assets/logos/rbc.svg", "logoAlt": "RBC Insurance"
+    }
+  ],
+  "skillsHeading": "Skills",
+  "skills": {
+    "offense": {
+      "label": "Offense: design and strategy",
+      "type": "spell",
+      "items": [
+        { "name": "Comp Plan Design", "text": "Quotas, accelerators, SPIFs, deal-based and usage-based plans." },
+        { "name": "GTM Strategy", "text": "Segmentation, motion design, launch planning." },
+        { "name": "Quota & Territory Planning", "text": "Capacity models, coverage, fair territories." },
+        { "name": "Funnel Mapping", "text": "Stage definitions, conversion instrumentation, handoffs." }
+      ]
+    },
+    "defense": {
+      "label": "Defense: controls and governance",
+      "type": "trap",
+      "items": [
+        { "name": "Payout Controls", "text": "Calculate, approve, export, pay, with an audit trail at every step." },
+        { "name": "Comp Compliance & Governance", "text": "Plan documents, acknowledgments, policy enforcement." },
+        { "name": "Data Integrity", "text": "One source of truth for reps, roles, quotas and credit." },
+        { "name": "Clawback Policy", "text": "Clear rules for churn, refunds and disputes." }
+      ]
+    }
+  },
+  "footer": {
+    "setCode": "JS-EN001",
+    "copyright": "© 2026 Jaspal Singh",
+    "note": "Original card design. Company names and logos belong to their owners. Views my own."
+  }
+}
