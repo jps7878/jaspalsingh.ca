@@ -526,16 +526,19 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 
 /* ---- card shell (from the proof; sized by the grid column, cqw units inside) ---- */
 .card {
-  --mx: 64%; --my: 30%;
+  /* light position: the ambient pass drives --ax/--ay (registered in the motion section), the pointer --px/--py;
+     --lo scales the layer opacities and --ga adds to the glare, both moved by the pass only */
+  --mx: var(--ax, 64%); --my: var(--ay, 30%); --lo: var(--fo, 1); --ga1: var(--ga, 0);
   --rx: 0deg; --ry: 0deg;
   --fp: calc(var(--mx) * 1.2 - 10%) calc(var(--my) * 1.2 - 10%);
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
   position: relative; width: 100%; margin: 0; aspect-ratio: 59 / 86;
   container-type: inline-size;
-  transform: translateY(calc(var(--lift, 0px) + var(--drop, 0px))) rotate(var(--rest, 0deg)) perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+  --dx: 0px; --dy: 0px; --dr: 0deg; --ds: 1; /* deal-in offsets, zero at rest (see the motion section) */
+  transform: translate(var(--dx), calc(var(--lift, 0px) + var(--drop, 0px) + var(--dy))) rotate(calc(var(--rest, 0deg) + var(--dr))) scale(var(--ds)) perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
-.card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
+.card.is-hover { --mx: var(--px, 64%); --my: var(--py, 30%); --lo: 1; --ga1: 0; transition: transform .07s linear; z-index: 5; }
 .card-inner {
   position: relative; width: 100%; height: 100%;
   border-radius: 4.5cqw; overflow: hidden; isolation: isolate;
@@ -693,7 +696,7 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
       hsla(175, 90%, 55%, .12) 53%, hsla(215, 95%, 62%, .16) 55.5%, hsla(275, 90%, 64%, .22) 57.5%, hsla(320, 90%, 62%, .22) 59.5%, rgba(255,255,255,0) 61%);
   background-size: 240% 240%;
   background-position: var(--fp);
-  mix-blend-mode: hard-light; opacity: .48;
+  mix-blend-mode: hard-light; opacity: calc(.48 * var(--lo));
   -webkit-mask-image: var(--falloff), ${MASK_FOIL}; mask-image: var(--falloff), ${MASK_FOIL};
   -webkit-mask-composite: source-in; mask-composite: intersect;
   transition: background-position .55s cubic-bezier(.2,.8,.2,1);
@@ -704,7 +707,7 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
     rgba(255,255,255,0) 49.8%, rgba(255,255,255,.16) 51.4%, rgba(255,255,255,.6) 52.5%, rgba(255,255,255,.74) 53%, rgba(255,255,255,.58) 53.6%, rgba(255,255,255,.16) 54.8%, rgba(255,255,255,0) 56.4%);
   background-size: 240% 240%;
   background-position: var(--fp);
-  mix-blend-mode: normal; opacity: .85;
+  mix-blend-mode: normal; opacity: calc(.85 * var(--lo));
   -webkit-mask-image: var(--falloff), ${MASK_SHEEN}; mask-image: var(--falloff), ${MASK_SHEEN};
   -webkit-mask-composite: source-in; mask-composite: intersect;
   transition: background-position .55s cubic-bezier(.2,.8,.2,1);
@@ -712,7 +715,7 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
 /* directional micro-grain, visible only inside the band */
 .prism {
   background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0) 0 2px, rgba(255,255,255,.7) 2px 3px, rgba(0,0,0,.35) 3px 4px, rgba(0,0,0,0) 4px 6px);
-  mix-blend-mode: overlay; opacity: .7;
+  mix-blend-mode: overlay; opacity: calc(.7 * var(--lo));
   -webkit-mask-image: linear-gradient(115deg, transparent 45.5%, #000 48.5%, #000 57.5%, transparent 60.5%), ${MASK_SHEEN}, var(--falloff);
   mask-image: linear-gradient(115deg, transparent 45.5%, #000 48.5%, #000 57.5%, transparent 60.5%), ${MASK_SHEEN}, var(--falloff);
   -webkit-mask-size: 240% 240%, 100% 100%, 100% 100%; mask-size: 240% 240%, 100% 100%, 100% 100%;
@@ -724,7 +727,7 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
   background-image: ${GLITTER}, ${GLITTER};
   background-size: 210px 210px, 150px 150px;
   background-position: calc(var(--mx) * .5) calc(var(--my) * .5), calc(100% - var(--mx) * .35) calc(var(--my) * .3);
-  mix-blend-mode: color-dodge; opacity: .5;
+  mix-blend-mode: color-dodge; opacity: calc(.5 * var(--lo));
   -webkit-mask-image: linear-gradient(#000, #000); mask-image: linear-gradient(#000, #000);
   -webkit-mask-size: ${f2(CZ.art.w)}cqw ${f2(CZ.art.h)}cqw; mask-size: ${f2(CZ.art.w)}cqw ${f2(CZ.art.h)}cqw;
   -webkit-mask-position: ${f2(CZ.art.x)}cqw ${f2(CZ.art.y)}cqw; mask-position: ${f2(CZ.art.x)}cqw ${f2(CZ.art.y)}cqw;
@@ -743,7 +746,7 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
 }
 .glare {
   background: radial-gradient(farthest-corner circle at var(--mx) var(--my), rgba(255,255,255,.7) 0%, rgba(255,255,255,.28) 20%, rgba(255,255,255,0) 58%);
-  mix-blend-mode: overlay; opacity: var(--gl);
+  mix-blend-mode: overlay; opacity: calc(var(--gl) * var(--lo) + var(--ga1));
   -webkit-mask-image: ${MASK_GLARE}; mask-image: ${MASK_GLARE};
   transition: opacity .5s ease, background-position .5s ease;
 }
@@ -753,6 +756,101 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
   .card { transform: none !important; transition: none; }
   .foil, .sheen, .prism, .glitter, .satin, .glare { transition: none; }
 }
+
+/* ---- motion (2026-09-09, "the cards laying flat is boring"): dealt onto the slate, an occasional pass of light over
+   the foils, a cursor light on the stone, click to inspect. Everything is gated so the page degrades to what it was:
+   the undealt state sits behind html.js (set in <head>, so with scripts off every card is simply visible), the pass
+   behind html.ambient (script: @property supported, motion allowed, fine pointer); the light, the inspect buttons and
+   the dialog exist only when the script builds them. Reduced motion: cards appear in place, no pass, no light, open
+   and close are instant. Coarse pointers: no pass, no light, no tilt; tap to inspect still works. ---- */
+@property --ax { syntax: '<percentage>'; inherits: true; initial-value: 64%; }
+@property --ay { syntax: '<percentage>'; inherits: true; initial-value: 30%; }
+@property --fo { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --ga { syntax: '<number>'; inherits: true; initial-value: 0; }
+/* deal-in: an undealt card hangs above its slot (105%, a beat toward the row's leading edge, a couple of degrees off,
+   the angle seeded per card by the build as --dr0) under a wide soft lift shadow (.card::before); it comes down over
+   480ms and the lift shadow collapses into the card's own as it touches. The card is opaque from the first 140ms on,
+   it lands rather than dissolves in. The script staggers a batch through --dd and drops .dealing once landed. */
+.card::before {
+  content: ""; position: absolute; inset: 0; border-radius: 4.5cqw; pointer-events: none; opacity: 0;
+  box-shadow: 10px 34px 40px -8px rgba(4,7,14,.5), 22px 72px 88px -22px rgba(5,9,18,.48);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .grid > .card:not(.dealt), html.js .shelf > .card:not(.dealt) { opacity: 0; --dx: -26px; --dy: -16px; --dr: var(--dr0, -2.4deg); --ds: 1.05; }
+  html.js .grid > .card:not(.dealt)::before, html.js .shelf > .card:not(.dealt)::before { opacity: 1; }
+  .card.dealing { transition: transform .48s cubic-bezier(.2,.8,.2,1) var(--dd, 0ms), opacity .14s ease-out var(--dd, 0ms); }
+  .card.dealing::before { transition: opacity .48s cubic-bezier(.5,0,.8,.5) var(--dd, 0ms); }
+}
+/* ambient: one pass of light over a foil card, 3.6s, one direction. The resting glint dims, a light enters at the top
+   right corner, crosses the card down and to the left (quick in, long tail out) and leaves at the bottom left, then
+   the resting glint comes back. It drives the light position the pointer drives (--ax/--ay, resolved through --mx/--my
+   on .card), so the layers move exactly as they do under the hand; --fo carries the fades at either edge (the two
+   jumps, at 12% and 62%, happen while the layers are dark) and --ga lifts the glare as the light crosses the middle.
+   The script runs it once as a card lands and then every 24s or so, one card at a time, only on cards that are on
+   screen and not under the hand; nothing loops in CSS. */
+@keyframes pass {
+  0%    { --ax: 64%; --ay: 30%; --fo: 1; --ga: 0; animation-timing-function: ease-in-out; }
+  11.9% { --ax: 64%; --ay: 30%; }
+  12%   { --ax: 132%; --ay: -34%; --fo: 0; --ga: 0; animation-timing-function: cubic-bezier(.35,0,.2,1); }
+  19%   { --fo: 1; }
+  30%   { --ga: .14; animation-timing-function: ease-in-out; }
+  50%   { --fo: 1; animation-timing-function: ease-in; }
+  61.9% { --ax: -30%; --ay: 122%; }
+  62%   { --ax: 64%; --ay: 30%; --fo: 0; --ga: 0; animation-timing-function: ease-out; }
+  90%, 100% { --ax: 64%; --ay: 30%; --fo: 1; --ga: 0; }
+}
+html.ambient .foil-card.pass { animation: pass 3.6s linear both; }
+/* while the pass drives the card the layers follow it directly; their .55s ease is for the hand leaving */
+html.ambient .foil-card.pass .foil, html.ambient .foil-card.pass .sheen, html.ambient .foil-card.pass .prism,
+html.ambient .foil-card.pass .glitter, html.ambient .foil-card.pass .glare { transition: none; }
+/* cursor light: one pool of cool light on the slate, a key light following the pointer a beat behind, under everything */
+.lume {
+  position: fixed; left: 0; top: 0; width: 720px; height: 720px; margin: -360px 0 0 -360px; border-radius: 50%;
+  pointer-events: none; z-index: 0; mix-blend-mode: screen; opacity: 0; transition: opacity .6s ease; will-change: transform;
+  background: radial-gradient(closest-side, rgba(214,226,245,.16), rgba(214,226,245,.06) 46%, rgba(214,226,245,0));
+}
+.lume.on { opacity: 1; }
+.hero, main, .foot { position: relative; z-index: 1; }
+/* inspect. The button the script adds to each card is the keyboard and screen-reader target (named "Inspect <name>";
+   the article keeps its text); it covers the card without taking pointer events, so text on the card can still be
+   selected and a genuine click on the card opens it, and it carries the focus ring. The dialog is a native <dialog>
+   (top layer, page inert): a dim that blurs the page, a stage at the final geometry that a clone of the card flies to
+   (FLIP, scale about its top-left corner) on its own elevation shadow, a close button and a one-line hint. */
+html.js .grid > .card, html.js .shelf > .card { cursor: zoom-in; }
+.inspect-btn { position: absolute; inset: 0; margin: 0; padding: 0; border: 0; background: none; border-radius: 4.5cqw; pointer-events: none; -webkit-appearance: none; appearance: none; }
+.inspect-btn:focus-visible { outline: 2px solid #E6EAF1; outline-offset: 6px; } /* the page ink, literal: inside a card --ink is the frame's ink */
+html.inspecting { overflow: hidden; }
+html.inspecting body { position: fixed; width: 100%; } /* holds on iOS too; the script sets top to -scrollY */
+.inspect {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  background: transparent; color: inherit; overflow: visible; z-index: 100; outline: none; -webkit-tap-highlight-color: transparent;
+}
+.inspect::backdrop { background: transparent; }
+.inspect-dim { position: absolute; inset: 0; background: rgba(6,8,14,.84); opacity: 0; transition: opacity .22s ease; cursor: zoom-out; }
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .inspect-dim { background: rgba(6,8,14,.6); -webkit-backdrop-filter: blur(10px) saturate(.85); backdrop-filter: blur(10px) saturate(.85); }
+}
+.inspect.on .inspect-dim { opacity: 1; }
+.inspect-stage { position: absolute; transform-origin: 0 0; transition: transform .48s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+.inspect-stage::before {
+  content: ""; position: absolute; inset: 0; border-radius: 4.5% / 3.09%; opacity: 0; transition: opacity .48s ease;
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,.7), 0 64px 120px -24px rgba(0,0,0,.75), 0 0 0 1px rgba(0,0,0,.4);
+}
+.inspect.on .inspect-stage::before { opacity: 1; }
+.inspect-stage .card { cursor: auto; }
+.inspect-close {
+  position: absolute; top: 18px; right: 18px; width: 40px; height: 40px; padding: 0; display: grid; place-items: center; cursor: pointer;
+  color: #E6EAF1; background: rgba(176,192,216,.10); border: 1px solid rgba(176,192,216,.4); border-radius: 50%;
+  opacity: 0; transition: opacity .22s ease, border-color .15s ease, background-color .15s ease;
+}
+.inspect-close svg { width: 16px; height: 16px; display: block; }
+.inspect-close:hover { border-color: rgba(196,210,230,.72); background: rgba(176,192,216,.2); }
+.inspect-close:focus-visible { outline: 2px solid #E6EAF1; outline-offset: 3px; }
+.inspect.on .inspect-close { opacity: 1; }
+.inspect-hint { position: absolute; left: 0; right: 0; margin: 0; padding: 0 24px; text-align: center; font-size: 13px; font-weight: 500; letter-spacing: .01em; line-height: 1.4; color: var(--muted); opacity: 0; transition: opacity .15s ease; pointer-events: none; }
+.inspect.on .inspect-hint { opacity: 1; transition: opacity .3s ease .25s; } /* arrives a beat after the card, leaves with the dim */
+@media (max-width: 599px) { .inspect-close { top: 12px; right: 12px; } }
+@media (prefers-reduced-motion: reduce) { .inspect-dim, .inspect-stage, .inspect-stage::before, .inspect-close, .inspect-hint, .lume { transition: none; } }
 
 /* ---- qa close-up ---- */
 body.detail { padding: 42px 24px; display: flex; justify-content: center; align-items: flex-start; }
@@ -870,6 +968,9 @@ body {
 // typeLine or company/city/dates, foil where the frame allows it. kind 'skill': glyph coin, no mark,
 // type line "[ Spell / group ]", "[ Trap / group ]" or a kindLabel override, frame chosen by the skill's type; foil if the skill asks and its frame allows (the rare).
 const cap = s => s[0].toUpperCase() + s.slice(1);
+// Deal-in angle per card, in build order: a couple of degrees either way, so a dealt row does not alternate like a metronome.
+const DEAL_TILT = [-2.6, 2.1, -1.8, 2.9, -2.3, 1.7, -3.0, 2.4, -2.0, 2.7, -1.6, 2.2, -2.8, 1.9, -2.5, 3.1, -2.1];
+let dealCount = 0;
 function fullCard(card, kind, rel, opts = {}) {
   const frameName = kind === 'skill' ? card.type : card.frame;
   const t = FRAMES[frameName];
@@ -884,6 +985,7 @@ function fullCard(card, kind, rel, opts = {}) {
   const efs = effectSize(card.text, kind === 'skill' ? G.effectFsSkill : G.effectFs);
   const tfs = typeSize(typeLine);
   const foil = !!(card.foil && t.foil);
+  const style = [opts.style || '', `--dr0:${DEAL_TILT[dealCount++ % DEAL_TILT.length]}deg`].filter(Boolean).join(';');
   const badge = kind === 'skill'
     ? `<span class="badge" aria-hidden="true">${GLYPHS[card.type]}</span>`
     : `<span class="badge${card.badge.length >= 7 ? ' long' : card.badge.length >= 5 ? ' mid' : ''}">${esc(card.badge)}</span>`;
@@ -892,7 +994,7 @@ function fullCard(card, kind, rel, opts = {}) {
     ? '<div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>'
     : '<div class="satin"></div><div class="glare"></div>';
   return `
-<article class="card ${kind} f-${frameName}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}"${opts.style ? ` style="${opts.style}"` : ''}>
+<article class="card ${kind} f-${frameName}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}"${style ? ` style="${style}"` : ''}>
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"${nameStyle ? ` style="${nameStyle}"` : ''}><span>${esc(card.name)}</span></h3>
@@ -955,37 +1057,79 @@ function footer(f, links) {
 </footer>`;
 }
 
-// ---------- script: measured fit after fonts load, then pointer tilt (mouse/pen only) ----------
+// ---------- script ----------
+// Measured fit after the fonts load, then: cards dealt in as they scroll into view, pointer tilt (mouse/pen only), the
+// occasional pass of light over the foils and a cursor light on the slate (fine pointer, motion allowed), and click to
+// inspect. Everything past fit() is additive: with the script off the page is the flat, complete page.
 const js = `
 (function(){
-  var mm = window.matchMedia ? function(q){ return matchMedia(q).matches; } : function(){ return false; };
+  var doc = document, root = doc.documentElement;
+  var mq = window.matchMedia ? function(q){ return matchMedia(q); } : function(){ return { matches: false }; };
+  var rm = mq('(prefers-reduced-motion: reduce)'), coarse = mq('(pointer: coarse)').matches;
+  function reduced(){ return rm.matches; } // read when it matters, so a preference changed mid-visit is honoured
+  var tilt = !rm.matches && !coarse;        // sampled once: it decides what gets bound
   var NFS = ${G.nameFs}, NFS_MIN = ${G.nameFsMin}, COND_MIN = ${G.nameCondMin};
+  var pX = -1, pY = -1; // last pointer position, for the inspected card
+  // Measured fit. Widths are read from computed style (layout values, so a card mid-deal or under the hand measures
+  // the same as one at rest) and the name plates are batched: one write pass, one read pass, one write pass.
   function fit(){
-    document.querySelectorAll('.card').forEach(function(card){
-      var W = card.clientWidth / 100; if (!W) return;
+    var cards = [].slice.call(doc.querySelectorAll('.card')), names = [];
+    cards.forEach(function(card){
       card.querySelectorAll('.name').forEach(function(h){
         var s = h.firstElementChild; if (!s) return;
-        s.style.transform = 'none'; h.style.setProperty('--nfs', NFS + 'cqw');
-        var w = s.getBoundingClientRect().width, a = h.clientWidth;
-        s.style.transform = '';
-        if (!(w > 0)) return;
-        var r = a / w, fs = NFS;
-        if (r < COND_MIN) { fs = Math.max(NFS_MIN, NFS * r / COND_MIN); r = Math.min(1, r * NFS / fs); }
-        h.style.setProperty('--nfs', fs.toFixed(2) + 'cqw');
-        h.style.setProperty('--cond', r < 1 ? r.toFixed(3) : '1');
+        h.style.setProperty('--nfs', NFS + 'cqw'); names.push([h, s]);
       });
-      var e = card.querySelector('.effect'); if (!e) return;
+    });
+    var m = names.map(function(p){ return [parseFloat(getComputedStyle(p[1]).width), parseFloat(getComputedStyle(p[0]).width)]; });
+    names.forEach(function(p, i){
+      var w = m[i][0], a = m[i][1]; if (!(w > 0)) return;
+      var r = a / w, fs = NFS;
+      if (r < COND_MIN) { fs = Math.max(NFS_MIN, NFS * r / COND_MIN); r = Math.min(1, r * NFS / fs); }
+      p[0].style.setProperty('--nfs', fs.toFixed(2) + 'cqw');
+      p[0].style.setProperty('--cond', r < 1 ? r.toFixed(3) : '1');
+    });
+    cards.forEach(function(card){
+      var W = card.clientWidth / 100, e = card.querySelector('.effect'); if (!W || !e) return;
       var fs = parseFloat(getComputedStyle(e).fontSize) / W, n = 0;
       while (e.scrollHeight > e.clientHeight + 1 && fs > 2.4 && n++ < 14) { fs -= .1; e.style.setProperty('--efs', fs.toFixed(2) + 'cqw'); }
     });
   }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); else fit();
+
+  // Deal-in. Undealt cards are hidden by CSS (html.js, motion allowed) until .dealt; an IntersectionObserver deals
+  // each as it enters the viewport, a batch 80ms apart in document order (a tall viewport gets its hand dealt across a
+  // second, not in a burst). A foil card catches a pass of light as it lands.
+  var waiting = [].slice.call(doc.querySelectorAll('.grid > .card, .shelf > .card')), started = false;
+  function dealAll(){ waiting.forEach(function(c){ c.classList.add('dealt'); }); }
+  function deal(){
+    if (started) return; started = true;
+    if (reduced() || !('IntersectionObserver' in window)) return dealAll();
+    try {
+      var io = new IntersectionObserver(function(entries){
+        var batch = entries.filter(function(e){ return e.isIntersecting; }).map(function(e){ return e.target; })
+          .sort(function(a, b){ return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        batch.forEach(function(c, i){
+          io.unobserve(c);
+          var d = i * 80;
+          c.style.setProperty('--dd', d + 'ms');
+          c.classList.add('dealing', 'dealt');
+          setTimeout(function(){ c.classList.remove('dealing'); c.style.removeProperty('--dd'); }, d + 560);
+          if (c.classList.contains('foil-card')) firstPass(c, d + 900);
+        });
+      }, { rootMargin: '0px 0px -10% 0px' });
+      waiting.forEach(function(c){ io.observe(c); });
+    } catch (err) { dealAll(); }
+  }
+  // Fonts first so the cards land printed, but never more than a beat: after 600ms they deal in whatever face is
+  // there, and fit() runs again when the fonts arrive.
+  var fontsIn = false;
+  function go(){ fit(); deal(); }
+  (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(function(){ fontsIn = true; go(); }, go);
+  setTimeout(function(){ if (!fontsIn) go(); }, 600);
 
   // Skills shelf: prev/next step one card (card pitch measured from the first two cards); the snap settles it.
-  var shelf = document.querySelector('.shelf'), nav = document.querySelector('.shelf-nav');
+  var shelf = doc.querySelector('.shelf'), nav = doc.querySelector('.shelf-nav');
   if (shelf && nav) {
-    var reduce = mm('(prefers-reduced-motion: reduce)'), sraf = 0;
-    var btns = nav.querySelectorAll('button');
+    var sraf = 0, btns = nav.querySelectorAll('button');
     function pitch(){ var c = shelf.querySelectorAll('.card'); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : shelf.clientWidth; }
     function maxScroll(){ return Math.max(0, shelf.scrollWidth - shelf.clientWidth); }
     function update(){
@@ -997,34 +1141,193 @@ const js = `
     nav.addEventListener('click', function(e){
       var b = e.target.closest('button'); if (!b || b.disabled) return;
       var s = pitch(), i = Math.round(shelf.scrollLeft / s) + (+b.dataset.dir);
-      shelf.scrollTo({ left: Math.max(0, Math.min(maxScroll(), i * s)), behavior: reduce ? 'auto' : 'smooth' });
+      shelf.scrollTo({ left: Math.max(0, Math.min(maxScroll(), i * s)), behavior: reduced() ? 'auto' : 'smooth' });
     });
     shelf.addEventListener('scroll', function(){ if (!sraf) sraf = requestAnimationFrame(update); }, { passive: true });
     addEventListener('resize', update);
     update();
   }
 
-  if (mm('(prefers-reduced-motion: reduce)') || mm('(pointer: coarse)')) return;
-  document.querySelectorAll('.card').forEach(function(card){
-    var max = parseFloat(card.dataset.tilt || '10'), raf = 0, px = .5, py = .5;
+  // Pointer tilt, bound per card so the inspected clone can take it too. The pointer writes --px/--py (the light) and
+  // --rx/--ry (the angles); .card.is-hover routes the light to them. Returns the leave routine.
+  function bindTilt(card, max){
+    var raf = 0, px = .5, py = .5, settle = 0;
     function apply(){
       raf = 0;
-      card.style.setProperty('--mx', (px*100).toFixed(2) + '%');
-      card.style.setProperty('--my', (py*100).toFixed(2) + '%');
+      card.style.setProperty('--px', (px*100).toFixed(2) + '%');
+      card.style.setProperty('--py', (py*100).toFixed(2) + '%');
       card.style.setProperty('--rx', ((.5 - py) * 2 * max).toFixed(2) + 'deg');
       card.style.setProperty('--ry', ((px - .5) * 2 * max).toFixed(2) + 'deg');
+    }
+    function leave(){
+      card.classList.remove('is-hover'); card.classList.add('settling');
+      ['--px','--py','--rx','--ry'].forEach(function(p){ card.style.removeProperty(p); });
+      clearTimeout(settle); settle = setTimeout(function(){ card.classList.remove('settling'); }, 600);
     }
     card.addEventListener('pointermove', function(e){
       if (e.pointerType === 'touch') return;
       var r = card.getBoundingClientRect();
       px = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
       py = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
-      card.classList.add('is-hover');
+      card.classList.add('is-hover'); card.classList.remove('settling');
       if (!raf) raf = requestAnimationFrame(apply);
     });
-    card.addEventListener('pointerleave', function(){
-      card.classList.remove('is-hover');
-      ['--mx','--my','--rx','--ry'].forEach(function(p){ card.style.removeProperty(p); });
+    card.addEventListener('pointerleave', leave);
+    return leave;
+  }
+  if (tilt) {
+    doc.querySelectorAll('.card').forEach(function(c){ bindTilt(c, parseFloat(c.dataset.tilt || '10')); });
+    doc.addEventListener('pointermove', function(e){ if (e.pointerType !== 'touch') { pX = e.clientX; pY = e.clientY; } }, { passive: true });
+  }
+
+  // Ambient (fine pointer, motion allowed). The pass is CSS behind html.ambient, gated on @property support
+  // (CSS.registerProperty ships with it) so browsers that cannot interpolate the custom properties do nothing at all.
+  // The script runs it once as a foil card lands, then every 24s (25.5s, 27s: the three never line up) while the card
+  // is on screen, skipping one under the hand or behind the dialog. The cursor light is one fixed element eased toward
+  // the pointer at a tenth of the gap per frame.
+  var ambient = tilt && !!(window.CSS && CSS.registerProperty), foils = [].slice.call(doc.querySelectorAll('.foil-card'));
+  if (ambient) {
+    root.classList.add('ambient');
+    if ('IntersectionObserver' in window) {
+      var lit = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ e.target.dataset.lit = e.isIntersecting ? '1' : ''; if (!e.isIntersecting) e.target.classList.remove('pass'); });
+      }, { threshold: .25 });
+      foils.forEach(function(c){ lit.observe(c); });
+    }
+    foils.forEach(function(c){ c.addEventListener('animationend', function(e){ if (e.target === c && e.animationName === 'pass') c.classList.remove('pass'); }); });
+  }
+  function pass(c){
+    if (!ambient || open || doc.hidden || c.dataset.lit === '' || c.classList.contains('is-hover') || c.classList.contains('settling')) return;
+    c.classList.add('pass');
+  }
+  function firstPass(c, delay){
+    if (!ambient) return;
+    setTimeout(function(){ pass(c); setInterval(function(){ pass(c); }, 24000 + Math.max(0, foils.indexOf(c)) * 1500); }, delay);
+  }
+  if (tilt) {
+    var lume = doc.createElement('div'), lx = 0, ly = 0, tx = 0, ty = 0, lraf = 0, seen = false;
+    lume.className = 'lume'; lume.setAttribute('aria-hidden', 'true'); doc.body.appendChild(lume);
+    function glide(){
+      lx += (tx - lx) * .1; ly += (ty - ly) * .1;
+      lume.style.transform = 'translate(' + lx.toFixed(1) + 'px,' + ly.toFixed(1) + 'px)';
+      lraf = Math.abs(tx - lx) + Math.abs(ty - ly) > .5 ? requestAnimationFrame(glide) : 0;
+    }
+    doc.addEventListener('pointermove', function(e){
+      if (e.pointerType === 'touch') return;
+      tx = e.clientX; ty = e.clientY;
+      if (!seen) { seen = true; lx = tx; ly = ty; lume.classList.add('on'); }
+      if (!lraf) lraf = requestAnimationFrame(glide);
+    }, { passive: true });
+    root.addEventListener('pointerleave', function(){ seen = false; lume.classList.remove('on'); });
+  }
+
+  // Click to inspect. Each card gets a button named "Inspect <name>" (the article keeps its text for the accessibility
+  // tree) that covers the card without taking pointer events; Enter or Space on it, or a genuine click on the card (the
+  // pointer travelled under 5px and no text is selected, so dragging to copy a line never opens it), opens a native
+  // <dialog>: the page dims and blurs, a clone flies (FLIP) from the card's resting footprint to the centre (about
+  // 640px wide on desktop, min(92vw, 420px) on phones, never taller than 84vh) on its own elevation shadow, the tilt the
+  // card had under the hand carries into the flight, the original hides underneath and the body is fixed at its scroll
+  // offset so the page cannot scroll under it (iOS included). Esc, the close button, a click on the dim or a deliberate
+  // scroll (160px of wheel) flies it back and returns focus to the card's button; a resize (a phone's URL bar, a dragged
+  // window) re-centres it instead. Text on the clone can be selected: clicking it does not close.
+  var open = null;
+  var CLOSE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+  function nameOf(c){ var n = c.querySelector('.name'); return n ? n.textContent.trim() : 'card'; }
+  function targetRect(){
+    var vw = innerWidth, vh = innerHeight;
+    var w = Math.min(vw < 600 ? Math.min(vw * .92, 420) : Math.min(vw * .92, 640), vh * .84 * 59 / 86), h = w * 86 / 59;
+    return { x: (vw - w) / 2, y: (vh - h) / 2, w: w, h: h };
+  }
+  function flip(o, r){ return 'translate(' + (r.left - o.t.x).toFixed(2) + 'px,' + (r.top - o.t.y).toFixed(2) + 'px) scale(' + (r.width / o.t.w).toFixed(4) + ')'; }
+  function place(o){
+    var t = o.t, s = o.st.style;
+    s.left = t.x + 'px'; s.top = t.y + 'px'; s.width = t.w + 'px'; s.height = t.h + 'px';
+    o.hint.style.top = Math.min(t.y + t.h + 22, innerHeight - 30) + 'px';
+  }
+  function inspect(src){
+    if (open) return;
+    var wasHover = src.classList.contains('is-hover'), vars = {};
+    ['--px','--py','--rx','--ry'].forEach(function(p){ vars[p] = src.style.getPropertyValue(p); });
+    src.style.transition = 'none'; src.style.transform = 'none'; // measured, and later returned to, in its resting footprint
+    var r = src.getBoundingClientRect(), t = targetRect();
+    var dlg = doc.createElement('dialog'), dim = doc.createElement('div'), st = doc.createElement('div'), x = doc.createElement('button'), hint = doc.createElement('p'), clone = src.cloneNode(true);
+    dlg.className = 'inspect'; dim.className = 'inspect-dim'; st.className = 'inspect-stage'; x.className = 'inspect-close'; hint.className = 'inspect-hint';
+    dlg.tabIndex = -1; dlg.setAttribute('aria-label', nameOf(src)); // showModal() puts focus on the close button, the first focusable thing inside
+    x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = CLOSE;
+    hint.textContent = coarse ? 'Tap outside to close' : 'Esc or click outside to close';
+    var b = clone.querySelector('.inspect-btn'); if (b) b.remove();
+    var desc = clone.querySelector('.effect'); if (desc) { desc.id = 'inspect-desc'; dlg.setAttribute('aria-describedby', 'inspect-desc'); }
+    clone.classList.remove('dealing', 'pass', 'settling', 'is-hover'); clone.classList.add('dealt');
+    clone.style.removeProperty('--dd'); clone.style.transition = ''; clone.style.transform = ''; clone.style.visibility = '';
+    // the tilt the card had under the hand rides along: same angles at the start of the flight; the pointer takes over
+    // if it is over the clone when the flight ends, otherwise the clone eases flat
+    if (wasHover && tilt) { clone.classList.add('is-hover'); Object.keys(vars).forEach(function(p){ if (vars[p]) clone.style.setProperty(p, vars[p]); }); }
+    st.appendChild(clone); dlg.appendChild(dim); dlg.appendChild(st); dlg.appendChild(x); dlg.appendChild(hint); doc.body.appendChild(dlg);
+    var o = open = { src: src, dlg: dlg, st: st, clone: clone, hint: hint, t: t, y: scrollY, btn: src.querySelector('.inspect-btn'), t0: Date.now(), dw: 0 };
+    place(o);
+    var instant = reduced();
+    if (!instant) st.style.transform = flip(o, r);
+    // scroll lock: the body fixed at the current offset, the scrollbar's width kept as padding so nothing shifts
+    var gutter = innerWidth - root.clientWidth;
+    doc.body.style.top = -o.y + 'px'; if (gutter > 0) doc.body.style.paddingRight = gutter + 'px';
+    root.classList.add('inspecting');
+    src.style.visibility = 'hidden';
+    if (dlg.showModal) dlg.showModal(); else { dlg.setAttribute('open', ''); dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.focus({ preventScroll: true }); }
+    if (tilt) o.leave = bindTilt(clone, 6);
+    void st.offsetWidth; // commit the starting frame, then let the transitions carry it to the resting one
+    dlg.classList.add('on'); st.style.transform = '';
+    if (!instant && o.leave) setTimeout(function(){ // flight over: flat unless the pointer is on it
+      if (open !== o || o.closing) return;
+      var tt = o.t; if (!(pX >= tt.x && pX <= tt.x + tt.w && pY >= tt.y && pY <= tt.y + tt.h)) o.leave();
+    }, 500);
+    o.key = function(e){ if (e.key === 'Escape') { e.preventDefault(); close(); } };
+    o.cancel = function(e){ e.preventDefault(); close(); }; // Esc through the dialog's own close watcher
+    o.closed = function(){ if (open === o && !o.closing) { o.closing = true; finish(o); } }; // closed by the browser itself
+    o.fit = function(){ if (!o.closing) { o.t = targetRect(); place(o); } };
+    o.wheel = function(e){ o.dw += Math.abs(e.deltaY) + Math.abs(e.deltaX); if (o.dw > 160) close(); };
+    o.dimClick = function(){ if (Date.now() - o.t0 > 400) close(); }; // not the second half of a double click
+    setTimeout(function(){ // once the click or keydown that opened it has finished dispatching
+      if (open !== o) return;
+      dim.addEventListener('click', o.dimClick); x.addEventListener('click', close);
+      dlg.addEventListener('cancel', o.cancel); dlg.addEventListener('close', o.closed);
+      doc.addEventListener('keydown', o.key);
+      addEventListener('wheel', o.wheel, { passive: true });
+      addEventListener('resize', o.fit);
+    }, 0);
+  }
+  function close(){
+    var o = open; if (!o || o.closing) return; o.closing = true;
+    doc.removeEventListener('keydown', o.key); removeEventListener('wheel', o.wheel); removeEventListener('resize', o.fit);
+    o.dlg.classList.remove('on');
+    if (o.leave) o.leave();
+    if (reduced()) return finish(o);
+    requestAnimationFrame(function(){ // fly back to where the card is now
+      o.st.style.transform = flip(o, o.src.getBoundingClientRect());
+      setTimeout(function(){ finish(o); }, 500);
+    });
+  }
+  function finish(o){
+    o.dlg.removeEventListener('cancel', o.cancel); o.dlg.removeEventListener('close', o.closed);
+    if (o.dlg.open && o.dlg.close) o.dlg.close();
+    o.dlg.remove();
+    o.src.style.visibility = ''; o.src.style.transform = ''; o.src.style.transition = '';
+    root.classList.remove('inspecting'); doc.body.style.top = ''; doc.body.style.paddingRight = '';
+    scrollTo(0, o.y);
+    open = null;
+    if (o.btn) o.btn.focus({ preventScroll: true });
+  }
+  waiting.forEach(function(c){
+    var btn = doc.createElement('button'), dx = 0, dy = 0;
+    btn.type = 'button'; btn.className = 'inspect-btn'; btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-label', 'Inspect ' + nameOf(c));
+    c.appendChild(btn);
+    c.addEventListener('pointerdown', function(e){ dx = e.clientX; dy = e.clientY; });
+    c.addEventListener('click', function(e){
+      if (e.target !== btn) { // from the pointer, not the keyboard: a drag or a selection is not a click
+        if (Math.abs(e.clientX - dx) > 5 || Math.abs(e.clientY - dy) > 5) return;
+        var sel = window.getSelection ? getSelection() : null;
+        if (sel && !sel.isCollapsed && sel.anchorNode && c.contains(sel.anchorNode)) return;
+      }
+      inspect(c);
     });
   });
 })();`;
@@ -1032,6 +1335,7 @@ const js = `
 // ---------- pages ----------
 function head(title, description) {
   return `<meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
 <title>${esc(title)}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="${esc(description)}">

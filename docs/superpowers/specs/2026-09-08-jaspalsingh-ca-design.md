@@ -45,6 +45,11 @@ Foil (eng and founder only): one light-following rainbow band with a near-white 
 
 Tilt: pointer-driven, up to 10 degrees on foil cards and 6 on matte, perspective 1000px, eases back on leave. Disabled under `prefers-reduced-motion: reduce` and on touch devices (cards render at rest). The page is complete with JavaScript disabled.
 
+Motion layer (added 2026-09-09 at the owner's request, "less static"):
+- Deal-in: grid and shelf cards are dealt onto the slate when their section scrolls into view (start slightly raised at scale 1.05 with a per-card seeded rotation of 1.6 to 3.1 degrees, land over 480ms with a shadow that tightens as they settle, 80ms stagger). Once per page load. The hidden initial state is gated behind an html.js class inside a reduced-motion media query, so with JS off or reduced motion every card is simply visible.
+- Ambient life: the three foil cards get a single one-directional light sweep (3.6s) on landing and then about once every 24s, one card at a time, never while hovered. A 720px cursor-following light sits under the content on the slate. Both off under reduced motion and on coarse pointers.
+- Click to inspect: every card carries a real inner <button> ("Inspect <name>", aria-haspopup=dialog); the article keeps its semantics. Opening flies a clone (FLIP, 480ms) into a native <dialog> with a blurred dim, an elevation shadow, a close button and an "Esc or click outside to close" hint; the clone has pointer tilt at 12 degrees and its text is selectable. Card capped at 84vh (about 470px wide at 1440x813, 359px at 390). Closes on Esc, the close button, a click outside, or 160px of wheel travel. Reduced motion: instant open/close, no tilt.
+
 ## Content
 
 All copy lives in `content.json`. Career text is a paragraph per card, professional, no jokes. Skills are name plus one line. Copy for RBC, Clio, Deel AE, Qotiv and Anthropic is the owner's draft and may be edited in place.
