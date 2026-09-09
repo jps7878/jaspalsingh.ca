@@ -97,6 +97,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
+.fine a { color: var(--muted); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.fine a:hover { color: var(--ink); }
 
 @media (max-width: 1199px) { .hero { gap: 56px; grid-template-columns: minmax(0, 1fr) 320px; } }
 @media (max-width: 979px) {
@@ -666,7 +668,7 @@ body {
 </main>
 
 <footer class="foot wrap">
-  <p class="fine"><span>JS-EN001</span><span>© 2026 Jaspal Singh</span><span>Original card design. Company names and logos belong to their owners. Views my own.</span></p>
+  <p class="fine"><span>JS-EN001</span><span>© 2026 Jaspal Singh</span><span>Original card design. Company names and logos belong to their owners. Views my own.</span><span>Designed and built with <a href="https://claude.com/claude-code" rel="noopener">Claude Code</a>.</span></p>
   <nav aria-label="Profile links, footer"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
 </footer>
 <script>

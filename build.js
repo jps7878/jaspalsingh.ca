@@ -488,6 +488,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .foot { padding-block: 36px 72px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 40px; }
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
+.fine a { color: var(--muted); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.fine a:hover { color: var(--ink); }
 
 @media (max-width: 1199px) { .hero { gap: 56px; grid-template-columns: minmax(0, 1fr) 320px; } }
 @media (max-width: 979px) {
@@ -874,7 +876,7 @@ function skillsSection() {
 function footer(f, links) {
   return `
 <footer class="foot wrap">
-  <p class="fine"><span>${esc(f.setCode)}</span><span>${esc(f.copyright)}</span><span>${esc(f.note)}</span></p>
+  <p class="fine"><span>${esc(f.setCode)}</span><span>${esc(f.copyright)}</span><span>${esc(f.note)}</span>${f.madeWith ? `<span>${esc(f.madeWith.before)}<a href="${esc(f.madeWith.href)}" rel="noopener">${esc(f.madeWith.linkText)}</a>${esc(f.madeWith.after)}</span>` : ''}</p>
   <nav aria-label="Profile links, footer">${linksList(links)}</nav>
 </footer>`;
 }

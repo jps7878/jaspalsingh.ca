@@ -250,7 +250,13 @@
   "footer": {
     "setCode": "JS-EN001",
     "copyright": "© 2026 Jaspal Singh",
-    "note": "Original card design. Company names and logos belong to their owners. Views my own."
+    "note": "Original card design. Company names and logos belong to their owners. Views my own.",
+    "madeWith": {
+      "before": "Designed and built with ",
+      "linkText": "Claude Code",
+      "href": "https://claude.com/claude-code",
+      "after": "."
+    }
   },
   "skillsIntro": "Spells are what I design and build. Traps are the controls that keep payouts honest."
 }
