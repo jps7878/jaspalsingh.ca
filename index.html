@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Jaspal Singh</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="I sold for six years, ran the systems that pay sellers, and now I build them as an engineer at Anthropic.">
+<meta name="description" content="I build the systems that decide how sellers get paid.">
 <meta name="theme-color" content="#17181C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,10 +30,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
-.hero { display: grid; grid-template-columns: minmax(0, 1fr) var(--card-w); gap: 72px; align-items: start; padding-block: 72px 40px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
-.hero-card { width: 100%; }
-.hero-card .card { width: 100%; }
 .hero h1 { margin: 0 0 10px; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
 .headline { margin: 0 0 28px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
 .thesis { margin: 0 0 18px; font-size: 25px; line-height: 1.32; font-weight: 500; color: var(--ink); letter-spacing: -.012em; }
@@ -41,14 +39,14 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
 .links a { color: var(--link); text-decoration: none; font-size: 15px; font-weight: 500; padding-bottom: 2px; border-bottom: 1px solid rgba(173,175,182,.4); }
 .links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
-.hero-photo { width: 88px; height: 88px; margin: 0 0 22px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 12px 30px -12px rgba(0,0,0,.7); }
-.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-portrait { width: 100%; aspect-ratio: 4 / 5; margin-top: 6px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.08), 0 1px 2px rgba(4,7,14,.7), 2px 12px 16px -6px rgba(4,7,14,.55), 5px 32px 44px -12px rgba(5,9,18,.6); }
+.hero-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* initials plaque until assets/photo.jpg exists: hairline rim, top-lit, quiet monogram */
 .tile {
   width: 100%; height: 100%; display: grid; place-items: center;
   background: radial-gradient(120% 110% at 28% 18%, #35363D 0%, #27282D 62%, #222328 100%);
   box-shadow: inset 0 0 0 1px rgba(233,228,218,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.35);
-  color: #D6D1C6; font-size: 26px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
+  color: #D6D1C6; font-size: 64px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
 }
 
 /* ---- sections ---- */
@@ -100,20 +98,21 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
 
-@media (max-width: 1199px) { .hero { gap: 56px; } }
+@media (max-width: 1199px) { .hero { gap: 56px; grid-template-columns: minmax(0, 1fr) 320px; } }
 @media (max-width: 979px) {
   :root { --pad-x: 32px; --card-w: calc((100% - var(--gap)) / 2); }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; }
-  .hero-card { width: var(--card-w); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 56px; }
+  .hero-portrait { order: -1; width: 160px; aspect-ratio: 1; margin-top: 0; }
+  .tile { font-size: 40px; }
 }
 @media (max-width: 599px) {
   :root { --gap: 22px; --pad-x: 24px; --card-w: min(340px, 82vw); }
   .grid { grid-template-columns: minmax(0, var(--card-w)); }
   .shelf-frame { margin-bottom: -72px; }
-  .hero { gap: 28px; padding-block: 44px 32px; }
-  .hero-photo { width: 64px; height: 64px; margin: 0 0 16px; border-radius: 5px; }
-  .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
+  .hero { gap: 22px; padding-block: 44px 32px; }
+  .hero-portrait { width: 120px; }
+  .tile { font-size: 32px; letter-spacing: .1em; text-indent: .1em; }
   .thesis { font-size: 22px; }
   .bio { font-size: 16px; }
   .foot { padding-bottom: 56px; }
@@ -410,7 +409,7 @@ body {
 /* chrome on the slab: cool off-white type, steel links, cooled rules and buttons */
 .headline, .intro { color: #AEB8C6; }
 .links a { border-bottom-color: rgba(154,170,191,.42); }
-.hero-photo { box-shadow: 0 1px 0 rgba(255,255,255,.06), 3px 14px 30px -12px rgba(4,7,14,.78); }
+.hero-portrait { box-shadow: 0 1px 0 rgba(255,255,255,.08), 0 1px 2px rgba(4,7,14,.78), 2px 12px 16px -6px rgba(4,7,14,.58), 5px 32px 44px -12px rgba(5,9,18,.66); }
 .tile {
   background: radial-gradient(120% 110% at 28% 18%, #3A424F 0%, #2A303A 62%, #242A33 100%);
   box-shadow: inset 0 0 0 1px rgba(230,234,241,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.4);
@@ -439,14 +438,18 @@ body {
 
 <header class="hero wrap">
   <div class="hero-text">
-    <div class="hero-photo"><div class="tile" aria-hidden="true">JS</div></div>
     <h1>Jaspal Singh</h1>
     <p class="headline">Incentives Engineer and Forward Deployed Engineer at Anthropic. Founder, Qotiv.</p>
-    <p class="thesis">I sold for six years, ran the systems that pay sellers, and now I build them as an engineer at Anthropic.</p>
+    <p class="thesis">I build the systems that decide how sellers get paid.</p>
     <p class="bio">Account executive at RBC Insurance, Clio and Deel. Moved into revenue strategy and operations at Deel, where I ran sales compensation for roughly 500 reps worldwide, then led revenue operations at Engine as Director. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems, and I'm building Qotiv, a compensation platform for deal-based and usage-based commissions.</p>
     <nav aria-label="Profile links"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
   </div>
-  <div class="hero-card">
+  <div class="hero-portrait"><div class="tile" aria-hidden="true">JS</div></div>
+</header>
+<main>
+<section class="section wrap" aria-labelledby="experience-h">
+  <h2 id="experience-h">Experience</h2>
+  <div class="grid">
 <article class="card career f-eng foil-card" data-tilt="10">
   <div class="card-inner">
     <header class="plate">
@@ -460,12 +463,6 @@ body {
     <div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>
   </div>
 </article>
-  </div>
-</header>
-<main>
-<section class="section wrap" aria-labelledby="experience-h">
-  <h2 id="experience-h">Experience</h2>
-  <div class="grid">
 <article class="card career f-founder foil-card" data-tilt="10">
   <div class="card-inner">
     <header class="plate">

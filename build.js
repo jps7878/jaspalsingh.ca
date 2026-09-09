@@ -421,10 +421,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
-.hero { display: grid; grid-template-columns: minmax(0, 1fr) var(--card-w); gap: 72px; align-items: start; padding-block: 72px 40px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
-.hero-card { width: 100%; }
-.hero-card .card { width: 100%; }
 .hero h1 { margin: 0 0 10px; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
 .headline { margin: 0 0 28px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
 .thesis { margin: 0 0 18px; font-size: 25px; line-height: 1.32; font-weight: 500; color: var(--ink); letter-spacing: -.012em; }
@@ -432,14 +430,14 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
 .links a { color: var(--link); text-decoration: none; font-size: 15px; font-weight: 500; padding-bottom: 2px; border-bottom: 1px solid rgba(173,175,182,.4); }
 .links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
-.hero-photo { width: 88px; height: 88px; margin: 0 0 22px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 12px 30px -12px rgba(0,0,0,.7); }
-.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-portrait { width: 100%; aspect-ratio: 4 / 5; margin-top: 6px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.08), 0 1px 2px rgba(4,7,14,.7), 2px 12px 16px -6px rgba(4,7,14,.55), 5px 32px 44px -12px rgba(5,9,18,.6); }
+.hero-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* initials plaque until assets/photo.jpg exists: hairline rim, top-lit, quiet monogram */
 .tile {
   width: 100%; height: 100%; display: grid; place-items: center;
   background: radial-gradient(120% 110% at 28% 18%, #35363D 0%, #27282D 62%, #222328 100%);
   box-shadow: inset 0 0 0 1px rgba(233,228,218,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.35);
-  color: #D6D1C6; font-size: 26px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
+  color: #D6D1C6; font-size: 64px; font-weight: 500; letter-spacing: .08em; text-indent: .08em;
 }
 
 /* ---- sections ---- */
@@ -491,20 +489,21 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 .fine { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 12.5px; font-weight: 500; letter-spacing: .005em; color: var(--muted); line-height: 1.8; }
 .foot .links a { font-size: 13px; }
 
-@media (max-width: 1199px) { .hero { gap: 56px; } }
+@media (max-width: 1199px) { .hero { gap: 56px; grid-template-columns: minmax(0, 1fr) 320px; } }
 @media (max-width: 979px) {
   :root { --pad-x: 32px; --card-w: calc((100% - var(--gap)) / 2); }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; }
-  .hero-card { width: var(--card-w); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 56px; }
+  .hero-portrait { order: -1; width: 160px; aspect-ratio: 1; margin-top: 0; }
+  .tile { font-size: 40px; }
 }
 @media (max-width: 599px) {
   :root { --gap: 22px; --pad-x: 24px; --card-w: min(340px, 82vw); }
   .grid { grid-template-columns: minmax(0, var(--card-w)); }
   .shelf-frame { margin-bottom: -72px; }
-  .hero { gap: 28px; padding-block: 44px 32px; }
-  .hero-photo { width: 64px; height: 64px; margin: 0 0 16px; border-radius: 5px; }
-  .tile { font-size: 22px; letter-spacing: .1em; text-indent: .1em; }
+  .hero { gap: 22px; padding-block: 44px 32px; }
+  .hero-portrait { width: 120px; }
+  .tile { font-size: 32px; letter-spacing: .1em; text-indent: .1em; }
   .thesis { font-size: 22px; }
   .bio { font-size: 16px; }
   .foot { padding-bottom: 56px; }
@@ -765,7 +764,7 @@ body {
 /* chrome on the slab: cool off-white type, steel links, cooled rules and buttons */
 .headline, .intro { color: #AEB8C6; }
 .links a { border-bottom-color: rgba(154,170,191,.42); }
-.hero-photo { box-shadow: 0 1px 0 rgba(255,255,255,.06), 3px 14px 30px -12px rgba(4,7,14,.78); }
+.hero-portrait { box-shadow: 0 1px 0 rgba(255,255,255,.08), 0 1px 2px rgba(4,7,14,.78), 2px 12px 16px -6px rgba(4,7,14,.58), 5px 32px 44px -12px rgba(5,9,18,.66); }
 .tile {
   background: radial-gradient(120% 110% at 28% 18%, #3A424F 0%, #2A303A 62%, #242A33 100%);
   box-shadow: inset 0 0 0 1px rgba(230,234,241,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.4);
@@ -835,20 +834,18 @@ const linksList = (links, cls) => `<ul class="links${cls ? ' ' + cls : ''}">${li
 
 function hero(site) {
   const photo = exists(site.photo)
-    ? `<img src="${esc(site.photo)}" alt="${esc(site.photoAlt)}" width="88" height="88">`
+    ? `<img src="${esc(site.photo)}" alt="${esc(site.photoAlt)}" width="720" height="900">`
     : `<div class="tile" aria-hidden="true">${esc(initials(site.name))}</div>`;
   return `
 <header class="hero wrap">
   <div class="hero-text">
-    <div class="hero-photo">${photo}</div>
     <h1>${esc(site.name)}</h1>
     <p class="headline">${esc(site.headline)}</p>
     <p class="thesis">${esc(site.thesis)}</p>
     <p class="bio">${esc(site.body)}</p>
     <nav aria-label="Profile links">${linksList(site.links)}</nav>
   </div>
-  <div class="hero-card">${fullCard(content.cards[0], 'career', '')}
-  </div>
+  <div class="hero-portrait">${photo}</div>
 </header>`;
 }
 // Skills: heading with prev/next at the right (revealed by the script; hidden without it), intro line, then
@@ -980,7 +977,7 @@ ${hero(site)}
 <main>
 <section class="section wrap" aria-labelledby="experience-h">
   <h2 id="experience-h">${esc(content.experienceHeading)}</h2>
-  <div class="grid">${cards.slice(1).map(c => fullCard(c, 'career', '')).join('')}
+  <div class="grid">${cards.map(c => fullCard(c, 'career', '')).join('')}
   </div>
 </section>${skillsSection()}
 </main>
