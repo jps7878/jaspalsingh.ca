@@ -399,7 +399,7 @@ ${motes}
 const PLACEHOLDER_ART = { anthropic: artNocturne, engine: artEngine };
 
 // ---------- CSS ----------
-const FONTS_HREF = 'https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=block';
+const FONTS_HREF = 'https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&family=Inter:wght@400;500;600;700&display=block';
 const css = `
 /* --card-w is one column of the Experience grid, written as a formula so the hero card and every shelf card
    resolve it against their own container and come out the same physical size as the grid's cards. */
@@ -413,7 +413,7 @@ body {
   background-image: radial-gradient(1400px 900px at 50% 0, #2B2C31 0%, #1E1F24 40%, rgba(23,24,28,0) 100%);
   background-repeat: no-repeat;
   color: var(--ink-2);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.5;
 }
 a { color: var(--link); }
@@ -423,10 +423,10 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 /* ---- hero: text block with the portrait set beside it (not pushed to the far edge) ---- */
 .hero { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 72px; align-items: start; padding-block: 72px 40px; }
 .hero-text { max-width: 64ch; }
-.hero h1 { margin: 0 0 10px; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.1; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+.hero h1 { margin: 0 0 10px; font-family: "Space Grotesk", system-ui, sans-serif; font-size: clamp(40px, 4.2vw, 54px); line-height: 1.06; font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
 .headline { margin: 0 0 28px; font-size: 15.5px; font-weight: 500; color: #A9ABB2; line-height: 1.45; }
-.thesis { margin: 0 0 18px; font-size: 25px; line-height: 1.32; font-weight: 500; color: var(--ink); letter-spacing: -.012em; }
-.bio { margin: 0 0 28px; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+.thesis { margin: 0 0 18px; font-family: "Space Grotesk", system-ui, sans-serif; font-size: 27px; line-height: 1.28; font-weight: 500; color: var(--ink); letter-spacing: -.015em; }
+.bio { margin: 0 0 28px; font-size: 16.5px; line-height: 1.6; letter-spacing: -.005em; color: var(--ink-2); }
 .links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
 .links a { color: var(--link); text-decoration: none; font-size: 15px; font-weight: 500; padding-bottom: 2px; border-bottom: 1px solid rgba(173,175,182,.4); }
 .links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
@@ -442,7 +442,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 
 /* ---- sections ---- */
 .section { padding-block: 36px 48px; }
-.section h2 { margin: 0 0 24px; font-size: 26px; font-weight: 600; letter-spacing: -.012em; line-height: 1.2; color: var(--ink); }
+.section h2 { margin: 0 0 24px; font-family: "Space Grotesk", system-ui, sans-serif; font-size: 29px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: var(--ink); }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
 
 /* ---- skills: heading with prev/next at the right, intro in the hero's muted style, then a full-bleed shelf ---- */

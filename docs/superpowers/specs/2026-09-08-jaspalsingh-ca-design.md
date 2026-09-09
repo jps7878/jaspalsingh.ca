@@ -21,7 +21,7 @@ A one-page personal brand site for Jaspal Singh. Audience: people who look him u
 1. Hero (revised 2026-09-08 evening at the owner's request: "description plus picture"). Left: name, headline, one-line tagline ("I build the systems that decide how sellers get paid."), four-sentence bio, links (LinkedIn, Email, Qotiv, GitHub). Inter, left-aligned, max 64ch. Right: a large portrait (`assets/photo.jpg`, shown at 4:5 about 360px wide, rounded, grounded shadow; a neutral initials tile until the photo exists). On phones the portrait sits above the name at 120-160px. No card in the hero.
 2. Experience. Heading "Experience". All seven cards, newest first, three per row on wide screens (about 430px wide, rows of 3/3/1 left-aligned), two columns on tablets, one column on phones (about 340px). Cards keep the 59:86 ratio at every size.
 3. Skills. Heading "Skills", a one-line plain-words intro ("Spells are what I design and build. Traps are the controls that keep payouts honest."), and one full-bleed horizontal shelf of eight FULL cards (same anatomy and size as the career cards) in the spell (green) and trap (magenta) metals, matte. Order alternates spell and trap so both are visible at first paint. Shelf: scroll-snap, first card aligned to the content column, peek of the next card, prev/next buttons (JS, hidden without it), keyboard-scrollable region. Skill cards differ from career cards only in: a glyph coin (spell sparkle, trap hexagonal ring) instead of a word, type line `[ Spell / Design & Strategy ]` or `[ Trap / Controls & Governance ]`, no company mark. Set codes continue JS-EN008 to JS-EN015; each has its own art slot with a code-drawn placeholder until real art exists (optional prompts in the owner's art document).
-4. Footer. One line styled like card fine print: set code, copyright, ownership note. Same four links.
+4. Footer. One line styled like card fine print: set code, copyright, ownership note, and "Designed and built with Claude Code" linking to claude.com/claude-code (owner wants the Claude use stated plainly). Same four links.
 
 ## Card system
 
@@ -50,7 +50,7 @@ All copy lives in `content.json`. Career text is a paragraph per card, professio
 
 ## Typography and color
 
-Cormorant SC for card names, EB Garamond for card text, Inter for everything outside the cards (hero, headings, labels, badge words, bottom strip). Google Fonts, one link, `display=block`. Page ink for the hero is a warm off-white on the charcoal; links a muted silver. All saturated color lives in the cards.
+Cormorant SC for card names, EB Garamond for card text, Inter for the small labels inside cards (badge words, bottom strip). Page chrome (revised 2026-09-08 late, owner found Inter bland): Space Grotesk for the name, tagline and section headings; Plus Jakarta Sans for body text, links, footer. Google Fonts, one link, `display=block`. Page ink for the hero is a warm off-white on the charcoal; links a muted silver. All saturated color lives in the cards.
 
 ## Quality floor
 
