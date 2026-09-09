@@ -177,34 +177,14 @@
       "artPlaceholder": "assets/art/placeholder-09-payout-controls.svg"
     },
     {
-      "id": "account-management",
-      "type": "spell",
-      "group": "Design & Strategy",
-      "name": "Account Management & CSM Flows",
-      "text": "Post-sale motions for account managers and customer success: renewals, upsell, cross-sell and service-tier upgrades. Designs the handoffs, ownership rules and comp credit so expanding an account is as clean as landing it.",
-      "setCode": "JS-EN010",
-      "art": "assets/art/art-10-account-management.jpg",
-      "artPlaceholder": "assets/art/placeholder-10-account-management.svg"
-    },
-    {
       "id": "comp-compliance",
       "type": "trap",
       "group": "Controls & Governance",
       "name": "Comp Compliance & Governance",
       "text": "Plan documents, acknowledgments, policy enforcement. Reps sign what they are paid on, and changes go through a process instead of a spreadsheet edit.",
-      "setCode": "JS-EN011",
-      "art": "assets/art/art-11-comp-compliance.jpg",
-      "artPlaceholder": "assets/art/placeholder-11-comp-compliance.svg"
-    },
-    {
-      "id": "data-analysis",
-      "type": "spell",
-      "group": "Design & Strategy",
-      "name": "Data Analysis",
-      "text": "SQL and spreadsheet analysis across CRM, billing and payout data. Turns rep, deal and usage records into the numbers leaders decide on: attainment, cost of compensation, conversion and forecast.",
-      "setCode": "JS-EN012",
-      "art": "assets/art/art-12-data-analysis.jpg",
-      "artPlaceholder": "assets/art/placeholder-12-data-analysis.svg"
+      "setCode": "JS-EN010",
+      "art": "assets/art/art-10-comp-compliance.jpg",
+      "artPlaceholder": "assets/art/placeholder-10-comp-compliance.svg"
     },
     {
       "id": "data-integrity",
@@ -212,9 +192,9 @@
       "group": "Controls & Governance",
       "name": "Data Integrity",
       "text": "One source of truth for reps, roles, quotas and credit. Catches the duplicate account, the missing territory and the stale role before they become a wrong payment.",
-      "setCode": "JS-EN013",
-      "art": "assets/art/art-13-data-integrity.jpg",
-      "artPlaceholder": "assets/art/placeholder-13-data-integrity.svg"
+      "setCode": "JS-EN011",
+      "art": "assets/art/art-11-data-integrity.jpg",
+      "artPlaceholder": "assets/art/placeholder-11-data-integrity.svg"
     },
     {
       "id": "gtm-strategy",
@@ -222,19 +202,9 @@
       "group": "Design & Strategy",
       "name": "GTM Strategy",
       "text": "Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.",
-      "setCode": "JS-EN014",
-      "art": "assets/art/art-14-gtm-strategy.jpg",
-      "artPlaceholder": "assets/art/placeholder-14-gtm-strategy.svg"
-    },
-    {
-      "id": "quota-territory",
-      "type": "spell",
-      "group": "Design & Strategy",
-      "name": "Quota & Territory Planning",
-      "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
-      "setCode": "JS-EN015",
-      "art": "assets/art/art-15-quota-territory.jpg",
-      "artPlaceholder": "assets/art/placeholder-15-quota-territory.svg"
+      "setCode": "JS-EN012",
+      "art": "assets/art/art-12-gtm-strategy.jpg",
+      "artPlaceholder": "assets/art/placeholder-12-gtm-strategy.svg"
     },
     {
       "id": "funnel-mapping",
@@ -242,9 +212,39 @@
       "group": "Design & Strategy",
       "name": "Funnel Mapping",
       "text": "Stage definitions, conversion instrumentation, handoffs. Maps how a deal actually moves so forecasts, comp and marketing all read from the same funnel.",
+      "setCode": "JS-EN013",
+      "art": "assets/art/art-13-funnel-mapping.jpg",
+      "artPlaceholder": "assets/art/placeholder-13-funnel-mapping.svg"
+    },
+    {
+      "id": "quota-territory",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Quota & Territory Planning",
+      "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
+      "setCode": "JS-EN014",
+      "art": "assets/art/art-14-quota-territory.jpg",
+      "artPlaceholder": "assets/art/placeholder-14-quota-territory.svg"
+    },
+    {
+      "id": "account-management",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Account Management & CSM Flows",
+      "text": "Post-sale motions for account managers and customer success: renewals, upsell, cross-sell and service-tier upgrades. Designs the handoffs, ownership rules and comp credit so expanding an account is as clean as landing it.",
+      "setCode": "JS-EN015",
+      "art": "assets/art/art-15-account-management.jpg",
+      "artPlaceholder": "assets/art/placeholder-15-account-management.svg"
+    },
+    {
+      "id": "data-analysis",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Data Analysis",
+      "text": "SQL and spreadsheet analysis across CRM, billing and payout data. Turns rep, deal and usage records into the numbers leaders decide on: attainment, cost of compensation, conversion and forecast.",
       "setCode": "JS-EN016",
-      "art": "assets/art/art-16-funnel-mapping.jpg",
-      "artPlaceholder": "assets/art/placeholder-16-funnel-mapping.svg"
+      "art": "assets/art/art-16-data-analysis.jpg",
+      "artPlaceholder": "assets/art/placeholder-16-data-analysis.svg"
     }
   ],
   "footer": {
