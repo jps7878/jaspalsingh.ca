@@ -176,14 +176,14 @@
       "artPlaceholder": "assets/art/placeholder-09-payout-controls.svg"
     },
     {
-      "id": "gtm-strategy",
+      "id": "account-management",
       "type": "spell",
       "group": "Design & Strategy",
-      "name": "GTM Strategy",
-      "text": "Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.",
+      "name": "Account Management & CSM Flows",
+      "text": "Post-sale motions for account managers and customer success: renewals, upsell, cross-sell and service-tier upgrades. Designs the handoffs, ownership rules and comp credit so expanding an account is as clean as landing it.",
       "setCode": "JS-EN010",
-      "art": "assets/art/art-10-gtm-strategy.jpg",
-      "artPlaceholder": "assets/art/placeholder-10-gtm-strategy.svg"
+      "art": "assets/art/art-10-account-management.jpg",
+      "artPlaceholder": "assets/art/placeholder-10-account-management.svg"
     },
     {
       "id": "comp-compliance",
@@ -196,14 +196,14 @@
       "artPlaceholder": "assets/art/placeholder-11-comp-compliance.svg"
     },
     {
-      "id": "quota-territory",
+      "id": "data-analysis",
       "type": "spell",
       "group": "Design & Strategy",
-      "name": "Quota & Territory Planning",
-      "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
+      "name": "Data Analysis",
+      "text": "SQL and spreadsheet analysis across CRM, billing and payout data. Turns rep, deal and usage records into the numbers leaders decide on: attainment, cost of compensation, conversion and forecast.",
       "setCode": "JS-EN012",
-      "art": "assets/art/art-12-quota-territory.jpg",
-      "artPlaceholder": "assets/art/placeholder-12-quota-territory.svg"
+      "art": "assets/art/art-12-data-analysis.jpg",
+      "artPlaceholder": "assets/art/placeholder-12-data-analysis.svg"
     },
     {
       "id": "data-integrity",
@@ -216,24 +216,34 @@
       "artPlaceholder": "assets/art/placeholder-13-data-integrity.svg"
     },
     {
+      "id": "gtm-strategy",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "GTM Strategy",
+      "text": "Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.",
+      "setCode": "JS-EN014",
+      "art": "assets/art/art-14-gtm-strategy.jpg",
+      "artPlaceholder": "assets/art/placeholder-14-gtm-strategy.svg"
+    },
+    {
+      "id": "quota-territory",
+      "type": "spell",
+      "group": "Design & Strategy",
+      "name": "Quota & Territory Planning",
+      "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
+      "setCode": "JS-EN015",
+      "art": "assets/art/art-15-quota-territory.jpg",
+      "artPlaceholder": "assets/art/placeholder-15-quota-territory.svg"
+    },
+    {
       "id": "funnel-mapping",
       "type": "spell",
       "group": "Design & Strategy",
       "name": "Funnel Mapping",
       "text": "Stage definitions, conversion instrumentation, handoffs. Maps how a deal actually moves so forecasts, comp and marketing all read from the same funnel.",
-      "setCode": "JS-EN014",
-      "art": "assets/art/art-14-funnel-mapping.jpg",
-      "artPlaceholder": "assets/art/placeholder-14-funnel-mapping.svg"
-    },
-    {
-      "id": "clawback-policy",
-      "type": "trap",
-      "group": "Controls & Governance",
-      "name": "Clawback Policy",
-      "text": "Clear rules for churn, refunds and disputes. Written down before the deal closes, so nobody argues about it after.",
-      "setCode": "JS-EN015",
-      "art": "assets/art/art-15-clawback-policy.jpg",
-      "artPlaceholder": "assets/art/placeholder-15-clawback-policy.svg"
+      "setCode": "JS-EN016",
+      "art": "assets/art/art-16-funnel-mapping.jpg",
+      "artPlaceholder": "assets/art/placeholder-16-funnel-mapping.svg"
     }
   ],
   "footer": {
