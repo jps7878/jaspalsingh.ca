@@ -434,6 +434,67 @@ body {
     4px 22px 28px -12px rgba(5,9,18,.6),
     6px 46px 56px -30px rgba(5,9,18,.5);
 }
+
+/* ---- Profile links as struck steel coins. Same construction as the card badges (.badge): reeded conic rim in the
+   ENG card's metal, thin dark outer ring, thin light inner ring, a struck face set 11% in and lit from the upper
+   left. The face is the ENG plate's brushed steel and the mark is engraved in the ENG ink with the plate's 1px
+   light relief below it (cf. .name: color var(--ink), text-shadow 0 1px 0 var(--ink-shadow)). ---- */
+.links { gap: 12px 26px; align-items: center; }
+.links a {
+  display: inline-flex; align-items: center; gap: 11px;
+  padding-bottom: 0; border-bottom: 0;
+  font-size: 14.5px; font-weight: 500; line-height: 1.2; letter-spacing: .002em; color: var(--link);
+  transition: color .15s ease;
+}
+.links a:hover { color: var(--ink); border-bottom: 0; }
+.links a:focus-visible { outline-offset: 3px; border-radius: 999px; }
+.coin {
+  --d: 40px;
+  --rim-1: #FBFBFD; --rim-2: #8E929E; --rim-3: #DADCE2; --rim-dark: #4A4E5A;          /* .f-eng .badge rim */
+  --face-1: #F4F5F8; --face-2: #D3D6DD; --face-3: #ACB1BD; --face-4: #8C919E;         /* .f-eng plate steel, falling off to its rim-2 */
+  --mark-relief: rgba(255,255,255,.72);                                                 /* .f-eng --ink-shadow */
+  flex: none; position: relative; width: var(--d); height: var(--d); border-radius: 50%;
+  display: grid; place-items: center;
+  background-image:
+    repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.55) 0deg 3deg, rgba(0,0,0,.42) 3deg 6deg),
+    conic-gradient(from 205deg at 50% 50%, var(--rim-1) 0deg, var(--rim-2) 70deg, var(--rim-3) 150deg, var(--rim-2) 210deg, var(--rim-1) 290deg, var(--rim-3) 330deg, var(--rim-1) 360deg);
+  background-blend-mode: overlay, normal;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.38),
+    0 0 0 1px var(--rim-dark),
+    0 1px 2px rgba(4,7,14,.7), 1px 2px 4px rgba(4,7,14,.45);
+  transition: filter .15s ease;
+}
+/* struck face: spun steel with the hotspot upper-left, stepped a hair below the rim */
+.coin::before {
+  content: ""; position: absolute; inset: 11%; border-radius: 50%; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.45) 18%, rgba(255,255,255,0) 42%),
+    repeating-conic-gradient(from 12deg at 50% 50%, rgba(255,255,255,.10) 0deg 3deg, rgba(0,0,0,.09) 3deg 6deg),
+    radial-gradient(circle at 46% 42%, var(--face-1) 0%, var(--face-2) 46%, var(--face-3) 80%, var(--face-4) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.6),
+    inset 0 1.5px 2px rgba(0,0,0,.3),
+    inset 0 -1px 0 rgba(255,255,255,.4),
+    0 0 0 1px rgba(40,44,55,.62),
+    0 1px 0 1px rgba(255,255,255,.3);
+}
+/* the mark: the white asset recoloured to the ENG ink by filter (brightness(0) invert(.14) sepia(1) hue-rotate(186deg)
+   brightness(.87) lands on #22262F) with the plate's 1px light relief below it. <img> rather than mask-image so the
+   file:// QA harness (opaque origin, no CORS for masks) and the served site render the same. */
+.mark {
+  position: relative; z-index: 1; display: block; width: 46%; height: 46%; object-fit: contain;
+  filter: brightness(0) invert(.14) sepia(1) hue-rotate(186deg) brightness(.87) drop-shadow(0 1px 0 var(--mark-relief));
+}
+.mark-qotiv { width: 50%; height: 50%; }
+.links a:hover .coin { filter: brightness(1.07); }
+/* footer: same coins at 30px, 13px labels */
+.foot .links { gap: 10px 22px; }
+.foot .links a { font-size: 13px; gap: 9px; }
+.foot .coin { --d: 30px; }
+/* 390px: the column takes three coins and orphans the fourth; two aligned columns read as intended */
+@media (max-width: 599px) { .links { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 14px 30px; } .foot .links { gap: 12px 26px; } }
+@media (prefers-reduced-motion: reduce) { .links a, .coin { transition: none; } }
 </style>
 </head>
 <body>
@@ -444,7 +505,7 @@ body {
     <p class="headline">Incentives Engineer at Anthropic. Founder, Qotiv.</p>
     <p class="thesis">10+ years in GTM. Now I engineer it.</p>
     <p class="bio">I started in sales: life and living benefits at RBC Insurance, then software at Clio and Deel, from outbound legal tech to global hiring and payroll for small businesses. At Deel I moved into revenue strategy and operations and rose from senior analyst to senior manager, owning sales compensation for roughly 500 reps worldwide, mapping the funnel for every product launch and running the revenue tech stack. As Director of Revenue Strategy and Operations at Engine, I led the operations team across new business, expansion, revenue data, product go-to-market and compensation, and launched comp infrastructure covering every variable role. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems that go-to-market teams run on. I'm also the founder of Qotiv, a comprehensive compensation platform built for both deal-based and usage-based commissions, covering plan design, the full payout lifecycle, compliance and signed plan documents in one system.</p>
-    <nav aria-label="Profile links"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
+    <nav aria-label="Profile links"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/linkedin.svg" alt=""></span>LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/mail.svg" alt=""></span>Email</a></li><li><a href="https://qotiv.com" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark mark-qotiv" src="assets/icons/qotiv.png" alt=""></span>Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/github.svg" alt=""></span>GitHub</a></li></ul></nav>
   </div>
   <div class="hero-portrait"><div class="tile" aria-hidden="true">JS</div></div>
 </header>
@@ -669,7 +730,7 @@ body {
 
 <footer class="foot wrap">
   <p class="fine"><span>JS-EN001</span><span>© 2026 Jaspal Singh</span><span>Original card design. Company names and logos belong to their owners. Views my own.</span><span>Designed and built with <a href="https://claude.com/claude-code" rel="noopener">Claude Code</a>.</span></p>
-  <nav aria-label="Profile links, footer"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener">LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com">Email</a></li><li><a href="https://qotiv.com" rel="me noopener">Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener">GitHub</a></li></ul></nav>
+  <nav aria-label="Profile links, footer"><ul class="links"><li><a href="https://www.linkedin.com/in/jaspalsinghsoor/" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/linkedin.svg" alt=""></span>LinkedIn</a></li><li><a href="mailto:jaspalsinghsoor@gmail.com"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/mail.svg" alt=""></span>Email</a></li><li><a href="https://qotiv.com" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark mark-qotiv" src="assets/icons/qotiv.png" alt=""></span>Qotiv</a></li><li><a href="https://github.com/jps7878" rel="me noopener"><span class="coin" aria-hidden="true"><img class="mark" src="assets/icons/github.svg" alt=""></span>GitHub</a></li></ul></nav>
 </footer>
 <script>
 (function(){

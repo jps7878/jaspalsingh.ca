@@ -10,19 +10,24 @@
     "links": [
       {
         "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/jaspalsinghsoor/"
+        "href": "https://www.linkedin.com/in/jaspalsinghsoor/",
+        "icon": "assets/icons/linkedin.svg"
       },
       {
         "label": "Email",
-        "href": "mailto:jaspalsinghsoor@gmail.com"
+        "href": "mailto:jaspalsinghsoor@gmail.com",
+        "icon": "assets/icons/mail.svg"
       },
       {
         "label": "Qotiv",
-        "href": "https://qotiv.com"
+        "href": "https://qotiv.com",
+        "icon": "assets/icons/qotiv.png",
+        "iconClass": "mark-qotiv"
       },
       {
         "label": "GitHub",
-        "href": "https://github.com/jps7878"
+        "href": "https://github.com/jps7878",
+        "icon": "assets/icons/github.svg"
       }
     ]
   },
