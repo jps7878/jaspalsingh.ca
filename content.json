@@ -150,7 +150,8 @@
       "artPlaceholder": "assets/art/placeholder-07-rbc.svg",
       "logo": "assets/logos/rbc.svg",
       "logoAlt": "RBC Insurance",
-      "logoWide": false
+      "logoWide": false,
+      "hidden": true
     }
   ],
   "skillsHeading": "Skills",

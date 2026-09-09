@@ -977,7 +977,7 @@ ${hero(site)}
 <main>
 <section class="section wrap" aria-labelledby="experience-h">
   <h2 id="experience-h">${esc(content.experienceHeading)}</h2>
-  <div class="grid">${cards.map(c => fullCard(c, 'career', '')).join('')}
+  <div class="grid">${cards.filter(c => !c.hidden).map(c => fullCard(c, 'career', '')).join('')}
   </div>
 </section>${skillsSection()}
 </main>
