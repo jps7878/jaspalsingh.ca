@@ -2,7 +2,7 @@
   "site": {
     "title": "Jaspal Singh",
     "name": "Jaspal Singh",
-    "headline": "Incentives Engineer and Forward Deployed Engineer at Anthropic. Founder, Qotiv.",
+    "headline": "Incentives Engineer at Anthropic. Founder, Qotiv.",
     "thesis": "Ten years in revenue operations. Now I engineer it.",
     "body": "Account executive at RBC Insurance, Clio and Deel. Moved into revenue strategy and operations at Deel, where I ran sales compensation for roughly 500 reps worldwide, then led revenue operations at Engine as Director. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems, and I'm building Qotiv, a compensation platform for deal-based and usage-based commissions.",
     "photo": "assets/photo.jpg",
@@ -43,12 +43,7 @@
       "artPlaceholder": "assets/art/placeholder-01-anthropic.svg",
       "logo": "assets/logos/anthropic.svg",
       "logoAlt": "Anthropic",
-      "logoWide": false,
-      "typeLine": [
-        "Anthropic",
-        "Forward Deployed Engineer",
-        "May 2026 – Present"
-      ]
+      "logoWide": false
     },
     {
       "id": "qotiv",
