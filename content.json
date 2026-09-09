@@ -4,7 +4,7 @@
     "name": "Jaspal Singh",
     "headline": "Incentives Engineer at Anthropic. Founder, Qotiv.",
     "thesis": "10+ years in GTM. Now I engineer it.",
-    "body": "I started in sales: life and living benefits at RBC Insurance, then software at Clio and Deel, from outbound legal tech to global hiring and payroll for small businesses. At Deel I moved into revenue strategy and operations and rose from senior analyst to senior manager, owning sales compensation for roughly 500 reps worldwide, mapping the funnel for every product launch and running the revenue tech stack. As Director of Revenue Strategy and Operations at Engine, I led the operations team across new business, expansion, revenue data, product go-to-market and compensation, and launched comp infrastructure covering every variable role. Today I'm an Incentives Engineer at Anthropic, building the internal compensation, data and framework systems that go-to-market teams run on. I'm also the founder of Qotiv, a comprehensive compensation platform built for both deal-based and usage-based commissions, covering plan design, the full payout lifecycle, compliance and signed plan documents in one system.",
+    "body": "My career has been spent inside companies at the steepest part of their growth curve, learning firsthand how a revenue organization has to be rebuilt at every order of magnitude. I joined Clio early and was there as it crossed into unicorn territory. At Deel, an early employee through the climb from $30M to $1B in ARR, I moved from selling into revenue strategy and operations and came to own compensation for roughly 500 reps around the world. At Engine, as Director of Revenue Strategy and Operations, I helped double the sales team and built the compensation infrastructure that let it scale without breaking. Today I'm an Incentives Engineer at Anthropic, designing and building the compensation, data and framework systems its go-to-market teams run on. I'm also the founder of Qotiv, a comprehensive compensation platform for deal-based and usage-based commissions.",
     "photo": "assets/photo.jpg",
     "photoAlt": "Jaspal Singh",
     "links": [
@@ -157,14 +157,26 @@
   "skillsHeading": "Skills",
   "skills": [
     {
+      "id": "gtm-engineer",
+      "type": "rare",
+      "kindLabel": "Secret Rare",
+      "foil": true,
+      "group": "GTM Engineering",
+      "name": "GTM Engineer",
+      "text": "Turns the go-to-market playbook into software: the automations, data pipelines and AI agents that enrich, route, sequence and report without a human in the loop. Sits between sales, operations and engineering, and ships what all three need.",
+      "setCode": "JS-EN008",
+      "art": "assets/art/art-08-gtm-engineer.jpg",
+      "artPlaceholder": "assets/art/placeholder-08-gtm-engineer.svg"
+    },
+    {
       "id": "comp-plan-design",
       "type": "spell",
       "group": "Design & Strategy",
       "name": "Comp Plan Design",
       "text": "Quotas, accelerators, SPIFs, deal-based and usage-based plans. Designs the mechanics so a plan pays for the behaviour the business actually wants, and models the cost before anyone signs.",
-      "setCode": "JS-EN008",
-      "art": "assets/art/art-08-comp-plan-design.jpg",
-      "artPlaceholder": "assets/art/placeholder-08-comp-plan-design.svg"
+      "setCode": "JS-EN009",
+      "art": "assets/art/art-09-comp-plan-design.jpg",
+      "artPlaceholder": "assets/art/placeholder-09-comp-plan-design.svg"
     },
     {
       "id": "payout-controls",
@@ -172,9 +184,9 @@
       "group": "Controls & Governance",
       "name": "Payout Controls",
       "text": "Calculate, approve, export, pay, with an audit trail at every step. Every payout traces back to a plan version, a deal and an approver.",
-      "setCode": "JS-EN009",
-      "art": "assets/art/art-09-payout-controls.jpg",
-      "artPlaceholder": "assets/art/placeholder-09-payout-controls.svg"
+      "setCode": "JS-EN010",
+      "art": "assets/art/art-10-payout-controls.jpg",
+      "artPlaceholder": "assets/art/placeholder-10-payout-controls.svg"
     },
     {
       "id": "comp-compliance",
@@ -182,9 +194,9 @@
       "group": "Controls & Governance",
       "name": "Comp Compliance & Governance",
       "text": "Plan documents, acknowledgments, policy enforcement. Reps sign what they are paid on, and changes go through a process instead of a spreadsheet edit.",
-      "setCode": "JS-EN010",
-      "art": "assets/art/art-10-comp-compliance.jpg",
-      "artPlaceholder": "assets/art/placeholder-10-comp-compliance.svg"
+      "setCode": "JS-EN011",
+      "art": "assets/art/art-11-comp-compliance.jpg",
+      "artPlaceholder": "assets/art/placeholder-11-comp-compliance.svg"
     },
     {
       "id": "data-integrity",
@@ -192,9 +204,9 @@
       "group": "Controls & Governance",
       "name": "Data Integrity",
       "text": "One source of truth for reps, roles, quotas and credit. Catches the duplicate account, the missing territory and the stale role before they become a wrong payment.",
-      "setCode": "JS-EN011",
-      "art": "assets/art/art-11-data-integrity.jpg",
-      "artPlaceholder": "assets/art/placeholder-11-data-integrity.svg"
+      "setCode": "JS-EN012",
+      "art": "assets/art/art-12-data-integrity.jpg",
+      "artPlaceholder": "assets/art/placeholder-12-data-integrity.svg"
     },
     {
       "id": "gtm-strategy",
@@ -202,9 +214,9 @@
       "group": "Design & Strategy",
       "name": "GTM Strategy",
       "text": "Segmentation, motion design, launch planning. Decides who sells what to whom, and how the handoffs work, before the first rep is hired.",
-      "setCode": "JS-EN012",
-      "art": "assets/art/art-12-gtm-strategy.jpg",
-      "artPlaceholder": "assets/art/placeholder-12-gtm-strategy.svg"
+      "setCode": "JS-EN013",
+      "art": "assets/art/art-13-gtm-strategy.jpg",
+      "artPlaceholder": "assets/art/placeholder-13-gtm-strategy.svg"
     },
     {
       "id": "funnel-mapping",
@@ -212,9 +224,9 @@
       "group": "Design & Strategy",
       "name": "Funnel Mapping",
       "text": "Stage definitions, conversion instrumentation, handoffs. Maps how a deal actually moves so forecasts, comp and marketing all read from the same funnel.",
-      "setCode": "JS-EN013",
-      "art": "assets/art/art-13-funnel-mapping.jpg",
-      "artPlaceholder": "assets/art/placeholder-13-funnel-mapping.svg"
+      "setCode": "JS-EN014",
+      "art": "assets/art/art-14-funnel-mapping.jpg",
+      "artPlaceholder": "assets/art/placeholder-14-funnel-mapping.svg"
     },
     {
       "id": "quota-territory",
@@ -222,9 +234,9 @@
       "group": "Design & Strategy",
       "name": "Quota & Territory Planning",
       "text": "Capacity models, coverage, fair territories. Sets targets a team can believe in and carves patches so no rep wins or loses on geography alone.",
-      "setCode": "JS-EN014",
-      "art": "assets/art/art-14-quota-territory.jpg",
-      "artPlaceholder": "assets/art/placeholder-14-quota-territory.svg"
+      "setCode": "JS-EN015",
+      "art": "assets/art/art-15-quota-territory.jpg",
+      "artPlaceholder": "assets/art/placeholder-15-quota-territory.svg"
     },
     {
       "id": "account-management",
@@ -232,9 +244,9 @@
       "group": "Design & Strategy",
       "name": "Account Management & CSM Flows",
       "text": "Post-sale motions for account managers and customer success: renewals, upsell, cross-sell and service-tier upgrades. Designs the handoffs, ownership rules and comp credit so expanding an account is as clean as landing it.",
-      "setCode": "JS-EN015",
-      "art": "assets/art/art-15-account-management.jpg",
-      "artPlaceholder": "assets/art/placeholder-15-account-management.svg"
+      "setCode": "JS-EN016",
+      "art": "assets/art/art-16-account-management.jpg",
+      "artPlaceholder": "assets/art/placeholder-16-account-management.svg"
     },
     {
       "id": "data-analysis",
@@ -242,9 +254,9 @@
       "group": "Design & Strategy",
       "name": "Data Analysis",
       "text": "SQL and spreadsheet analysis across CRM, billing and payout data. Turns rep, deal and usage records into the numbers leaders decide on: attainment, cost of compensation, conversion and forecast.",
-      "setCode": "JS-EN016",
-      "art": "assets/art/art-16-data-analysis.jpg",
-      "artPlaceholder": "assets/art/placeholder-16-data-analysis.svg"
+      "setCode": "JS-EN017",
+      "art": "assets/art/art-17-data-analysis.jpg",
+      "artPlaceholder": "assets/art/placeholder-17-data-analysis.svg"
     }
   ],
   "footer": {

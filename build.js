@@ -221,12 +221,25 @@ const FRAMES = {
     badge: { rim: ['#FBE6F0', '#8C3A66', '#E3A7C6', '#4C1A38'], coin: ['#6A2350', '#471435', '#2A0A1E'], ink: '#FFEAF5' }, // deep plum face, glyph not word
     foil: false, satin: '255,236,246', glare: [.24, .5],
   },
+  rare: { // royal blue, the set's secret rare: dark plate with light ink, foil like the current-role cards
+    base: '#2B4FB0', brush: BRUSH_B, grain: GRAIN_B,
+    vignette: vignette('6,14,50', .18), light: light('214,228,255', '6,14,50', [.42, .12, .05, .12]),
+    metal: metal('#3A62CA', '#2B4FB0', '#2749A6', '#22429A'),
+    edge: '#0E1F58', chamfer: 'rgba(196,214,255,.95)', shade: 'rgba(6,14,50,.30)', ridgeL: 'rgba(206,220,255,.95)', ridgeD: 'rgba(6,14,50,.62)',
+    ink: '#EEF3FF', inkShadow: 'rgba(4,10,40,.7)',
+    plate: plateSet('12,24,74', '190,208,255', 'rgba(4,10,40,.55)', 'rgba(130,160,235,.55)'),
+    bezel: ['#DCE6FF', '#5E82D8', '#16307A', 'rgba(214,228,255,.85)', 'rgba(6,14,50,.5)', 'rgba(6,14,50,.5)'],
+    paperLine: '#3B5390', paperDrop: 'rgba(220,232,255,.5)',
+    badge: { rim: ['#EEF3FF', '#3B5CB5', '#B9CBF5', '#0E1F58'], coin: ['#173585', '#0E245E', '#071540'], ink: '#F2F6FF' },
+    foil: true, satin: '220,232,255', glare: [.3, .7],
+  },
 };
 // Coin glyphs for skill cards (original marks, drawn in the coin's ink color via currentColor). Both are a
 // single filled shape so the two coins read as one struck relief: spell is a four-point sparkle (108 units^2
 // of ink), trap a hexagonal seal with a ring knocked out of it (even-odd), leaving a centre disc; its
 // radii (hex 9.8, ring 6.6, disc 2.9) put it at 139 units^2 so the two sit close in weight.
 const GLYPHS = {
+  rare: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6L14.59 8.44L21.89 8.79L16.18 13.36L18.11 20.41L12 16.4L5.89 20.41L7.82 13.36L2.11 8.79L9.41 8.44Z"/></svg>',
   spell: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6C12.9 7.7 16.3 11.1 22.4 12C16.3 12.9 12.9 16.3 12 22.4C11.1 16.3 7.7 12.9 1.6 12C7.7 11.1 11.1 7.7 12 1.6Z"/></svg>',
   trap: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2L20.49 7.1V16.9L12 21.8L3.51 16.9V7.1Z M12 5.4A6.6 6.6 0 1 0 12 18.6A6.6 6.6 0 1 0 12 5.4Z M12 9.1A2.9 2.9 0 1 1 12 14.9A2.9 2.9 0 1 1 12 9.1Z"/></svg>',
 };
@@ -855,7 +868,7 @@ body {
 // ---------- markup ----------
 // One full-card renderer. kind 'career': word coin, company mark in the art window, type line from
 // typeLine or company/city/dates, foil where the frame allows it. kind 'skill': glyph coin, no mark,
-// type line "[ Spell / group ]" or "[ Trap / group ]", frame chosen by the skill's type, always matte.
+// type line "[ Spell / group ]", "[ Trap / group ]" or a kindLabel override, frame chosen by the skill's type; foil if the skill asks and its frame allows (the rare).
 const cap = s => s[0].toUpperCase() + s.slice(1);
 function fullCard(card, kind, rel) {
   const frameName = kind === 'skill' ? card.type : card.frame;
@@ -863,14 +876,14 @@ function fullCard(card, kind, rel) {
   if (!t) throw new Error(`Unknown frame "${frameName}" on card ${card.id}`);
   if (kind === 'skill' && !GLYPHS[card.type]) throw new Error(`Unknown skill type "${card.type}" on card ${card.id}`);
   const art = exists(card.art) ? card.art : card.artPlaceholder;
-  const typeLine = kind === 'skill' ? `[ ${cap(card.type)} / ${card.group} ]`
+  const typeLine = kind === 'skill' ? `[ ${card.kindLabel || cap(card.type)} / ${card.group} ]`
     : Array.isArray(card.typeLine) ? `[ ${card.typeLine.join(' / ')} ]` : `[ ${card.company} / ${card.city} / ${card.dates} ]`;
   const nameAvail = G.inner - G.platePadL - G.platePadR - G.plateGap - G.badge;
   const name = nameFit(card.name, nameAvail);
   const nameStyle = [name.fs !== G.nameFs ? `--nfs:${name.fs}cqw` : '', name.cond < 1 ? `--cond:${name.cond}` : ''].filter(Boolean).join(';');
   const efs = effectSize(card.text, kind === 'skill' ? G.effectFsSkill : G.effectFs);
   const tfs = typeSize(typeLine);
-  const foil = kind === 'career' && card.foil && t.foil;
+  const foil = !!(card.foil && t.foil);
   const badge = kind === 'skill'
     ? `<span class="badge" aria-hidden="true">${GLYPHS[card.type]}</span>`
     : `<span class="badge${card.badge.length >= 7 ? ' long' : card.badge.length >= 5 ? ' mid' : ''}">${esc(card.badge)}</span>`;
