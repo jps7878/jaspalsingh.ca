@@ -743,6 +743,51 @@ ${Object.entries(FRAMES).map(([k, t]) => frameCss(k, t)).join('')}
 /* ---- qa close-up ---- */
 body.detail { padding: 42px 24px; display: flex; justify-content: center; align-items: flex-start; }
 body.detail .card { width: 720px; }
+
+/* ---- Backdrop: honed blue-grey slate slab under one key light from the upper left (chosen 2026-09-08) ---- */
+:root { --bg: #161A22; --ink: #E6EAF1; --ink-2: #C3CAD6; --muted: #8E98A8; --link: #9AAABF; }
+body {
+  background-color: var(--bg);
+  background-image:
+    /* bottom vignette */
+    linear-gradient(180deg, rgba(8,10,15,0) 56%, rgba(8,10,15,.38) 86%, rgba(8,10,15,.52) 100%),
+    /* stone: mottle + cleavage (soft-light), then fine grain + flecks (overlay) */
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='1400'><filter id='mo' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.0017' numOctaves='4' stitchTiles='stitch' seed='9'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0' intercept='1'/><feFuncR type='linear' slope='1.4' intercept='-0.2'/><feFuncG type='linear' slope='1.4' intercept='-0.2'/><feFuncB type='linear' slope='1.4' intercept='-0.2'/></feComponentTransfer></filter><filter id='bd' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.0016 0.015' numOctaves='4' stitchTiles='stitch' seed='14'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer result='band'><feFuncA type='linear' slope='0' intercept='1'/><feFuncR type='linear' slope='1.5' intercept='-0.25'/><feFuncG type='linear' slope='1.5' intercept='-0.25'/><feFuncB type='linear' slope='1.5' intercept='-0.25'/></feComponentTransfer><feTurbulence type='fractalNoise' baseFrequency='0.0024' numOctaves='2' stitchTiles='stitch' seed='21'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0' intercept='1'/></feComponentTransfer><feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 0 0 0 -0.9' result='mask'/><feComposite in='band' in2='mask' operator='in'/></filter><filter id='cl' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'><feTurbulence type='turbulence' baseFrequency='0.0006 0.0062' numOctaves='1' stitchTiles='stitch' seed='3'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0' intercept='1'/></feComponentTransfer><feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 1'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 1'/></feComponentTransfer></filter><rect width='1400' height='1400' filter='url(%23mo)' opacity='0.55'/><rect width='1400' height='1400' filter='url(%23bd)' opacity='0.30'/></svg>"),
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch' seed='17'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0' intercept='1'/></feComponentTransfer></filter><filter id='m' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch' seed='5'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0' intercept='1'/><feFuncR type='table' tableValues='0 0 0 0 0 0 0 0 0.3 1 1'/></feComponentTransfer><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0 0 0'/></filter><rect width='180' height='180' filter='url(%23g)' opacity='0.44'/><rect width='180' height='180' filter='url(%23m)' opacity='0.28'/></svg>"),
+    /* key light from the upper left */
+    radial-gradient(1500px 1050px at 6% -4%, rgba(70,84,106,.40) 0%, rgba(58,70,90,.20) 42%, rgba(40,48,62,0) 100%),
+    /* base slab tone, lit corner to shadowed corner */
+    linear-gradient(166deg, #232A35 0%, #1C222B 40%, #171B23 72%, #13161D 100%);
+  background-repeat: no-repeat, repeat, repeat, no-repeat, no-repeat;
+  background-size: auto, 1400px 1400px, 180px 180px, auto, auto;
+  background-blend-mode: normal, soft-light, overlay, normal, normal;
+}
+/* chrome on the slab: cool off-white type, steel links, cooled rules and buttons */
+.headline, .intro { color: #AEB8C6; }
+.links a { border-bottom-color: rgba(154,170,191,.42); }
+.hero-photo { box-shadow: 0 1px 0 rgba(255,255,255,.06), 3px 14px 30px -12px rgba(4,7,14,.78); }
+.tile {
+  background: radial-gradient(120% 110% at 28% 18%, #3A424F 0%, #2A303A 62%, #242A33 100%);
+  box-shadow: inset 0 0 0 1px rgba(230,234,241,.16), inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.4);
+  color: #D3DAE4;
+}
+.shelf-btn { background: rgba(176,192,216,.07); border-color: rgba(176,192,216,.34); }
+.shelf-btn:hover { border-color: rgba(196,210,230,.62); background: rgba(176,192,216,.14); }
+.shelf-btn:disabled { border-color: rgba(176,192,216,.34); background: rgba(176,192,216,.07); }
+.foot { border-top-color: rgba(176,192,216,.11); }
+/* card shadows: same inset rings, drop shadows cooled and pulled slightly longer toward the lower right (light is upper left) */
+.card-inner {
+  box-shadow:
+    inset 0 0 0 2px var(--edge),
+    inset 0 0 0 3px var(--chamfer),
+    inset 0 0 0 4px var(--shade),
+    0 1px 0 rgba(255,255,255,.10),
+    0 1px 2px rgba(4,7,14,.78),
+    1px 2px 3px rgba(4,7,14,.5),
+    2px 12px 16px -6px rgba(4,7,14,.58),
+    4px 22px 28px -12px rgba(5,9,18,.6),
+    6px 46px 56px -30px rgba(5,9,18,.5);
+}
 `;
 
 // ---------- markup ----------
