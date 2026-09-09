@@ -86,8 +86,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 .shelf::-webkit-scrollbar { display: none; }
 .shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
-/* shelf cards rest at a slight, varied tilt like cards laid on a table by hand; the one under the pointer straightens and lifts */
-.shelf .card:hover, .shelf .card.is-hover { --rest: 0deg; --drop: 0px; --lift: -6px; }
 /* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
 .shelf:focus-visible { outline: none; }
 .shelf-frame:has(.shelf:focus-visible)::after {
@@ -614,7 +612,7 @@ body {
   </div>
   <div class="shelf-frame">
     <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">
-<article class="card skill f-rare foil-card" data-tilt="10" style="--rest:-1.6deg;--drop:2px">
+<article class="card skill f-rare foil-card" data-tilt="10">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>GTM Engineer</span></h3>
@@ -627,7 +625,7 @@ body {
     <div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:1.1deg;--drop:-3px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Comp Plan Design</span></h3>
@@ -640,7 +638,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6" style="--rest:-0.9deg;--drop:1px">
+<article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Payout Controls</span></h3>
@@ -653,7 +651,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6" style="--rest:1.7deg;--drop:-2px">
+<article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Comp Compliance &amp; Governance</span></h3>
@@ -666,7 +664,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6" style="--rest:-1.3deg;--drop:3px">
+<article class="card skill f-trap" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Data Integrity</span></h3>
@@ -679,7 +677,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:0.8deg;--drop:-1px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>GTM Strategy</span></h3>
@@ -692,7 +690,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:-1.8deg;--drop:2px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Funnel Mapping</span></h3>
@@ -705,7 +703,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:1.2deg;--drop:-3px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Quota &amp; Territory Planning</span></h3>
@@ -718,7 +716,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:-1deg;--drop:1px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name" style="--cond:0.917"><span>Account Management &amp; CSM Flows</span></h3>
@@ -731,7 +729,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6" style="--rest:1.5deg;--drop:-2px">
+<article class="card skill f-spell" data-tilt="6">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Data Analysis</span></h3>

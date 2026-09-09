@@ -490,8 +490,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 .shelf::-webkit-scrollbar { display: none; }
 .shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
-/* shelf cards rest at a slight, varied tilt like cards laid on a table by hand; the one under the pointer straightens and lifts */
-.shelf .card:hover, .shelf .card.is-hover { --rest: 0deg; --drop: 0px; --lift: -6px; }
 /* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
 .shelf:focus-visible { outline: none; }
 .shelf-frame:has(.shelf:focus-visible)::after {
@@ -930,9 +928,6 @@ function hero(site) {
 // one full-bleed snap shelf holding all eight cards in content order. The shelf is a focusable region named
 // "Skill cards" so it is not announced as a second "Skills" inside the section.
 const chevron = dir => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${dir < 0 ? 'M10 3 5 8l5 5' : 'M6 3l5 5-5 5'}"/></svg>`;
-// Resting tilt/drop for shelf cards, in degrees / px, alternating sides so neighbours never lean the same way.
-const REST_TILT = [-1.6, 1.1, -0.9, 1.7, -1.3, 0.8, -1.8, 1.2, -1.0, 1.5];
-const REST_DROP = [2, -3, 1, -2, 3, -1, 2, -3, 1, -2];
 function skillsSection() {
   return `
 <section class="section" aria-labelledby="skills-h">
@@ -947,7 +942,7 @@ function skillsSection() {
     <p class="intro">${esc(content.skillsIntro)}</p>
   </div>
   <div class="shelf-frame">
-    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">${content.skills.map((s, i) => fullCard(s, 'skill', '', { style: `--rest:${REST_TILT[i % REST_TILT.length]}deg;--drop:${REST_DROP[i % REST_DROP.length]}px` })).join('')}
+    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">${content.skills.map(s => fullCard(s, 'skill', '')).join('')}
     </div>
   </div>
 </section>`;
