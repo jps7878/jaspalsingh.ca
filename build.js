@@ -490,6 +490,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 .shelf::-webkit-scrollbar { display: none; }
 .shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
+/* shelf cards rest at a slight, varied tilt like cards laid on a table by hand; the one under the pointer straightens and lifts */
+.shelf .card:hover, .shelf .card.is-hover { --rest: 0deg; --drop: 0px; --lift: -6px; }
 /* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
 .shelf:focus-visible { outline: none; }
 .shelf-frame:has(.shelf:focus-visible)::after {
@@ -532,7 +534,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
   position: relative; width: 100%; margin: 0; aspect-ratio: 59 / 86;
   container-type: inline-size;
-  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform: translateY(calc(var(--lift, 0px) + var(--drop, 0px))) rotate(var(--rest, 0deg)) perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
 .card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
@@ -862,7 +864,7 @@ body {
 .foot .coin { --d: 30px; }
 /* 390px: the column takes three coins and orphans the fourth; two aligned columns read as intended */
 @media (max-width: 599px) { .links { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 14px 30px; } .foot .links { gap: 12px 26px; } }
-@media (prefers-reduced-motion: reduce) { .links a, .coin { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .links a, .coin { transition: none; } .shelf .card { transition: none; } }
 `;
 
 // ---------- markup ----------
@@ -870,7 +872,7 @@ body {
 // typeLine or company/city/dates, foil where the frame allows it. kind 'skill': glyph coin, no mark,
 // type line "[ Spell / group ]", "[ Trap / group ]" or a kindLabel override, frame chosen by the skill's type; foil if the skill asks and its frame allows (the rare).
 const cap = s => s[0].toUpperCase() + s.slice(1);
-function fullCard(card, kind, rel) {
+function fullCard(card, kind, rel, opts = {}) {
   const frameName = kind === 'skill' ? card.type : card.frame;
   const t = FRAMES[frameName];
   if (!t) throw new Error(`Unknown frame "${frameName}" on card ${card.id}`);
@@ -892,7 +894,7 @@ function fullCard(card, kind, rel) {
     ? '<div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>'
     : '<div class="satin"></div><div class="glare"></div>';
   return `
-<article class="card ${kind} f-${frameName}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}">
+<article class="card ${kind} f-${frameName}${foil ? ' foil-card' : ''}" data-tilt="${foil ? 10 : 6}"${opts.style ? ` style="${opts.style}"` : ''}>
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"${nameStyle ? ` style="${nameStyle}"` : ''}><span>${esc(card.name)}</span></h3>
@@ -928,6 +930,9 @@ function hero(site) {
 // one full-bleed snap shelf holding all eight cards in content order. The shelf is a focusable region named
 // "Skill cards" so it is not announced as a second "Skills" inside the section.
 const chevron = dir => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${dir < 0 ? 'M10 3 5 8l5 5' : 'M6 3l5 5-5 5'}"/></svg>`;
+// Resting tilt/drop for shelf cards, in degrees / px, alternating sides so neighbours never lean the same way.
+const REST_TILT = [-1.6, 1.1, -0.9, 1.7, -1.3, 0.8, -1.8, 1.2, -1.0, 1.5];
+const REST_DROP = [2, -3, 1, -2, 3, -1, 2, -3, 1, -2];
 function skillsSection() {
   return `
 <section class="section" aria-labelledby="skills-h">
@@ -942,7 +947,7 @@ function skillsSection() {
     <p class="intro">${esc(content.skillsIntro)}</p>
   </div>
   <div class="shelf-frame">
-    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">${content.skills.map(s => fullCard(s, 'skill', '')).join('')}
+    <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">${content.skills.map((s, i) => fullCard(s, 'skill', '', { style: `--rest:${REST_TILT[i % REST_TILT.length]}deg;--drop:${REST_DROP[i % REST_DROP.length]}px` })).join('')}
     </div>
   </div>
 </section>`;

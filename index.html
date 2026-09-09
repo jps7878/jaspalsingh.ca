@@ -86,6 +86,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 }
 .shelf::-webkit-scrollbar { display: none; }
 .shelf .card { flex: none; width: var(--card-w); scroll-snap-align: start; }
+/* shelf cards rest at a slight, varied tilt like cards laid on a table by hand; the one under the pointer straightens and lifts */
+.shelf .card:hover, .shelf .card.is-hover { --rest: 0deg; --drop: 0px; --lift: -6px; }
 /* Keyboard focus on the shelf frames the row of cards (6px above, 8px below), not the padded scroll box. */
 .shelf:focus-visible { outline: none; }
 .shelf-frame:has(.shelf:focus-visible)::after {
@@ -128,7 +130,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
   position: relative; width: 100%; margin: 0; aspect-ratio: 59 / 86;
   container-type: inline-size;
-  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform: translateY(calc(var(--lift, 0px) + var(--drop, 0px))) rotate(var(--rest, 0deg)) perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
 .card.is-hover { transition: transform .07s linear; will-change: transform; z-index: 5; }
@@ -500,7 +502,7 @@ body {
 .foot .coin { --d: 30px; }
 /* 390px: the column takes three coins and orphans the fourth; two aligned columns read as intended */
 @media (max-width: 599px) { .links { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 14px 30px; } .foot .links { gap: 12px 26px; } }
-@media (prefers-reduced-motion: reduce) { .links a, .coin { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .links a, .coin { transition: none; } .shelf .card { transition: none; } }
 </style>
 </head>
 <body>
@@ -612,7 +614,7 @@ body {
   </div>
   <div class="shelf-frame">
     <div class="shelf" role="region" aria-label="Skill cards" tabindex="0">
-<article class="card skill f-rare foil-card" data-tilt="10">
+<article class="card skill f-rare foil-card" data-tilt="10" style="--rest:-1.6deg;--drop:2px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>GTM Engineer</span></h3>
@@ -625,7 +627,7 @@ body {
     <div class="foil"></div><div class="sheen"></div><div class="prism"></div><div class="glitter"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:1.1deg;--drop:-3px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Comp Plan Design</span></h3>
@@ -638,7 +640,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6">
+<article class="card skill f-trap" data-tilt="6" style="--rest:-0.9deg;--drop:1px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Payout Controls</span></h3>
@@ -651,7 +653,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6">
+<article class="card skill f-trap" data-tilt="6" style="--rest:1.7deg;--drop:-2px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Comp Compliance &amp; Governance</span></h3>
@@ -664,7 +666,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-trap" data-tilt="6">
+<article class="card skill f-trap" data-tilt="6" style="--rest:-1.3deg;--drop:3px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Data Integrity</span></h3>
@@ -677,7 +679,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:0.8deg;--drop:-1px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>GTM Strategy</span></h3>
@@ -690,7 +692,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:-1.8deg;--drop:2px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Funnel Mapping</span></h3>
@@ -703,7 +705,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:1.2deg;--drop:-3px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Quota &amp; Territory Planning</span></h3>
@@ -716,7 +718,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:-1deg;--drop:1px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name" style="--cond:0.917"><span>Account Management &amp; CSM Flows</span></h3>
@@ -729,7 +731,7 @@ body {
     <div class="satin"></div><div class="glare"></div>
   </div>
 </article>
-<article class="card skill f-spell" data-tilt="6">
+<article class="card skill f-spell" data-tilt="6" style="--rest:1.5deg;--drop:-2px">
   <div class="card-inner">
     <header class="plate">
       <h3 class="name"><span>Data Analysis</span></h3>
