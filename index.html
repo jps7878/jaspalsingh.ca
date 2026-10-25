@@ -123,9 +123,8 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
 
 /* ---- card shell (from the proof; sized by the grid column, cqw units inside) ---- */
 .card {
-  /* light position: the ambient pass drives --ax/--ay (registered in the motion section), the pointer --px/--py;
-     --lo scales the layer opacities and --ga adds to the glare, both moved by the pass only */
-  --mx: var(--ax, 64%); --my: var(--ay, 30%); --lo: var(--fo, 1); --ga1: var(--ga, 0);
+  /* light position: at rest 64%/30%, the pointer drives --px/--py; --lo scales the layer opacities, --ga1 adds to the glare */
+  --mx: 64%; --my: 30%; --lo: 1; --ga1: 0;
   --rx: 0deg; --ry: 0deg;
   --fp: calc(var(--mx) * 1.2 - 10%) calc(var(--my) * 1.2 - 10%);
   --falloff: radial-gradient(farthest-corner circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,.92) 28%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.22) 100%);
@@ -396,16 +395,12 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   .foil, .sheen, .prism, .glitter, .satin, .glare { transition: none; }
 }
 
-/* ---- motion (2026-09-09, "the cards laying flat is boring"): dealt onto the slate, an occasional pass of light over
-   the foils, a cursor light on the stone, click to inspect. Everything is gated so the page degrades to what it was:
-   the undealt state sits behind html.js (set in <head>, so with scripts off every card is simply visible), the pass
-   behind html.ambient (script: @property supported, motion allowed, fine pointer); the light, the inspect buttons and
-   the dialog exist only when the script builds them. Reduced motion: cards appear in place, no pass, no light, open
-   and close are instant. Coarse pointers: no pass, no light, no tilt; tap to inspect still works. ---- */
-@property --ax { syntax: '<percentage>'; inherits: true; initial-value: 64%; }
-@property --ay { syntax: '<percentage>'; inherits: true; initial-value: 30%; }
-@property --fo { syntax: '<number>'; inherits: true; initial-value: 1; }
-@property --ga { syntax: '<number>'; inherits: true; initial-value: 0; }
+/* ---- motion (2026-09-09, "the cards laying flat is boring"): dealt onto the slate, a cursor light on the stone, click
+   to inspect. Everything is gated so the page degrades to what it was: the undealt state sits behind html.js (set in
+   <head>, so with scripts off every card is simply visible); the light, the inspect buttons and the dialog exist only
+   when the script builds them. Reduced motion: cards appear in place, no light, open and close are instant. Coarse
+   pointers: no light, no tilt; tap to inspect still works. (The automatic foil sweep was removed 2026-10-25: animating
+   registered custom properties repainted every blended foil layer each frame and made the idle page lag.) ---- */
 /* deal-in: an undealt card hangs above its slot (105%, a beat toward the row's leading edge, a couple of degrees off,
    the angle seeded per card by the build as --dr0) under a wide soft lift shadow (.card::before); it comes down over
    480ms and the lift shadow collapses into the card's own as it touches. The card is opaque from the first 140ms on,
@@ -420,28 +415,6 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   .card.dealing { transition: transform .48s cubic-bezier(.2,.8,.2,1) var(--dd, 0ms), opacity .14s ease-out var(--dd, 0ms); }
   .card.dealing::before { transition: opacity .48s cubic-bezier(.5,0,.8,.5) var(--dd, 0ms); }
 }
-/* ambient: one pass of light over a foil card, 3.6s, one direction. The resting glint dims, a light enters at the top
-   right corner, crosses the card down and to the left (quick in, long tail out) and leaves at the bottom left, then
-   the resting glint comes back. It drives the light position the pointer drives (--ax/--ay, resolved through --mx/--my
-   on .card), so the layers move exactly as they do under the hand; --fo carries the fades at either edge (the two
-   jumps, at 12% and 62%, happen while the layers are dark) and --ga lifts the glare as the light crosses the middle.
-   The script runs it once as a card lands and then every 24s or so, one card at a time, only on cards that are on
-   screen and not under the hand; nothing loops in CSS. */
-@keyframes pass {
-  0%    { --ax: 64%; --ay: 30%; --fo: 1; --ga: 0; animation-timing-function: ease-in-out; }
-  11.9% { --ax: 64%; --ay: 30%; }
-  12%   { --ax: 132%; --ay: -34%; --fo: 0; --ga: 0; animation-timing-function: cubic-bezier(.35,0,.2,1); }
-  19%   { --fo: 1; }
-  30%   { --ga: .14; animation-timing-function: ease-in-out; }
-  50%   { --fo: 1; animation-timing-function: ease-in; }
-  61.9% { --ax: -30%; --ay: 122%; }
-  62%   { --ax: 64%; --ay: 30%; --fo: 0; --ga: 0; animation-timing-function: ease-out; }
-  90%, 100% { --ax: 64%; --ay: 30%; --fo: 1; --ga: 0; }
-}
-html.ambient .foil-card.pass { animation: pass 3.6s linear both; }
-/* while the pass drives the card the layers follow it directly; their .55s ease is for the hand leaving */
-html.ambient .foil-card.pass .foil, html.ambient .foil-card.pass .sheen, html.ambient .foil-card.pass .prism,
-html.ambient .foil-card.pass .glitter, html.ambient .foil-card.pass .glare { transition: none; }
 /* cursor light: one pool of cool light on the slate, a key light following the pointer a beat behind, under everything */
 .lume {
   position: fixed; left: 0; top: 0; width: 720px; height: 720px; margin: -360px 0 0 -360px; border-radius: 50%;
@@ -886,7 +859,7 @@ body {
 
   // Deal-in. Undealt cards are hidden by CSS (html.js, motion allowed) until .dealt; an IntersectionObserver deals
   // each as it enters the viewport, a batch 80ms apart in document order (a tall viewport gets its hand dealt across a
-  // second, not in a burst). A foil card catches a pass of light as it lands.
+  // second, not in a burst).
   var waiting = [].slice.call(doc.querySelectorAll('.grid > .card, .shelf > .card')), started = false;
   function dealAll(){ waiting.forEach(function(c){ c.classList.add('dealt'); }); }
   function deal(){
@@ -902,7 +875,6 @@ body {
           c.style.setProperty('--dd', d + 'ms');
           c.classList.add('dealing', 'dealt');
           setTimeout(function(){ c.classList.remove('dealing'); c.style.removeProperty('--dd'); }, d + 560);
-          if (c.classList.contains('foil-card')) firstPass(c, d + 900);
         });
       }, { rootMargin: '0px 0px -10% 0px' });
       waiting.forEach(function(c){ io.observe(c); });
@@ -969,30 +941,7 @@ body {
     doc.addEventListener('pointermove', function(e){ if (e.pointerType !== 'touch') { pX = e.clientX; pY = e.clientY; } }, { passive: true });
   }
 
-  // Ambient (fine pointer, motion allowed). The pass is CSS behind html.ambient, gated on @property support
-  // (CSS.registerProperty ships with it) so browsers that cannot interpolate the custom properties do nothing at all.
-  // The script runs it once as a foil card lands, then every 24s (25.5s, 27s: the three never line up) while the card
-  // is on screen, skipping one under the hand or behind the dialog. The cursor light is one fixed element eased toward
-  // the pointer at a tenth of the gap per frame.
-  var ambient = tilt && !!(window.CSS && CSS.registerProperty), foils = [].slice.call(doc.querySelectorAll('.foil-card'));
-  if (ambient) {
-    root.classList.add('ambient');
-    if ('IntersectionObserver' in window) {
-      var lit = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ e.target.dataset.lit = e.isIntersecting ? '1' : ''; if (!e.isIntersecting) e.target.classList.remove('pass'); });
-      }, { threshold: .25 });
-      foils.forEach(function(c){ lit.observe(c); });
-    }
-    foils.forEach(function(c){ c.addEventListener('animationend', function(e){ if (e.target === c && e.animationName === 'pass') c.classList.remove('pass'); }); });
-  }
-  function pass(c){
-    if (!ambient || open || doc.hidden || c.dataset.lit === '' || c.classList.contains('is-hover') || c.classList.contains('settling')) return;
-    c.classList.add('pass');
-  }
-  function firstPass(c, delay){
-    if (!ambient) return;
-    setTimeout(function(){ pass(c); setInterval(function(){ pass(c); }, 24000 + Math.max(0, foils.indexOf(c)) * 1500); }, delay);
-  }
+  // Cursor light (fine pointer, motion allowed): one fixed element eased toward the pointer at a tenth of the gap per frame.
   if (tilt) {
     var lume = doc.createElement('div'), lx = 0, ly = 0, tx = 0, ty = 0, lraf = 0, seen = false;
     lume.className = 'lume'; lume.setAttribute('aria-hidden', 'true'); doc.body.appendChild(lume);
@@ -1046,7 +995,7 @@ body {
     hint.textContent = coarse ? 'Tap outside to close' : 'Esc or click outside to close';
     var b = clone.querySelector('.inspect-btn'); if (b) b.remove();
     var desc = clone.querySelector('.effect'); if (desc) { desc.id = 'inspect-desc'; dlg.setAttribute('aria-describedby', 'inspect-desc'); }
-    clone.classList.remove('dealing', 'pass', 'settling', 'is-hover'); clone.classList.add('dealt');
+    clone.classList.remove('dealing', 'settling', 'is-hover'); clone.classList.add('dealt');
     clone.style.removeProperty('--dd'); clone.style.transition = ''; clone.style.transform = ''; clone.style.visibility = '';
     // the tilt the card had under the hand rides along: same angles at the start of the flight; the pointer takes over
     // if it is over the clone when the flight ends, otherwise the clone eases flat

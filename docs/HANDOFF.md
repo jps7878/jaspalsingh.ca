@@ -1,6 +1,6 @@
 # jaspalsingh.ca — handoff
 
-Last updated 2026-09-09 (31 commits on `main`, latest `cd53f7a`). Site is LIVE at https://jaspalsingh.ca on GitHub Pages with a valid certificate and HTTPS enforced.
+Last updated 2026-10-25 (foil sweep removed for load lag; see the spec's Ambient life note). Site is LIVE at https://jaspalsingh.ca on GitHub Pages with a valid certificate and HTTPS enforced.
 
 ## What this is
 
@@ -30,7 +30,7 @@ Jas's personal brand site. Concept: an homage to Yu-Gi-Oh trading cards. Career 
 3. Skills: intro line, one full-bleed scroll-snap shelf of ten full cards with prev/next buttons. Order: GTM Engineer (royal-blue Secret Rare, foil) first, then the compensation block (Comp Plan Design, Payout Controls, Comp Compliance & Governance, Data Integrity), then GTM in journey order (GTM Strategy, Funnel Mapping, Quota & Territory Planning, Account Management & CSM Flows), Data Analysis last. Set codes JS-EN008 to 017.
 4. Footer: set code, copyright, ownership note, "Designed and built with Claude Code", the two coin links.
 
-Motion: pointer tilt; deal-in entrance per section; one-directional foil sweep on the three foil cards (on landing, then about every 24s, one at a time); cursor-following light on the slate; click-to-inspect native dialog with FLIP flight, blurred dim, close button, selectable text. All off under reduced motion and touch where appropriate; page complete with JS disabled.
+Motion: pointer tilt; deal-in entrance per section; cursor-following light on the slate; click-to-inspect native dialog with FLIP flight, blurred dim, close button, selectable text. All off under reduced motion and touch where appropriate; page complete with JS disabled.
 
 ## Jas's standing rules (learned the hard way)
 
