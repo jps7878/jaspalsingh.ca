@@ -1,6 +1,6 @@
 # jaspalsingh.ca — handoff
 
-Last updated 2026-10-25 (foil sweep removed for load lag; see the spec's Ambient life note). Site is LIVE at https://jaspalsingh.ca on GitHub Pages with a valid certificate and HTTPS enforced.
+Last updated 2026-10-29 (foil sweep removed to fix load lag in `4408b1e`; this handoff update follows it). Site is LIVE at https://jaspalsingh.ca on GitHub Pages with a valid certificate and HTTPS enforced.
 
 ## What this is
 
@@ -16,7 +16,7 @@ Jas's personal brand site. Concept: an homage to Yu-Gi-Oh trading cards. Career 
 ## Files
 
 - `content.json`: every string on the page. Hero (name, headline, tagline, bio, photo path, links with icons), career `cards` (7; RBC has `"hidden": true`), `skills` (10, flat array with `type` spell|trap|rare, `group`, optional `kindLabel`, `foil`), footer (set code, copyright, note, `madeWith` link to Claude Code).
-- `build.js`: frame token table (`FRAMES`: eng, founder, ops, sales, spell, trap, rare), glyph coins, glyph-measured text fitting (name condensing, effect-text stepping), the card renderer `fullCard(card, kind, rel, opts)`, hero, skills shelf, footer, the slate backdrop CSS, the inline script (tilt, deal-in, ambient sweep, cursor light, inspect dialog). Content-free by design.
+- `build.js`: frame token table (`FRAMES`: eng, founder, ops, sales, spell, trap, rare), glyph coins, glyph-measured text fitting (name condensing, effect-text stepping), the card renderer `fullCard(card, kind, rel, opts)`, hero, skills shelf, footer, the slate backdrop CSS, the inline script (tilt, deal-in, cursor light, inspect dialog). Content-free by design.
 - `assets/art/placeholder-NN-<id>.svg`: code-drawn art per card (17 files). Real art is optional: drop `assets/art/art-NN-<id>.jpg` (1:1) and rebuild; the build prefers it when present. Jas is happy with the placeholders.
 - `assets/logos/`: white company marks (sources in `SOURCES.md`). `assets/icons/`: LinkedIn, Qotiv marks for the link coins (mail and github icons remain on disk but are unused).
 - `assets/photo.jpg` does not exist yet; the hero shows a "JS" initials tile until it does (square or 4:5 portrait, any size).
@@ -31,6 +31,16 @@ Jas's personal brand site. Concept: an homage to Yu-Gi-Oh trading cards. Career 
 4. Footer: set code, copyright, ownership note, "Designed and built with Claude Code", the two coin links.
 
 Motion: pointer tilt; deal-in entrance per section; cursor-following light on the slate; click-to-inspect native dialog with FLIP flight, blurred dim, close button, selectable text. All off under reduced motion and touch where appropriate; page complete with JS disabled.
+
+## Performance (2026-10-25)
+
+Jas reported the site "very slow to load" in every browser, on his Mac, and laggy even without scrolling. Root cause: the automatic foil sweep (`@keyframes pass` animating registered custom properties `--ax/--ay/--fo/--ga` on the foil cards, on landing and every ~24s). Custom-property animation cannot run on the compositor, so every frame restyled, repainted and re-rasterized all the blended foil layers (`mix-blend-mode` hard-light/overlay/color-dodge). Idle frame rate at 1512x982 @2x: ~38-41fps with the sweep, steady 60fps without. Fixed in `4408b1e` by removing the sweep (Jas's choice over rebuilding it); hover tilt, foil response to the hand, deal-in, cursor light and inspect unchanged.
+
+Ruled out with measurements: network/DNS/redirects/IPv6 (122 KB page, ~0.2s), JavaScript (no long tasks), Chrome hardware acceleration (on), extensions (lag was in every browser), the `feTurbulence` noise textures (no measurable difference, even at 2x), Google Fonts `display=block`.
+
+Rules for future motion: animate only `transform`/`opacity` on a pre-rendered layer; never loop an animation of custom properties that feed blended layers; measure idle fps before shipping any ambient effect.
+
+Harness: `qa/perf/` (gitignored, CDP scripts, Node 25 built-in WebSocket). `node qa/perf/idle-h.mjs <url> <port>` = idle fps buckets, no input, @2x; `trace2.mjs` = load trace + raster totals + frame stats (env `THROTTLE=4` for CPU throttling); `smoke.mjs <url>` = foil hover + inspect dialog + console errors; `noscroll.mjs <url> <port> <w> <h>` = which on-screen cards get dealt without scrolling. Serve variants with `python3 -m http.server` from a copy of the repo; compare base vs a sed-edited `index.html` copy. Gotchas: headful test windows get throttled if occluded (use headless or `--disable-backgrounding-occluded-windows`); the first foil card's centre is below the fold at 982px tall, so scroll it into view before hover tests.
 
 ## Jas's standing rules (learned the hard way)
 
@@ -49,6 +59,7 @@ To rebuild from the committed engine without disturbing an in-progress `build.js
 
 ## Open items
 
+0. **Confirm the lag fix on Jas's Mac** (hard reload, Cmd+Shift+R). Still unexplained: in 3 of ~35 test loads a cold first load froze for 3-8s in GPU raster (`RasterDecoderImpl::DoEndRasterCHROMIUM`); never reproduced on demand, a blank control page never did it. If Jas still sees lag, get a DevTools Performance recording (Cmd+Opt+I, Performance, reload-and-record, save) and look there first. The first ~1s is still 30-45fps while the first row deals in.
 1. **Projects section (next up).** Jas chose a "ledger" over cards: one row per project with name, company and years, a one-sentence outcome, two or three metric chips, and a small era-coloured metal marker. He still owes edits to the draft rows: (1) Global sales compensation program, Deel 2022-2025, ~500 reps; (2) Comp infrastructure for every variable role, Engine 2025-2026, sales team 2x; (3) Funnel and launch mapping, Deel; (4) Qotiv, founder, 2025-present, deal + usage-based comp platform, link qotiv.com; (5) Incentive systems at Anthropic, one line, no detail; (6) jaspalsingh.ca built with Claude Code; (7) optional side builds (macOS IPTV player in Swift, AI sports analysis tool, Pokémon ROM hack). Add `projects` to `content.json` and a `projectsSection()` to `build.js`; spec section to add.
 2. Photo: `assets/photo.jpg` from Jas.
 3. Optional real card art (prompts in `~/Desktop/jaspalsingh-card-art-prompts.md`); Jas is content with the placeholders.
